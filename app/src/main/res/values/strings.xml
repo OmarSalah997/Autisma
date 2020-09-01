@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Autisma</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="rememberme">Remember me</string>
+    <string name="signIn">SIGN IN</string>
+    <string name="signInFB">SIGN IN WITH FACEBOOK</string>
+    <string name="signInG">SIGN IN WITH GOOGLE</string>
+    <string name="NOACC">Don\'t have an account?</string>
+    <string name="haveAcc">Already have an account?</string>
+    <string name="Signup">SIGN UP</string>
+    <string name="rewritePass">Re-write Password</string>
+    <string name="forgotpass">FORGOT PASSWORD</string>
+    <string name="email">E-MAIL</string>
+    <string name="sendmail">SEND EMAIL</string>
+    <string name="forgotpassText">We just need your registered Email to send you password reset instructions</string>
 </resources>

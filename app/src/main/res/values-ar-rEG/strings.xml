@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Autisma</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="password">كلمة السر</string>
+    <string name="rememberme">تذكّرني</string>
+    <string name="signIn">تسجيل الدخول</string>
+    <string name="signInFB">تسجيل الدخول بفيسبوك</string>
+    <string name="signInG">تسجيل الدخول بجوجل</string>
+    <string name="NOACC">ليس لديك حساب؟</string>
+    <string name="haveAcc">لديك حساب بالفعل؟</string>
+    <string name="Signup">تسجيل</string>
+    <string name="rewritePass">أعد كتابة كلمة السر</string>
+    <string name="forgotpass">نسيت كلمة السر</string>
+    <string name="email">البريد الألكتروني</string>
+    <string name="forgotpassText">نحتاج بريدك الالكتروني المسجل لارسال خطوات اعادة تعيين كلمة السر</string>
+    <string name="sendmail">ارسل للبريد الالكتروني</string>
+</resources>
