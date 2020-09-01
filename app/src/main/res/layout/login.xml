@@ -73,7 +73,7 @@
         android:id="@+id/sign_in_button"
         android:layout_width="349dp"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
 
         android:background="@drawable/button_shape"
         android:fontFamily="sans-serif"
@@ -81,7 +81,6 @@
         android:textColor="@color/colorWhite"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
 
@@ -137,4 +136,16 @@
         android:textSize="17dp"
         app:layout_constraintStart_toEndOf="@+id/dont_have_acc"
         app:layout_constraintTop_toBottomOf="@+id/sign_with_google" />
+
+    <TextView
+        android:id="@+id/to_forgot_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        app:layout_constraintBottom_toTopOf="@+id/rememberMe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        android:textColor="#bbbbbb"
+        android:textSize="17dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

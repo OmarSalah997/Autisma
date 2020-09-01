@@ -21,5 +21,13 @@ public class LOGIN extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        TextView forgot_pass=findViewById(R.id.to_forgot_pass);
+        forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LOGIN.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
