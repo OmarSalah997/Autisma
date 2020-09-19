@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -33,6 +34,15 @@ public class LOGIN extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LOGIN.this, ForgotPasswordActivity.class);
                 startActivity(intent);
+            }
+        });
+        Button signup=findViewById(R.id.sign_in_button);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               Intent intent= new Intent(LOGIN.this, MainHOME.class);
+                startActivity(intent);
+
             }
         });
         final TextView language=findViewById(R.id.change_lang);

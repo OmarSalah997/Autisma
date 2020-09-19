@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:title="@string/take_a_photo"
+    android:icon="@drawable/ic_baseline_camera_alt_24"/>
+    <item
+        android:title="@string/video"
+        android:icon="@drawable/ic_baseline_videocam_24"/>
+    <item
+        android:title="@string/MCQ"
+        android:icon="@drawable/ic_baseline_mcq_24"/>
+    <item
+        android:title="@string/doctors"
+        android:icon="@drawable/ic_baseline_local_hospital_24"/>
+    <item
+        android:title="@string/institutions"
+        android:icon="@drawable/ic_baseline_home_work_24"/>
+    <item
+        android:title="@string/help_video"
+        android:icon="@drawable/ic_baseline_play_circle_outline_24"/>
+
+
+</menu>

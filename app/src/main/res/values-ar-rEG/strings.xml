@@ -15,4 +15,18 @@
     <string name="email">البريد الألكتروني</string>
     <string name="forgotpassText">نحتاج بريدك الالكتروني المسجل لارسال خطوات اعادة تعيين كلمة السر</string>
     <string name="sendmail">ارسل للبريد الالكتروني</string>
+    <string name="take_a_photo">التقط صورة</string>
+    <string name="video">اختبار الفيديو</string>
+    <string name="doctors">اطباء بالقرب منك</string>
+    <string name="help_video">فيديوهات مساعدة</string>
+    <string name="MCQ">اسئلة خاصة باولياء الامر</string>
+    <string name="institutions">مؤسسات مساعدة</string>
+    <string name="myAlarms">تنبيهاتي</string>
+    <string name="settings">الاعدادات</string>
+    <string name="language">اللغة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="open">افتح</string>
+    <string name="close">اغلق</string>
+    <string name="lang_ar">عربي</string>
+    <string name="lang_en">انجليزي</string>
 </resources>
