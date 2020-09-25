@@ -20,8 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainHOME extends AppCompatActivity {
     private DrawerLayout Drawer_layout;
     private ActionBarDrawerToggle ToggleButton;
-    private ActionBar actionBar;
-    private NavigationView navigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,14 +28,16 @@ public class MainHOME extends AppCompatActivity {
         setContentView(R.layout.activity_main_home);
         Drawer_layout=findViewById(R.id.drawer);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
+
         Drawer_layout.addDrawerListener(ToggleButton);
         ToggleButton.syncState();
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBar=getSupportActionBar();
-        if(actionBar!=null)
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-        navigation=findViewById(R.id.NavigationView);
+
+        NavigationView navigation = findViewById(R.id.NavigationView);
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {

@@ -8,30 +8,32 @@
 
     <EditText
         android:id="@+id/username_signup"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_style"
-        android:drawableLeft="@drawable/ic_baseline_account_box_24"
+        android:drawableStart="@drawable/ic_baseline_account_box_24"
         android:drawablePadding="3dp"
         android:hint="@string/username"
         android:paddingStart="10dp"
-        android:textSize="18dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Sign_up_text" />
 
     <EditText
         android:id="@+id/email_signup"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_style"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawableStart="@drawable/ic_baseline_email_24"
         android:drawablePadding="3dp"
         android:hint="@string/email"
         android:paddingStart="10dp"
-        android:textSize="18dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reEnterpassword_signup2" />
@@ -43,50 +45,50 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/Signup"
         android:textColor="#000000"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintVertical_bias="0.057" />
 
     <EditText
         android:id="@+id/password_signup"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_style"
-        android:drawableLeft="@drawable/ic_baseline_lock_open_24"
+        android:drawableStart="@drawable/ic_baseline_lock_open_24"
         android:drawablePadding="3dp"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingStart="10dp"
-
-        android:textSize="18dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_signup" />
 
     <EditText
         android:id="@+id/reEnterpassword_signup2"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_style"
-        android:drawableLeft="@drawable/ic_baseline_lock_open_24"
+        android:drawableStart="@drawable/ic_baseline_lock_open_24"
         android:drawablePadding="3dp"
         android:hint="@string/rewritePass"
         android:inputType="textPassword"
         android:paddingStart="10dp"
-
-        android:textSize="18dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_signup" />
 
     <Button
         android:id="@+id/sign_in_button2"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
 
         android:layout_marginTop="20dp"
@@ -94,14 +96,14 @@
         android:fontFamily="sans-serif"
         android:text="@string/signIn"
         android:textColor="@color/colorWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_signup" />
 
     <Button
         android:id="@+id/sign_with_fb2"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_shape"
@@ -109,21 +111,21 @@
         android:text="@string/signInFB"
 
         android:textColor="@color/colorWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button2" />
 
     <Button
         android:id="@+id/sign_with_google2"
-        android:layout_width="349dp"
+        android:layout_width="250sp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_shape"
         android:fontFamily="sans-serif"
         android:text="@string/signInG"
         android:textColor="@color/colorWhite"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_with_fb2" />
@@ -132,12 +134,12 @@
         android:id="@+id/already_have_acc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="@string/haveAcc"
         android:textColor="#bbbbbb"
-        android:textSize="17dp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.262"
+        app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_with_google2" />
 
@@ -145,11 +147,11 @@
         android:id="@+id/to_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="84dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:text="@string/signIn"
         android:textColor="@color/colorDarkBlue"
-        android:textSize="17dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="17sp"
+        app:layout_constraintStart_toEndOf="@+id/already_have_acc"
         app:layout_constraintTop_toBottomOf="@+id/sign_with_google2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

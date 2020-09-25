@@ -29,4 +29,12 @@
     <string name="close">اغلق</string>
     <string name="lang_ar">عربي</string>
     <string name="lang_en">انجليزي</string>
+    <string name="noAlarmstext">اضغط على الزر بالاسفل لاضافة تنبيه</string>
+    <string name="alarm_hint">رسالة التنبيه</string>
+    <string name="Date">اليوم</string>
+    <string name="Time">الوقت</string>
+    <string name="current_pass">كلمة المرور الحالية</string>
+    <string name="new_pass">كلمة المرور الجديدة</string>
+    <string name="rewrite_new_pass">أعد كتابة كلمة المرور الجديدة</string>
+    <string name="reset_pass">أعد تعيين كلمة المرور</string>
 </resources>

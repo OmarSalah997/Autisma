@@ -10,8 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Settings"></activity>
-        <activity android:name=".Alarms" />
+        <activity android:name=".Change_password"></activity>
+        <activity
+            android:name=".Add_alarm"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity android:name=".Settings" />
+        <activity
+            android:name=".Alarms"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".MainHOME"
             android:theme="@style/Theme.AppCompat.Light" />
@@ -26,9 +32,10 @@
         </activity>
     </application>
 
-    <supports-screens
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true" />
+    <compatible-screens>
+        <screen
+            android:screenDensity="hdpi"
+            android:screenSize="normal" />
+    </compatible-screens>
 
 </manifest>
