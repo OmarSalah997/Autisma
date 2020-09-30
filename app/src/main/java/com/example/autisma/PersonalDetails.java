@@ -26,20 +26,20 @@ public class PersonalDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_details);
-         spinner = (Spinner) findViewById(R.id.country_spinner);
+       //  spinner = (Spinner) findViewById(R.id.country_spinner);
          spinner1= (Spinner)findViewById(R.id.ethnicity_spinner);
          finish=(Button)findViewById(R.id.Finish);
         age=(EditText)findViewById(R.id.age);
       jaundice=(CheckBox)findViewById(R.id.checkbox_yes_jaundice);
       familyHistory=(CheckBox)findViewById(R.id.checkbox_yes_family);
         // Create an ArrayAdapter using the string array and a default spinner layout
-       adapter = ArrayAdapter.createFromResource(this, R.array.Country_array, android.R.layout.simple_spinner_item);
+    //   adapter = ArrayAdapter.createFromResource(this, R.array.Country_array, android.R.layout.simple_spinner_item);
        adapter1 = ArrayAdapter.createFromResource(this, R.array.ethnicity_array, android.R.layout.simple_spinner_item);
-       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-spinner.setAdapter(adapter);
+     //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+//spinner.setAdapter(adapter);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+
         spinner1.setAdapter(adapter1);
         finish.setOnClickListener(new View.OnClickListener(){
             @Override
