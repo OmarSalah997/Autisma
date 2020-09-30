@@ -48,6 +48,7 @@ public class signUP extends AppCompatActivity {
         editor.apply();
     }
     private void loadlocale() {
+        Locale.getDefault().getDisplayLanguage();
         SharedPreferences prefs= getSharedPreferences("settings", Activity.MODE_PRIVATE);
         String language=prefs.getString("my lang","");
         setLocale(language);

@@ -67,8 +67,6 @@ public class LOGIN extends AppCompatActivity {
         });
     }
 
-
-
     private void setLocale(String s) {
         Locale locale= new Locale(s);
         Locale.setDefault(locale);
@@ -80,6 +78,11 @@ public class LOGIN extends AppCompatActivity {
         editor.apply();
     }
     private void loadlocale() {
+       /* String s=Locale.getDefault().getDisplayLanguage();
+        if(s.equals("العربية"))
+            setLocale("ar");
+        else
+            setLocale("en");*/
         SharedPreferences prefs= getSharedPreferences("settings", Activity.MODE_PRIVATE);
         String language=prefs.getString("my lang","");
         setLocale(language);
