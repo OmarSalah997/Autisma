@@ -26,6 +26,6 @@ public class Settings extends AppCompatActivity {
         String [] data;
         
         list=findViewById(R.id.settings_list);
-        ArrayAdapter<Menu> adapter=new ArrayAdapter<Menu>(this,R.layout.settings_row,R.id.setting_itemText,);
+        ArrayAdapter<Menu> adapter=new ArrayAdapter<Menu>(this,R.layout.settings_row,R.id.setting_itemText);
     }
 }
