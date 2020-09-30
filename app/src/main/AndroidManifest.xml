@@ -37,9 +37,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <supports-screens
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true" />
+    <compatible-screens>
+        <screen
+            android:screenDensity="hdpi"
+            android:screenSize="normal" />
+    </compatible-screens>
 
 </manifest>

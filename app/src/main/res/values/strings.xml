@@ -28,6 +28,14 @@
     <string name="close">Close</string>
     <string name="lang_ar">Arabic</string>
     <string name="lang_en">English</string>
+    <string name="noAlarmstext">Click on the butoon below to add an alarm</string>
+    <string name="alarm_hint">Reminder message</string>
+    <string name="Date">Date</string>
+    <string name="Time">Time</string>
+    <string name="current_pass">Current password</string>
+    <string name="new_pass">New password</string>
+    <string name="rewrite_new_pass">Re-write new password</string>
+    <string name="reset_pass">Reset password</string>
     <string-array name="Country_array">
         <item>Egypt</item>
     </string-array>
