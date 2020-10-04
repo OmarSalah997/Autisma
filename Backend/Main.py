@@ -91,6 +91,7 @@ api.add_resource(Alarm, '/alarm')
 api.add_resource(Login, '/login')
 api.add_resource(Signup, '/signup')
 api.add_resource(ForgetPass, '/forgetpass')
+api.add_resource(SetNewPass, '/setnewpass')
 api.add_resource(Logout, '/logout')
 api.add_resource(Confirm, '/confirm')
 api.add_resource(ChangePass, '/changepass')
@@ -100,6 +101,8 @@ api.add_resource(ProfileImg, '/profileImg')
 api.add_resource(MCQ, '/mcq')
 api.add_resource(ImgTest, '/imgtest')
 api.add_resource(VidTest, '/vidtest')
+
+
 if __name__ == "__main__":
     app.run(port='5002',debug=True)
 

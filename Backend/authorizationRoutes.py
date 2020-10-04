@@ -8,6 +8,7 @@ class Login(Resource):
         data = request.get_json()
         email = data['email']
         password = data['password']
+        type = data['type']
         try:
             db = mysql.connect(host="localhost", user="root", passwd="1234", database="mydb")
             cursor = db.cursor()
@@ -73,6 +74,7 @@ class Signup(Resource):
         name=data['user_name']
         email=data['email']
         password=data['password']
+        type = data['type']
         # check email is already in database then add it if not in database
         try:
             db = mysql.connect(host="localhost", user="root", passwd="1234", database="mydb")
@@ -90,7 +92,7 @@ class Signup(Resource):
                 db.commit()
                 cursor.close()
                 # send email to verify the email
-                send_email(name, email , "Autizma app account confirmation" , conf)
+                send_email('conf_email_template.txt',name, email , "Autizma app account confirmation" , conf)
                 return {'operation': 'success'}
         except Exception as e:
             return {'operation': 'fail', "error_code":"1001"}
@@ -99,8 +101,61 @@ class Signup(Resource):
 class ForgetPass(Resource):
     def post(self):
         email = request.get_json()['email']
+        try:
+            db = mysql.connect(host="localhost", user="root", passwd="1234", database="mydb")
+            cursor = db.cursor()
+            cursor.execute('SELECT USER_NAME , VALID FROM  users where EMAIL="' + str(email) + '"')
+            rows = cursor.fetchall()
+            if cursor.rowcount != 1:
+                return {'operation': 'fail', 'error_code': "2005"}
+            elif not bool(rows[0][1]):
+                return {'operation': 'fail', 'error_code': "2002"}
+            else:
+                name= str(rows[0][0])
+                conf = ''.join(["{}".format(randint(0, 9)) for num in range(6)])
+                cursor = db.cursor()
+                cursor.execute("UPDATE users SET ConCode = %s where  EMAIL=%s",(str(conf),str(email)))
+                db.commit()
+                cursor.close()
+                send_email('rest_email_template.txt',name,email,"your Autizma account recovery code ",conf)
+                return {'operation': 'success'}
 
-        return {'operation': 'success'}
+        except Exception as e:
+            return {'operation': 'fail', "error_code": "1001"}
+
+
+
+class SetNewPass (Resource):
+    def post(self):
+        data = request.get_json()
+        code = data['code']
+        email = data['email']
+        password = data['password']
+        try:
+            db = mysql.connect(host="localhost", user="root", passwd="1234", database="mydb")
+            cursor = db.cursor()
+            cursor.execute('SELECT ID FROM USERS WHERE EMAIL="' + str(email) + '"')
+            cursor.fetchall()
+            rows = cursor.rowcount
+            cursor.close()
+            print(rows)
+            if rows == 0:
+                return {'operation': 'fail', 'error_code': "2001"}
+            else:
+                cursor = db.cursor()
+                cursor.execute('SELECT ConCode FROM USERS WHERE EMAIL="' + str(email) + '"')
+                saved_code = str(cursor.fetchone()[0])
+                if saved_code == str(code):
+                    cursor.execute('UPDATE users SET ConCode = "" , password = MD5(%s)  where email = %s',(str(password), str(email)))
+                    db.commit()
+                    cursor.close()
+                    db.close()
+                    return {'operation': 'success'}
+                else:
+                    return {'operation': 'fail', "error_code": "2003"}
+
+        except Exception as e:
+            return {'operation': 'fail', "error_code": "1001"}
 
 
 class Confirm (Resource):
@@ -130,5 +185,7 @@ class Confirm (Resource):
                     cursor.close()
                     db.close()
                     return {'operation': 'success' , 'token': str(token)}
+                else:
+                    return {'operation': 'fail', "error_code": "2003"}
         except Exception as e:
             return {'operation': 'fail', "error_code" : "1001"}

@@ -7,9 +7,9 @@ MY_ADDRESS = 'no.reply_autizma@outlook.com'
 PASSWORD = 'A20212021a'
 
 
-def send_email(name , email , sub , con_code):
+def send_email(temp_email ,name , email , sub , con_code):
     # read template email body
-    with open('email_template.txt', 'r', encoding='utf-8') as template_file:
+    with open(temp_email, 'r', encoding='utf-8') as template_file:
         template_file_content = template_file.read()
     message_template = Template(template_file_content)
 
