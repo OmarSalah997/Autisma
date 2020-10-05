@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.autisma">
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,10 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Change_password"></activity>
+        <activity android:name=".Change_password" />
         <activity
             android:name=".Add_alarm"
-            android:theme="@style/Theme.AppCompat.Light" />
+            >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.Alarms" />
+        </activity>
         <activity android:name=".Settings" />
         <activity
             android:name=".Alarms"
@@ -30,6 +37,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name=".data.alarm_provider"
+            android:authorities="com.example.autisma"
+            android:exported="false" />
+        <service
+            android:name=".ReminderAlarmService"
+            android:exported="false" />
     </application>
 
     <compatible-screens>

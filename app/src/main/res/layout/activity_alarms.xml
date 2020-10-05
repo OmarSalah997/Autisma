@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Alarms">
 
+    <TextView
+        android:id="@+id/alarms_top_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="@string/edit_alarm"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/alarm_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ListView
         android:id="@+id/alarm_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-139dp" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarms_top_text" />
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
