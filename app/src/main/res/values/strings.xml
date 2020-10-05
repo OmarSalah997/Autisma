@@ -64,4 +64,41 @@
     <string name="done">Done</string>
     <string name="datenotset">Date not set</string>
     <string name="repeatnotset">Repeat not set</string>
+    <string-array name="Country_array">
+        <item>Egypt</item>
+    </string-array>
+    <string-array name="ethnicity_array">
+        <item>Arab</item>
+        <item>African</item>
+        <item>White European</item>
+        <item>Asian</item>
+        <item>African American</item>
+        <item>Turkish</item>
+        <item>Kurdish</item>
+        <item>Persian</item>
+        <item>Hispanic</item>
+        <item>Native indian</item>
+    </string-array>
+    <string name="startWatching">Start Watching </string>
+    <string name="stopWatching">Stop Watching</string>
+    <string name="chooseImage">اchoose Image</string>
+    <string name="uploadImage">Upload Image</string>
+    <string name="choice1">Definitely Agree</string>
+    <string name="choice2">Slightly Agree</string>
+    <string name="choice3">Slightly disagree</string>
+    <string name="choice4" >Definitely disagree</string>
+    <string name="next">Next</string>
+    <string name="question1">
+He/She often notices small sounds when others do not</string>
+    <string name="question2">
+He/She usually concentrates more on the whole picture rather than the small details</string>
+    <string name="question3">
+In a social group ,He/She can easily keep track of several different peoples conversations</string>
+    <string name="question4">He/She finds it easy to go back and fourth between different activites</string>
+    <string name="question5">He/She does not know how to keep a conversation going with his/her peers</string>
+    <string name="question6">He/She is good at social chit-chat</string>
+    <string name="question7">When He/She reads a story,he finds it difficult to work out the charachter s intenons or feelings</string>
+    <string name="question8">When He/She was in preschool,he/she used to enjoy playing games involving pretending with other children</string>
+    <string name="question9">He/She finds it easy to work out what someone is thinking or feeling just by looking at their face</string>
+    <string name="question10">He/She finds it hard to make new friends</string>
 </resources>

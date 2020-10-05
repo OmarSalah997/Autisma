@@ -14,12 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MainHOME extends AppCompatActivity {
     private DrawerLayout Drawer_layout;
     private ActionBarDrawerToggle ToggleButton;
+    private ActionBar actionBar;
+    private NavigationView navigation;
+    private Button quiz ,takePhoto,watchVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +31,18 @@ public class MainHOME extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home);
         Drawer_layout=findViewById(R.id.drawer);
+        quiz=findViewById(R.id.button_mcq);
+        takePhoto=findViewById(R.id.button_takephoto);
+        watchVideo=findViewById(R.id.button_video);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
-
         Drawer_layout.addDrawerListener(ToggleButton);
         ToggleButton.syncState();
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar !=null)
+        actionBar=getSupportActionBar();
+        if(actionBar!=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-
-        NavigationView navigation = findViewById(R.id.NavigationView);
+        navigation=findViewById(R.id.NavigationView);
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -56,6 +61,25 @@ public class MainHOME extends AppCompatActivity {
                         break;
                 }
                 return false;
+            }
+        });
+        quiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Quiz_Activity.class));
+            }
+        });
+
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),UploadImageActivity.class));
+            }
+        });
+        watchVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),RecordingActivity.class));
             }
         });
     }

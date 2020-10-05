@@ -65,4 +65,31 @@
     <string name="done">تمّ</string>
     <string name="datenotset">لم يتم تحديد التاريخ</string>
     <string name="repeatnotset">لم يتم التحديد</string>
+    <string name="startWatching">ابدا المشاهدة </string>
+    <string name="stopWatching"> توقف عن المشاهدة</string>
+    <string name="chooseImage">اختر صورة</string>
+    <string name="uploadImage">رفع الصورة</string>
+    <string name="choice1">اتفق تماما</string>
+    <string name="choice2">اتفق قليلا</string>
+    <string name="choice3">لا اتفق قليلا</string>
+    <string name="choice4" >لا اتفق ابدا</string>
+    <string name="next">التالى</string>
+    <string name="question1">
+غالبًا ما يلاحظ أصواتًا صغيرة عندما لا يلاحظ الآخرون ذلك</string>
+    <string name="question2">
+عادة ما يركز أكثر على الصورة الكاملة بدلاً من التفاصيل الصغيرة</string>
+    <string name="question3">
+في المجموعة الاجتماعية ، يمكنه بسهولة تتبع محادثات العديد من الأشخاص المختلفين</string>
+    <string name="question4">
+يجد أنه من السهل التغيير و العودة بين مختلف الأنشطة</string>
+    <string name="question5">لا يعرف كيف يستمر المحادثة مع أقرانه</string>
+    <string name="question6">هو جيد في الدردشة الاجتماعية</string>
+    <string name="question7">
+عندما يقرأ قصة ، فإنه يجد صعوبة في فهم مشاعر أو نوايا الشخصية</string>
+    <string name="question8">
+عندما كان في مرحلة ما قبل المدرسة ، كان يستمتع بممارسة الألعاب التي تتضمن التظاهر مع الأطفال الآخرين</string>
+    <string name="question9">
+يجد أنه من السهل معرفة ما يفكر فيه شخص ما أو يشعر به بمجرد النظر إلى وجهه</string>
+    <string name="question10">
+يجد صعوبة في تكوين صداقات جديدة</string>
 </resources>
