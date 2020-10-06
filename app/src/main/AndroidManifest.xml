@@ -28,8 +28,8 @@
         <activity
             android:name=".Alarms"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".Settings"></activity>
-        <activity android:name=".Alarms" />
+
+
         <activity
             android:name=".MainHOME"
             android:theme="@style/Theme.AppCompat.Light" />

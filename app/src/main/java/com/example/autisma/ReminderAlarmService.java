@@ -67,22 +67,13 @@ public class ReminderAlarmService extends IntentService{
                 .setSmallIcon(R.drawable.ic_baseline_notifications_on_24)
                 .setContentTitle(getString(R.string.alarm_notif))
                 .setContentText(description)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(NOTIFICATION_ID, builder.build());
-///////////////////////////////////////////////////
-       /* Notification note = new Notification.Builder(this)
-                .setContentTitle(getString(R.string.alarm_notif))
-                .setContentText(description)
-                .setSmallIcon(R.drawable.ic_baseline_notifications_on_24)
-                .build();
 
-
-        assert manager != null;
-        manager.notify(NOTIFICATION_ID, note);*/
-        ////////////////////////////////////////
     }
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
