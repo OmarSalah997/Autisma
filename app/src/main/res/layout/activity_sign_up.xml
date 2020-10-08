@@ -102,21 +102,6 @@
         app:layout_constraintTop_toBottomOf="@+id/email_signup" />
 
     <Button
-        android:id="@+id/sign_with_fb2"
-        android:layout_width="250sp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_shape"
-        android:fontFamily="sans-serif"
-        android:text="@string/signInFB"
-
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button2" />
-
-    <Button
         android:id="@+id/sign_with_google2"
         android:layout_width="250sp"
         android:layout_height="50dp"
@@ -127,8 +112,9 @@
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_with_fb2" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button2" />
 
     <TextView
         android:id="@+id/already_have_acc"

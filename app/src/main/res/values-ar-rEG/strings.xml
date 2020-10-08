@@ -92,4 +92,8 @@
 يجد أنه من السهل معرفة ما يفكر فيه شخص ما أو يشعر به بمجرد النظر إلى وجهه</string>
     <string name="question10">
 يجد صعوبة في تكوين صداقات جديدة</string>
+    <string-array name="settings_list">
+        <item>اللغة</item>
+    </string-array>
+    <string name="pickLanguage">اختر لغة التطبيق</string>
 </resources>

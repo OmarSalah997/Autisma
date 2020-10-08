@@ -86,24 +86,10 @@
         app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
 
     <Button
-        android:id="@+id/sign_with_fb"
-        android:layout_width="250sp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_shape"
-        android:fontFamily="sans-serif"
-        android:text="@string/signInFB"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
-
-    <Button
         android:id="@+id/sign_with_google"
         android:layout_width="250sp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_shape"
         android:fontFamily="sans-serif"
         android:text="@string/signInG"
@@ -111,7 +97,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_with_fb" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
     <TextView
         android:id="@+id/dont_have_acc"
@@ -154,9 +140,9 @@
         android:id="@+id/change_lang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
         android:text="en"
-        app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintStart_toEndOf="@+id/Sign_in_text" />
+        app:layout_constraintStart_toEndOf="@+id/Sign_in_text"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
