@@ -1,0 +1,19 @@
+Communication c = new Communication();
+                String url = "Your URL"; // route
+                JSONObject jsonBody = new JSONObject();//Json body data
+                try {
+                    jsonBody.put( "email","elnagmy45@gmail.com");
+                    jsonBody.put( "password","badr1230");
+                    jsonBody.put( "type","1");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                c.REQUEST_NO_AUTHORIZE(Request.Method.POST, url, jsonBody,
+                        new Communication.VolleyCallback() {
+                            @Override
+                            public void onSuccessResponse(JSONObject response) {
+					
+                                // do your work with response object
+                            }
+                        });
