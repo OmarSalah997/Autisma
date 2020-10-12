@@ -13,9 +13,11 @@ import com.example.autisma.data.alarm_contract;
 public class AlarmCursorAdapter extends CursorAdapter {
     private TextView mTitleText, mDateAndTimeText, mRepeatInfoText;
     private ImageView mActiveImage , mThumbnailImage;
+    private String currentLangCode;
 
     public AlarmCursorAdapter(Context context, Cursor c) {
         super(context, c, 0 /* flags */);
+        currentLangCode =context.getResources().getConfiguration().locale.getLanguage();
     }
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -77,8 +79,6 @@ else{
     // Set reminder title view
     public void setReminderTitle(String title) {
         mTitleText.setText(title);
-
-
     }
 
     // Set date and time views
@@ -90,7 +90,10 @@ else{
     @SuppressLint("SetTextI18n")
     public void setReminderRepeatInfo(String repeat, String repeatNo, String repeatType) {
         if(repeat.equals("true")){
-            mRepeatInfoText.setText(R.string.every + repeatNo + " " + repeatType );
+            if(currentLangCode.equals("en"))
+            mRepeatInfoText.setText("repeat after"+ repeatNo + " " + repeatType );
+            else
+                mRepeatInfoText.setText("تكرار بعد"+ repeatNo + " " + repeatType );
         }else if (repeat.equals("false")) {
             mRepeatInfoText.setText(R.string.repeat_off);
         }

@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.autisma">
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
+
     <application
         android:allowBackup="false"
         android:icon="@drawable/app_icon_200x200no_title"
@@ -19,15 +10,21 @@
         android:roundIcon="@mipmap/ic_launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".UserProfile"
+            android:theme="@style/Theme.AppCompat.Light">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity android:name=".Change_password" />
         <activity android:name=".Add_alarm">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.Alarms" />
         </activity>
-        <activity android:name=".Settings"
-            android:theme="@style/Theme.AppCompat.Light"
-            >
+        <activity
+            android:name=".Settings"
+            android:theme="@style/Theme.AppCompat.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
@@ -43,9 +40,17 @@
         <activity android:name=".LOGIN">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Quiz_Activity" />
+
+        <activity android:name=".PersonalDetails" />
+
+        <activity android:name=".RecordingActivity" />
+        <activity android:name=".UploadImageActivity" />
         <provider
             android:name=".data.alarm_provider"
             android:authorities="com.example.autisma"
@@ -54,18 +59,29 @@
             android:name=".ReminderAlarmService"
             android:exported="false"
             android:process=":ServiceProcess" />
-        <activity android:name=".Quiz_Activity" />
-        <activity android:name=".PersonalDetails"/>
-        <activity android:name=".RecordingActivity" />
-        <activity android:name=".UploadImageActivity" />
-        <service android:enabled="true" android:name=".RecorderService"    android:exported="true">
-        </service>
-    </application>
 
+        <service
+            android:name=".RecorderService"
+            android:enabled="true"
+            android:exported="true"></service>
+    </application>
     <compatible-screens>
         <screen
             android:screenDensity="hdpi"
             android:screenSize="normal" />
     </compatible-screens>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 </manifest>

@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -19,9 +21,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
 public class MainHOME extends AppCompatActivity {
@@ -30,11 +36,16 @@ public class MainHOME extends AppCompatActivity {
     private NavigationView navigation;
     private Button quiz ,takePhoto,watchVideo;
     private String currentLangCode;
+    private TextView userNameTextview;
+    private ImageView userPhotoImageview;
+    private String username;
+    private String user_photo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home);
-        currentLangCode = getResources().getConfiguration().locale.getLanguage();
+        SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
+        currentLangCode=prefs.getString("my lang","");
         Drawer_layout=findViewById(R.id.drawer);
         quiz=findViewById(R.id.button_mcq);
         takePhoto=findViewById(R.id.button_takephoto);
@@ -68,6 +79,11 @@ public class MainHOME extends AppCompatActivity {
                 return false;
             }
         });
+        View headerView = navigation.getHeaderView(0);
+        userNameTextview=(TextView)headerView.findViewById(R.id.user_name);
+        username=userNameTextview.getText().toString();
+        userPhotoImageview=headerView.findViewById(R.id.user_photo);
+        user_photo=userPhotoImageview.getDrawable().toString();
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,5 +121,14 @@ public class MainHOME extends AppCompatActivity {
             recreate();
         }
     }
-
+public void ToUserProfile(View v){
+        Intent intent=new Intent(getApplicationContext(), UserProfile.class);
+        intent.putExtra("USERNAME", username);
+    userPhotoImageview.buildDrawingCache();
+    Bitmap image= userPhotoImageview.getDrawingCache();
+    Bundle extras = new Bundle();
+    extras.putParcelable("imagebitmap", image);
+        intent.putExtra("USERPHOTO", extras);
+        startActivity(intent);
+}
 }

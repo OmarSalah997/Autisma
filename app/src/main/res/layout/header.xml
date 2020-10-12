@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/header">
+    android:id="@+id/header"
+    android:onClick="ToUserProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/gradient_color"
+        android:id="@+id/to_user_profile"
         >
         <androidx.cardview.widget.CardView
             android:layout_width="65dp"

@@ -61,7 +61,7 @@
     <string name="cancel">الغاء</string>
     <string name="add_alarm_title">تفاصيل التنبيه</string>
     <string name="edit_alarm">لتعديل التنبيه,اضغط عليه</string>
-    <string name="add_title">اضف عنوان التنيه</string>
+    <string name="add_title">اضف عنوان التنبيه</string>
     <string name="done">تمّ</string>
     <string name="datenotset">لم يتم تحديد التاريخ</string>
     <string name="repeatnotset">لم يتم التحديد</string>
@@ -96,4 +96,17 @@
         <item>اللغة</item>
     </string-array>
     <string name="pickLanguage">اختر لغة التطبيق</string>
+    <string name="minute">دقيقة</string>
+    <string name="hour">ساعة</string>
+    <string name="day">يوم</string>
+    <string name="week">اسبوع</string>
+    <string name="mounth">شهر</string>
+    <string name="enternum">ادخل عدد</string>
+    <string name="change_password">تغيير كلمة السر</string>
+    <string name="change_user_name">تغيير اسم المستخدم</string>
+    <string name="change_profile_pic">تغيير صورة الحساب</string>
+    <string name="blankName">الاسم الجديد فارغ!</string>
+    <string name="enterNewName">ادخل اسم المستخدم الجديد</string>
+    <string name="enterNewPass">ادخل كلمة سر جديدة</string>
+    <string name="blankPass">كلمة السر الجديدة فارغة!</string>
 </resources>

@@ -11,10 +11,9 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import 	androidx.core.app.NavUtils;
+import androidx.core.app.NavUtils;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -24,19 +23,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.autisma.data.alarm_contract;
-
 import android.app.TimePickerDialog;
 import android.app.DatePickerDialog;
-
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -44,12 +37,9 @@ public class Add_alarm extends AppCompatActivity implements
         TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener, LoaderManager.LoaderCallbacks<Cursor>  {
     private static final int EXISTING_VEHICLE_LOADER = 0;
-
-
     private EditText mTitleText;
     private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText;
     private FloatingActionButton Fab_save;
-
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private long mRepeatTime;
@@ -61,10 +51,8 @@ public class Add_alarm extends AppCompatActivity implements
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
-
     private Uri mCurrentReminderUri;
     private boolean mVehicleHasChanged = false;
-
     // Values for orientation change
     private static final String KEY_TITLE = "title_key";
     private static final String KEY_TIME = "time_key";
@@ -73,15 +61,13 @@ public class Add_alarm extends AppCompatActivity implements
     private static final String KEY_REPEAT_NO = "repeat_no_key";
     private static final String KEY_REPEAT_TYPE = "repeat_type_key";
     private static final String KEY_ACTIVE = "active_key";
-
-
     // Constant values in milliseconds
     private static final long milMinute = 60000L;
     private static final long milHour = 3600000L;
     private static final long milDay = 86400000L;
     private static final long milWeek = 604800000L;
     private static final long milMonth = 2592000000L;
-
+    private String currentLangCode;
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -94,21 +80,16 @@ public class Add_alarm extends AppCompatActivity implements
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
-
+        currentLangCode = getResources().getConfiguration().locale.getLanguage();
         Intent intent = getIntent();
         mCurrentReminderUri = intent.getData();
         if (mCurrentReminderUri == null) {
-
             setTitle(getString(R.string.editor_activity_title_new_reminder));
-
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a reminder that hasn't been created yet.)
             invalidateOptionsMenu();
         } else {
-
             setTitle(getString(R.string.editor_activity_title_edit_reminder));
-
-
             getLoaderManager().initLoader(EXISTING_VEHICLE_LOADER, null, this);
         }
 
@@ -129,8 +110,10 @@ public class Add_alarm extends AppCompatActivity implements
         mActive = "true";
         mRepeat = "true";
         mRepeatNo = "1";
+        if(currentLangCode.equals("en"))
         mRepeatType = "Hour";
-
+        else
+            mRepeatType = "ساعة";
         mCalendar = Calendar.getInstance();
         mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
         mMinute = mCalendar.get(Calendar.MINUTE);
@@ -163,8 +146,10 @@ public class Add_alarm extends AppCompatActivity implements
         mRepeatNoText.setText(mRepeatNo);
         mRepeatTypeText.setText(mRepeatType);
         String every=getString(R.string.every );
-        mRepeatText.setText(every + mRepeatNo + " " + mRepeatType );
-
+        if(currentLangCode.equals("en"))
+            mRepeatText.setText("repeat after" + mRepeatNo + " " + mRepeatType+"(s)" );
+        else
+            mRepeatText.setText("تكرار بعد" + mRepeatNo + " " + mRepeatType );
         // To save state on device rotation
         if (savedInstanceState != null) {
             String savedTitle = savedInstanceState.getString(KEY_TITLE);
@@ -313,21 +298,15 @@ public class Add_alarm extends AppCompatActivity implements
         mDateText.setText(mDate);
     }*/
 
-    // On clicking the active button
-    public void selectFab1(View v) {
-        Fab_save = (FloatingActionButton) findViewById(R.id.confirm_alarm_btn);
-        Fab_save.setVisibility(View.GONE);
-        mActive = "true";
-    }
-
-
-
     // On clicking the repeat switch
     public void onSwitchRepeat(View view) {
         boolean on = ((SwitchCompat) view).isChecked();
         if (on) {
             mRepeat = "true";
-            mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+            if(currentLangCode.equals("en"))
+                mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+            else
+                mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType);
         } else {
             mRepeat = "false";
             mRepeatText.setText(R.string.repeat_off);
@@ -338,22 +317,25 @@ public class Add_alarm extends AppCompatActivity implements
     public void selectRepeatType(View v){
         final String[] items = new String[5];
 
-        items[0] = "Minute";
-        items[1] = "Hour";
-        items[2] = "Day";
-        items[3] = "Week";
-        items[4] = "Month";
+        items[0] = getResources().getString(R.string.minute);
+        items[1] = getResources().getString(R.string.hour);
+        items[2] = getResources().getString(R.string.day);
+        items[3] = getResources().getString(R.string.week);
+        items[4] = getResources().getString(R.string.mounth);
 
         // Create List Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Type");
+        builder.setTitle(R.string.repeat_type);
         builder.setItems(items, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int item) {
 
                 mRepeatType = items[item];
                 mRepeatTypeText.setText(mRepeatType);
-                mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+                if(currentLangCode.equals("en"))
+                    mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+                else
+                    mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType );
             }
         });
         AlertDialog alert = builder.create();
@@ -363,7 +345,7 @@ public class Add_alarm extends AppCompatActivity implements
     // On clicking repeat interval button
     public void setRepeatNo(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Enter Number");
+        alert.setTitle(R.string.enternum);
 
         // Create EditText box to input repeat number
         final EditText input = new EditText(this);
@@ -376,12 +358,18 @@ public class Add_alarm extends AppCompatActivity implements
                         if (input.getText().toString().length() == 0) {
                             mRepeatNo = Integer.toString(1);
                             mRepeatNoText.setText(mRepeatNo);
-                            mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+                            if(currentLangCode.equals("en"))
+                                mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+                            else
+                                mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType );
                         }
                         else {
                             mRepeatNo = input.getText().toString().trim();
                             mRepeatNoText.setText(mRepeatNo);
-                            mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+                            if(currentLangCode.equals("en"))
+                                mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+                            else
+                                mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType );
                         }
                     }
                 });
@@ -549,7 +537,6 @@ public class Add_alarm extends AppCompatActivity implements
         mCalendar.set(Calendar.SECOND, 0);
 
         long selectedTimestamp =  mCalendar.getTimeInMillis();
-        long selectedTimeSamp2=selectedTimestamp/3600000;
         // Check repeat type
         switch (mRepeatType) {
             case "Minute":
@@ -608,7 +595,7 @@ public class Add_alarm extends AppCompatActivity implements
                 new AlarmScheduler().setAlarm(getApplicationContext(), selectedTimestamp, mCurrentReminderUri);
             }
 
-            Toast.makeText(this, "Alarm time is " + selectedTimeSamp2,
+            Toast.makeText(this, "Alarm time is " + mTime,
                     Toast.LENGTH_LONG).show();
         }
 
@@ -685,7 +672,10 @@ public class Add_alarm extends AppCompatActivity implements
             mTimeText.setText(time);
             mRepeatNoText.setText(repeatNo);
             mRepeatTypeText.setText(repeatType);
-            mRepeatText.setText("Every " + repeatNo + " " + repeatType + "(s)");
+            if(currentLangCode.equals("en"))
+                mRepeatText.setText("Repeat after " + repeatNo + " " + repeatType + "(s)");
+            else
+                mRepeatText.setText("تكرار بعد " + repeatNo + " " + repeatType );
             // Setup up active buttons
             // Setup repeat switch
             if (repeat.equals("false")) {

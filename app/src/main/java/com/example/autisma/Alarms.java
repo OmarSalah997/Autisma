@@ -42,8 +42,6 @@ public class Alarms extends AppCompatActivity implements LoaderManager.LoaderCal
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
-    private int mYear, mMonth, mHour, mMinute, mDay;
-    private Calendar mCalendar;
 
     private static final int VEHICLE_LOADER = 0;
     private String title="";
@@ -56,12 +54,12 @@ public class Alarms extends AppCompatActivity implements LoaderManager.LoaderCal
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
 
-        mCalendar = Calendar.getInstance();
-        mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = mCalendar.get(Calendar.MINUTE);
-        mYear = mCalendar.get(Calendar.YEAR);
-        mMonth = mCalendar.get(Calendar.MONTH) + 1;
-        mDay = mCalendar.get(Calendar.DATE);
+        Calendar mCalendar = Calendar.getInstance();
+        int mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        int mMinute = mCalendar.get(Calendar.MINUTE);
+        int mYear = mCalendar.get(Calendar.YEAR);
+        int mMonth = mCalendar.get(Calendar.MONTH) + 1;
+        int mDay = mCalendar.get(Calendar.DATE);
 
         mDate = mDay + "/" + mMonth + "/" + mYear;
         mTime = mHour + ":" + mMinute;
@@ -95,7 +93,6 @@ public class Alarms extends AppCompatActivity implements LoaderManager.LoaderCal
             }
         });
 
-       // getLoaderManager().initLoader();
         getLoaderManager().initLoader(VEHICLE_LOADER, null,  this);
 
     }

@@ -1,18 +1,20 @@
 package com.example.autisma;
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -20,7 +22,7 @@ import androidx.core.app.TaskStackBuilder;
 import com.example.autisma.Add_alarm;
 
 import com.example.autisma.data.alarm_contract;
-public class ReminderAlarmService extends IntentService{
+public class ReminderAlarmService extends IntentService {
     private static final String TAG = ReminderAlarmService.class.getSimpleName();
 
     private static final int NOTIFICATION_ID = 42;
@@ -37,6 +39,49 @@ public class ReminderAlarmService extends IntentService{
         super(TAG);
     }
 
+   /* @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Uri uri = intent.getData();
+
+        //Display a notification to view the task details
+        Intent action = new Intent(this, Add_alarm.class);
+        action.setData(uri);
+        PendingIntent operation = TaskStackBuilder.create(this)
+                .addNextIntentWithParentStack(action)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Grab the task description
+        if(uri != null){
+            cursor = getContentResolver().query(uri, null, null, null, null);
+        }
+
+        String description = "";
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                description = alarm_contract.getColumnString(cursor, alarm_contract.AlarmReminderEntry.KEY_TITLE);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        createNotificationChannel();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.drawable.ic_baseline_notifications_on_24)
+                .setContentTitle(getString(R.string.alarm_notif))
+                .setContentText(description)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+        return null;
+    }
+*/
     @Override
     protected void onHandleIntent(Intent intent) {
 

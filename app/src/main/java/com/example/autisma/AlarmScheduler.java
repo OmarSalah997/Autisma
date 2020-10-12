@@ -1,10 +1,16 @@
 package com.example.autisma;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-public class AlarmScheduler {
+import android.os.IBinder;
+
+import androidx.annotation.Nullable;
+
+public class AlarmScheduler extends Service {
     /**
      * Schedule a reminder alarm at the specified time for the given task.
      *
@@ -49,6 +55,12 @@ public class AlarmScheduler {
 
         manager.cancel(operation);
 
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
 }
