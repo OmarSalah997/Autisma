@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,9 +49,10 @@ public class signUP extends AppCompatActivity {
         editor.apply();
     }
     private void loadlocale() {
-        Locale.getDefault().getDisplayLanguage();
-        SharedPreferences prefs= getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         String language=prefs.getString("my lang","");
+        if(language.equals(""))
+            language= Resources.getSystem().getConfiguration().locale.getLanguage();
         setLocale(language);
     }
 }

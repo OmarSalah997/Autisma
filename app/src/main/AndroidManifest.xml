@@ -58,11 +58,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Quiz_Activity" />
-
         <activity android:name=".PersonalDetails" />
-
         <activity android:name=".RecordingActivity" />
         <activity android:name=".UploadImageActivity" />
         <provider
@@ -73,7 +70,6 @@
             android:name=".ReminderAlarmService"
             android:exported="false"
             android:process=":ServiceProcess" />
-
         <service
             android:name=".RecorderService"
             android:enabled="true"
@@ -82,10 +78,8 @@
             android:name=".Alarm_module.Alarms_main"
             android:label="@string/app_name" >
         </activity>
-
         <activity android:name=".Alarm_module.ReminderAddActivity"
             android:label="title_activity_add_reminder"/>
-
         <activity android:name=".Alarm_module.ReminderEditActivity"
             android:label="title_activity_edit_reminder"/>
         <receiver android:name=".Alarm_module.AlarmReceiver"/>
@@ -95,8 +89,4 @@
             </intent-filter>
         </receiver>
     </application>
-
-
-
-
 </manifest>
