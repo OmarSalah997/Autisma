@@ -93,7 +93,7 @@ else{
             if(currentLangCode.equals("en"))
             mRepeatInfoText.setText("repeat after"+ repeatNo + " " + repeatType );
             else
-                mRepeatInfoText.setText("تكرار بعد"+ repeatNo + " " + repeatType );
+                mRepeatInfoText.setText("تكرار كل"+ repeatNo + " " + repeatType );
         }else if (repeat.equals("false")) {
             mRepeatInfoText.setText(R.string.repeat_off);
         }

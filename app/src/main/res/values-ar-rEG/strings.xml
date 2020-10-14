@@ -109,4 +109,7 @@
     <string name="enterNewName">ادخل اسم المستخدم الجديد</string>
     <string name="enterNewPass">ادخل كلمة سر جديدة</string>
     <string name="blankPass">كلمة السر الجديدة فارغة!</string>
+    <string name="save">حفظ</string>
+    <string name="details">تفاصيل</string>
+    <string name="editDone">تم التعديل</string>
 </resources>

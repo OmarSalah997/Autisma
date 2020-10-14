@@ -1,4 +1,4 @@
-package com.example.test.ui.login;
+/*package com.example.test.ui.login;
 
 import android.content.Context;
 import android.util.Log;
@@ -79,4 +79,4 @@ public class Communication {
         requestQueue.add(stringRequest);
     }
 
-}
+}*/

@@ -149,7 +149,7 @@ public class Add_alarm extends AppCompatActivity implements
         if(currentLangCode.equals("en"))
             mRepeatText.setText("repeat after" + mRepeatNo + " " + mRepeatType+"(s)" );
         else
-            mRepeatText.setText("تكرار بعد" + mRepeatNo + " " + mRepeatType );
+            mRepeatText.setText("تكرار كل" + mRepeatNo + " " + mRepeatType );
         // To save state on device rotation
         if (savedInstanceState != null) {
             String savedTitle = savedInstanceState.getString(KEY_TITLE);
@@ -306,7 +306,7 @@ public class Add_alarm extends AppCompatActivity implements
             if(currentLangCode.equals("en"))
                 mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
             else
-                mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType);
+                mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType);
         } else {
             mRepeat = "false";
             mRepeatText.setText(R.string.repeat_off);
@@ -335,7 +335,7 @@ public class Add_alarm extends AppCompatActivity implements
                 if(currentLangCode.equals("en"))
                     mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
                 else
-                    mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType );
+                    mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType );
             }
         });
         AlertDialog alert = builder.create();
@@ -361,7 +361,7 @@ public class Add_alarm extends AppCompatActivity implements
                             if(currentLangCode.equals("en"))
                                 mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
                             else
-                                mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType );
+                                mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType );
                         }
                         else {
                             mRepeatNo = input.getText().toString().trim();
@@ -369,7 +369,7 @@ public class Add_alarm extends AppCompatActivity implements
                             if(currentLangCode.equals("en"))
                                 mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
                             else
-                                mRepeatText.setText("تكرار بعد " + mRepeatNo + " " + mRepeatType );
+                                mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType );
                         }
                     }
                 });
@@ -385,7 +385,7 @@ public class Add_alarm extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
         // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.menu_add_reminder, menu);
+        getMenuInflater().inflate(R.menu.menu_delete_reminders, menu);
         return true;
     }
 
@@ -675,7 +675,7 @@ public class Add_alarm extends AppCompatActivity implements
             if(currentLangCode.equals("en"))
                 mRepeatText.setText("Repeat after " + repeatNo + " " + repeatType + "(s)");
             else
-                mRepeatText.setText("تكرار بعد " + repeatNo + " " + repeatType );
+                mRepeatText.setText("تكرار كل " + repeatNo + " " + repeatType );
             // Setup up active buttons
             // Setup repeat switch
             if (repeat.equals("false")) {

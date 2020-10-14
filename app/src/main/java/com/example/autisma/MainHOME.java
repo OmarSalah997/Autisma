@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.autisma.Alarm_module.Alarms_main;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.ByteArrayOutputStream;
@@ -66,7 +67,7 @@ public class MainHOME extends AppCompatActivity {
                 Drawer_layout.closeDrawers();
                 switch (id){
                     case R.id.myalarms:
-                        Intent alarms = new Intent(getApplicationContext(), Alarms.class);
+                        Intent alarms = new Intent(getApplicationContext(), Alarms_main.class);
                         startActivity(alarms);
                        break;
                     case R.id.settings:

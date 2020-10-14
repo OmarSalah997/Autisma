@@ -118,4 +118,7 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="enterNewName">Enter new name</string>
     <string name="enterNewPass">Enter new password</string>
     <string name="blankPass">new password cannot be blank!</string>
+    <string name="save">Save</string>
+    <string name="details">Details</string>
+    <string name="editDone">Editing done!</string>
 </resources>
