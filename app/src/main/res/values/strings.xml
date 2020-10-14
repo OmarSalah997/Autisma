@@ -128,4 +128,13 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="slightly_agree">SLIGHTLY AGREE</string>
     <string name="slightly_disagree">SLIGHTLY DISAGREE</string>
     <string name="definitely_disagree">DEFINITELY DISAGREE</string>
+    <string name="age">Age</string>
+    <string name="enterChildAge">Enter age of your child (in years)</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="no">No</string>
+    <string name="Ethnicity">Ethnicity</string>
+    <string name="Was_your_child_born_with_jaundice">Was your child born with jaundice?</string>
+    <string name="autisma_family_q">Has anyone in the immediate family been diagnosed with autism?</string>
 </resources>

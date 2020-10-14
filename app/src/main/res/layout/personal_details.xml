@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginBottom="12dp"
-        android:text="Age"
+        android:text="@string/age"
         android:textColor="@color/colorDarkBlue"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/age"
@@ -20,16 +20,17 @@
 
     <EditText
         android:id="@+id/age"
-        android:layout_width="349dp"
+        android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="87dp"
         android:layout_marginBottom="87dp"
         android:background="@drawable/edit_text_style"
         android:drawablePadding="3dp"
-        android:hint="Enter age of your child (in years)"
+        android:hint="@string/enterChildAge"
         android:paddingStart="10dp"
-        android:textSize="18dp"
+        android:paddingEnd="10dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/checkbox_male"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,30 +42,32 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="152dp"
-        android:text="Gender"
+        android:text="@string/gender"
         android:textColor="@color/colorDarkBlue"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/checkbox_male"
+        style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="12dp"
-        android:text="Male"
+        android:text="@string/male"
         app:layout_constraintStart_toStartOf="@+id/gendertext"
         app:layout_constraintTop_toBottomOf="@+id/gendertext" />
 
     <CheckBox
         android:id="@+id/checkbox_female"
+        style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:text="Female"
+        android:layout_marginStart="164dp"
+        android:text="@string/female"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkbox_male"
-        app:layout_constraintEnd_toEndOf="@+id/age" />
+        app:layout_constraintStart_toStartOf="@+id/checkbox_male" />
 
     <TextView
         android:id="@+id/ethnicityText"
@@ -72,9 +75,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="19dp"
-        android:text="Ethnicity"
+        android:text="@string/Ethnicity"
         android:textColor="@color/colorDarkBlue"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkbox_male" />
 
@@ -95,66 +98,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:text="Was your child born with jaundice?"
+        android:text="@string/Was_your_child_born_with_jaundice"
         android:textColor="@color/colorDarkBlue"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ethnicity_spinner" />
 
     <CheckBox
         android:id="@+id/checkbox_yes_jaundice"
+        style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="36dp"
-        android:text="Yes"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/yes"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkbox_no_jaundice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question" />
 
-    <CheckBox
-        android:id="@+id/checkbox_no_jaundice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="352dp"
-        android:text="No"
-        app:layout_constraintStart_toStartOf="@+id/checkbox_yes_jaundice"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/question2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Has anyone in the immediate family been diagnosed with autism?"
-        android:textColor="@color/colorDarkBlue"
-
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox_yes_jaundice" />
-
-    <CheckBox
-        android:id="@+id/checkbox_no_family"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="176dp"
-        android:text="No"
-        app:layout_constraintEnd_toEndOf="@+id/question2"
-        app:layout_constraintTop_toBottomOf="@+id/question2" />
-
-    <CheckBox
-        android:id="@+id/checkbox_yes_family"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="12dp"
-        android:text="Yes"
-        app:layout_constraintStart_toStartOf="@+id/question2"
-        app:layout_constraintTop_toBottomOf="@+id/question2" />
-<!--
+    <!--
     <TextView
         android:id="@+id/question3"
         android:layout_width="wrap_content"
@@ -176,14 +138,61 @@
         tools:layout_editor_absoluteX="0dp" />
       -->
 
+    <CheckBox
+        android:id="@+id/checkbox_no_jaundice"
+        style="@style/checkbox_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="368dp"
+        android:text="@string/no"
+        app:layout_constraintStart_toStartOf="@+id/checkbox_yes_jaundice"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/question2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/autisma_family_q"
+        android:textColor="@color/colorDarkBlue"
+
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_yes_jaundice" />
+
+    <CheckBox
+        android:id="@+id/checkbox_no_family"
+        style="@style/checkbox_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="108dp"
+        android:text="@string/no"
+        app:layout_constraintStart_toStartOf="@+id/checkbox_yes_family"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_no_jaundice" />
+
+    <CheckBox
+        android:id="@+id/checkbox_yes_family"
+        style="@style/checkbox_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/yes"
+        app:layout_constraintBaseline_toBaselineOf="@+id/checkbox_no_family"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question2" />
+
     <Button
         android:id="@+id/Finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@color/colorDarkBlue"
+        android:background="@drawable/button_shape"
         android:padding="8dp"
-        android:text="Finish"
+        android:text="@string/done"
         android:textColor="#fff"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

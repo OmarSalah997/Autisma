@@ -119,4 +119,13 @@
     <string name="slightly_agree">موافق</string>
     <string name="slightly_disagree">غير موافق</string>
     <string name="definitely_disagree">غير موافق تماما</string>
+    <string name="age">السن</string>
+    <string name="enterChildAge">ادخل سن الطفل (بالاعوام)</string>
+    <string name="gender">الجنس</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثى</string>
+    <string name="no">لا</string>
+    <string name="Ethnicity">العرق</string>
+    <string name="Was_your_child_born_with_jaundice">هل عانى الطفل من الصفراء بعد الولادة؟</string>
+    <string name="autisma_family_q">هل تم تشخيص احد افراد العائلة بالتوحد؟</string>
 </resources>
