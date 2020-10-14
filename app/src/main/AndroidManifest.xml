@@ -31,11 +31,7 @@
             android:value="com.example.autisma.MainHOME" />
         </activity>
         <activity android:name=".Change_password" />
-        <activity android:name=".Add_alarm">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.autisma.Alarms" />
-        </activity>
+
         <activity
             android:name=".Settings"
             android:theme="@style/Theme.AppCompat.Light">
@@ -43,9 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
         </activity>
-        <activity
-            android:name=".Alarms"
-            android:theme="@style/Theme.AppCompat.Light" />
+
         <activity
             android:name=".MainHOME"
             android:theme="@style/Theme.AppCompat.Light" />
@@ -62,14 +56,8 @@
         <activity android:name=".PersonalDetails" />
         <activity android:name=".RecordingActivity" />
         <activity android:name=".UploadImageActivity" />
-        <provider
-            android:name=".data.alarm_provider"
-            android:authorities="com.example.autisma"
-            android:exported="false" />
-        <receiver
-            android:name=".ReminderAlarmService"
-            android:exported="false"
-            android:process=":ServiceProcess" />
+
+
         <service
             android:name=".RecorderService"
             android:enabled="true"
