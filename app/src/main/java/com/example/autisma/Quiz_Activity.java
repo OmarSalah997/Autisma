@@ -16,19 +16,7 @@ import java.util.ArrayList;
 public class Quiz_Activity extends AppCompatActivity {
 
 
-    private String mQuestions [] = {
-            "He/She often notices small sounds when others don't",
-            "He/She usually concentrates more on the whole picture rather than the small details",
-            "In a social group ,He/She can easily keep track of several different people's conversations",
-            "He/She finds it easy to go back and fourth between different activites",
-            "He/She doesn't know how to keep a conversation going with his/her peers",
-            "He/She is good at social chit-chat",
-            "When He/She reads a story,he finds it difficult to work out the charachter's intenons or feelings",
-            "When He/She was in preschool,he/she used to enjoy playing games involving pretending with other children",
-            "He/She finds it easy to work out what someone is thinking or feeling just by looking at their face",
-            "He/She finds it hard to make new friends"
-
-    };
+    private String[] mQuestions;
     ArrayList<Integer> mAnswers = new ArrayList<Integer>();
 
     private TextView mScoreView;
@@ -47,7 +35,19 @@ public class Quiz_Activity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.quiz_activity);
+            mQuestions = new String[]{
+                    getString(R.string.question1),
+                    getString(R.string.question2),
+                    getString(R.string.question3),
+                    getString(R.string.question4),
+                    getString(R.string.question5),
+                    getString(R.string.question6),
+                    getString(R.string.question7),
+                    getString(R.string.question8),
+                    getString(R.string.question9),
+                    getString(R.string.question10)
 
+            };
 
             mQuestionView = (TextView)findViewById(R.id.question);
             mButtonChoice1 = (Button)findViewById(R.id.choice1);
@@ -64,7 +64,7 @@ public class Quiz_Activity extends AppCompatActivity {
                 public void onClick(View view){
                     //My logic for Button goes in here
                     mAnswers.add(1);
-                    mButtonChoice1.setBackgroundColor(Color.BLUE);
+                    mButtonChoice1.setBackground(getDrawable(R.drawable.checked_button_shape));
                    Chosen=true;
                 }
             });
@@ -77,7 +77,7 @@ public class Quiz_Activity extends AppCompatActivity {
                 public void onClick(View view){
                     //My logic for Button goes in here
                     mAnswers.add(2);
-                    mButtonChoice2.setBackgroundColor(Color.BLUE);
+                    mButtonChoice2.setBackground(getDrawable(R.drawable.checked_button_shape));
                     Chosen=true;
                 }
             });
@@ -91,7 +91,7 @@ public class Quiz_Activity extends AppCompatActivity {
                 public void onClick(View view){
                     //My logic for Button goes in here
                     mAnswers.add(3);
-                    mButtonChoice3.setBackgroundColor(Color.BLUE);
+                    mButtonChoice3.setBackground(getDrawable(R.drawable.checked_button_shape));
                     Chosen=true;
 
                 }
@@ -101,7 +101,7 @@ public class Quiz_Activity extends AppCompatActivity {
                 public void onClick(View view){
                     //My logic for Button goes in here
                     mAnswers.add(4);
-                    mButtonChoice4.setBackgroundColor(Color.BLUE);
+                    mButtonChoice4.setBackground(getDrawable(R.drawable.checked_button_shape));
                     Chosen=true;
 
                 }
@@ -109,22 +109,27 @@ public class Quiz_Activity extends AppCompatActivity {
             Next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(Chosen== true){
-                    updateQuestion();
-                    if(mQuestionNumber == 9)
-                    Next.setText("Sumbit");
-                    mButtonChoice1.setBackgroundColor(0xFF4D68EA);
-                    mButtonChoice2.setBackgroundColor(0xFF4D68EA);
-                    mButtonChoice3.setBackgroundColor(0xFF4D68EA);
-                    mButtonChoice4.setBackgroundColor(0xFF4D68EA);
+                    if(Chosen){
+
+                        if(mQuestionNumber == 10)
+                            Next.setText(getString(R.string.submit));
+                        mButtonChoice1.setBackground(getDrawable(R.drawable.button_shape));
+                        mButtonChoice2.setBackground(getDrawable(R.drawable.button_shape));
+                        mButtonChoice3.setBackground(getDrawable(R.drawable.button_shape));
+                        mButtonChoice4.setBackground(getDrawable(R.drawable.button_shape));
                         Chosen=false;
-                    if(Next.getText()=="Sumbit"){
-                        //start another activity
-                        startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
+                        if((Next.getText().equals("Sumbit")||Next.getText().equals("ارسال")))
+                            {
+                            //start another activity
+                            startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
+                            return;
+                            }
+                        updateQuestion();
                     }
-}else{
-                        Toast.makeText(Quiz_Activity.this, "Please choose an answer", Toast.LENGTH_SHORT).show();
-                    }
+                    else
+                        {
+                        Toast.makeText(Quiz_Activity.this, getString(R.string.Please_choose_an_answer), Toast.LENGTH_SHORT).show();
+                        }
                 }
             });
 
@@ -142,8 +147,7 @@ public class Quiz_Activity extends AppCompatActivity {
 
         }
     public String getQuestion(int a) {
-        String question = mQuestions[a];
-        return question;
+        return mQuestions[a];
     }
 
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/quiz_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="25dp">
 
         <TextView
             android:id="@+id/questionNB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:text="0"
             android:textSize="20sp" />
 
@@ -31,9 +30,9 @@
             android:id="@+id/score_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_toRightOf="@id/questionNB"
-            android:text=" /10 Questions "
+            android:layout_marginStart="0dp"
+            android:layout_toEndOf="@id/questionNB"
+            android:text="@string/questions_no"
             android:textSize="20sp" />
 
 
@@ -44,65 +43,65 @@
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="25dp"
         android:padding="8dp"
-        android:text="He/she often notices small sounds when others do not?"
+        android:text="@string/question1"
         android:textSize="20sp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Definitely Agree"
-        android:background="@color/colorDarkBlue"
+        android:text="@string/definitely_agree"
+        android:background="@drawable/button_shape"
         android:textColor="#fff"
         android:padding="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:id="@+id/choice1"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Slightly Agree"
-        android:background="@color/colorDarkBlue"
+        android:text="@string/slightly_agree"
+        android:background="@drawable/button_shape"
         android:textColor="#fff"
         android:padding="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:id="@+id/choice2"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Slightly Disagree"
-        android:background="@color/colorDarkBlue"
+        android:text="@string/slightly_disagree"
+        android:background="@drawable/button_shape"
         android:textColor="#fff"
         android:padding="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:id="@+id/choice3"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Definitely Disagree"
-        android:background="@color/colorDarkBlue"
+        android:text="@string/definitely_disagree"
+        android:background="@drawable/button_shape"
         android:textColor="#fff"
         android:padding="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:id="@+id/choice4"/>
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_shape"
+        android:padding="8dp"
+        android:text="@string/next"
+        android:textColor="#fff" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="24dp"
-            android:background="@color/colorDarkBlue"
-            android:padding="8dp"
-            android:text="Next ->"
-            android:textColor="#fff" />
     </RelativeLayout>
 </LinearLayout>
