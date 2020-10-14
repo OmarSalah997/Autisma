@@ -317,7 +317,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     // On clicking repeat interval button
     public void setRepeatNo(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Enter Number");
+        alert.setTitle(getString(R.string.enternum));
 
         // Create EditText box to input repeat number
         final EditText input = new EditText(this);
@@ -371,18 +371,23 @@ public class ReminderAddActivity extends AppCompatActivity implements
         // Check repeat type
         switch (mRepeatType) {
             case "Minute":
+            case "دقيقة":
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
                 break;
             case "Hour":
+            case "ساعة":
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
                 break;
             case "Day":
+            case "يوم":
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
                 break;
             case "Week":
+            case "اسبوع":
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
                 break;
             case "Month":
+            case "شهر":
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
                 break;
         }

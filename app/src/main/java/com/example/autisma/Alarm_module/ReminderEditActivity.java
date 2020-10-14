@@ -387,15 +387,15 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mAlarmReceiver.cancelAlarm(getApplicationContext(), mReceivedID);
 
         // Check repeat type
-        if (mRepeatType.equals("Minute")) {
+        if (mRepeatType.equals("Minute")|mRepeatType.equals("دقيقة")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
-        } else if (mRepeatType.equals("Hour")) {
+        } else if (mRepeatType.equals("Hour")|mRepeatType.equals("ساعة")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
-        } else if (mRepeatType.equals("Day")) {
+        } else if (mRepeatType.equals("Day")|mRepeatType.equals("يوم")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
-        } else if (mRepeatType.equals("Week")) {
+        } else if (mRepeatType.equals("Week")|mRepeatType.equals("اسبوع")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
-        } else if (mRepeatType.equals("Month")) {
+        } else if (mRepeatType.equals("Month")|mRepeatType.equals("شهر")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
         }
 
