@@ -14,7 +14,7 @@
         android:layout_marginBottom="12dp"
         android:text="Age"
         android:textColor="@color/colorDarkBlue"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/age"
         app:layout_constraintStart_toStartOf="@+id/age" />
 
