@@ -58,6 +58,10 @@
         <activity android:name=".UploadImageActivity" />
 
 
+        <activity android:name=".Helpful_institiutions"/>
+        <activity android:name=".Doctors" />
+        <activity android:name=".Profile" />
+
         <service
             android:name=".RecorderService"
             android:enabled="true"
@@ -77,4 +81,9 @@
             </intent-filter>
         </receiver>
     </application>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
 </manifest>

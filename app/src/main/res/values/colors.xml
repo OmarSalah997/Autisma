@@ -6,5 +6,9 @@
     <color name="colorLightGrey">#939393</color>
     <color name="colorDarkGrey">#696869</color>
     <color name="colorGrey">#f3f6ff</color>
+    <color name="bluelight">#449DEF</color>
+    <color name="whitegrey">#f2f5df</color>
+    <color name="startblue">#2F4F4F</color>
+    <color name="endblue">#32CD32</color>
 
 </resources>

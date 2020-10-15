@@ -35,7 +35,7 @@ public class MainHOME extends AppCompatActivity {
     private DrawerLayout Drawer_layout;
     private ActionBarDrawerToggle ToggleButton;
     private NavigationView navigation;
-    private Button quiz ,takePhoto,watchVideo;
+    private Button quiz ,takePhoto,watchVideo,helpfulInst,doctors;
     private String currentLangCode;
     private TextView userNameTextview;
     private ImageView userPhotoImageview;
@@ -51,6 +51,8 @@ public class MainHOME extends AppCompatActivity {
         quiz=findViewById(R.id.button_mcq);
         takePhoto=findViewById(R.id.button_takephoto);
         watchVideo=findViewById(R.id.button_video);
+        helpfulInst =findViewById(R.id.button_instetutions);
+        doctors=findViewById(R.id.button_doctors);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
         Drawer_layout.addDrawerListener(ToggleButton);
         ToggleButton.syncState();
@@ -102,6 +104,18 @@ public class MainHOME extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),RecordingActivity.class));
+            }
+        });
+        helpfulInst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Helpful_institiutions.class));
+            }
+        });
+        doctors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),Doctors.class));
             }
         });
     }
