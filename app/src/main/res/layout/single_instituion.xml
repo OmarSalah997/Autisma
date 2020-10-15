@@ -9,17 +9,18 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginRight="15dp"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
-        android:tag="icon"
-        android:src="@drawable/hospital_icon" />
+        android:src="@drawable/hospital_icon"
+        android:tag="icon" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -29,35 +30,37 @@
     android:textSize="20sp"
         android:clickable="true"
     android:textStyle="bold"
-    android:layout_toRightOf="@+id/icon"
+    android:layout_toLeftOf="@+id/icon"
     android:id="@+id/single_row"
         android:singleLine="true"
-        android:layout_alignParentRight="true"
+        android:text="اسم الدكتور"
+
     android:layout_alignParentTop="true"
 />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/single_row"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/single_row"
+        android:layout_toLeftOf="@+id/icon"
         >
-    <ImageView
-        android:layout_width="20sp"
-        android:layout_height="20sp"
-        android:src="@android:drawable/ic_menu_mylocation"
-        android:id="@+id/loc_icon"
 
-
-        ></ImageView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorDarkBlue"
         android:text="0.8 km away"
         android:textSize="20sp"
-
+        android:layout_toLeftOf="@id/loc_icon"
 
         />
-    </LinearLayout>
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@android:drawable/ic_menu_mylocation"
+            android:id="@+id/loc_icon"
+android:layout_alignParentRight="true"
+
+            ></ImageView>
+    </RelativeLayout>
 </RelativeLayout>
