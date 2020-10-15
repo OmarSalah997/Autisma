@@ -165,8 +165,8 @@ public class RecordingActivity extends AppCompatActivity {
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(RecordingActivity.this)
                 .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton(getString(R.string.done), okListener)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .create()
                 .show();
     }
@@ -183,12 +183,12 @@ public class RecordingActivity extends AppCompatActivity {
             mIntent.putExtra("Front_Request", true);
 
             startService(mIntent);
-            captureButton.setText("Stop Watching");
+            captureButton.setText(getString(R.string.startWatching));
         } else {
 
             stopService(mIntent);
             videoview.pause();
-            captureButton.setText("Start Watching");
+            captureButton.setText(getString(R.string.stopWatching));
         }
     }
     public void uploadImage(View v){

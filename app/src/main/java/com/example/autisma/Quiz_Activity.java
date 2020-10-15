@@ -118,7 +118,7 @@ public class Quiz_Activity extends AppCompatActivity {
                         mButtonChoice3.setBackground(getDrawable(R.drawable.button_shape));
                         mButtonChoice4.setBackground(getDrawable(R.drawable.button_shape));
                         Chosen=false;
-                        if((Next.getText().equals("Sumbit")||Next.getText().equals("ارسال")))
+                        if((Next.getText().equals("Submit")||Next.getText().equals("ارسال")))
                             {
                             //start another activity
                             startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
