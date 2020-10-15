@@ -69,6 +69,8 @@ class InstAdapter implements ListAdapter {
                     intent.putExtra("inst_desc",instData.Description);
                     intent.putExtra("inst_address",instData.loc);
                     intent.putExtra("inst_number",instData.mobileNumber);
+                    intent.putExtra("inst_fbPage",instData.fbPage);
+                    intent.putExtra("inst_webpage",instData.webPage);
                     context.startActivity(intent);
                 }
             });

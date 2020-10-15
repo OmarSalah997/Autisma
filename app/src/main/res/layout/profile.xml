@@ -100,7 +100,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -118,58 +118,53 @@
                 android:text="+266 225 225"
                 android:textStyle="bold" />
         </LinearLayout>
-    </LinearLayout>
-    <!--
         <LinearLayout
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal"
-            android:paddingLeft="25dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:id="@+id/fb_layout"
+            android:paddingLeft="25dp" >
+
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/icons8-place-marker-40"/>
+                android:src="@drawable/icons8_facebook" />
             <TextView
-                android:textStyle="bold"
-
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/facebookLink"
                 android:paddingLeft="20dp"
-                android:text="Add to group"/>
+                android:text="صفحة الفيسبوك"
+                android:clickable="true"
+                android:textStyle="bold" />
+
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal"
-            android:paddingLeft="25dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:id="@+id/web_layout"
+            android:paddingLeft="25dp" >
+
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-
-
+                android:src="@drawable/icons8_internet" />
             <TextView
-                android:textStyle="bold"
-
-                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Show all comments"/>
+                android:id="@+id/websiteLink"
+                android:text="الموقع الالكترونى"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:textColor="#fff"
-        android:background="@drawable/buttonstyleithgradient"
-        android:layout_marginTop="35dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Make a reservation"/>
--->
 </LinearLayout>
 
 
