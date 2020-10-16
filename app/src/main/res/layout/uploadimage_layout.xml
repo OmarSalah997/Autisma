@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/imgView"
         android:layout_width="395dp"
-        android:layout_height="431dp"
+        android:layout_height="395dp"
         android:layout_marginTop="25dp"
 
         tools:layout_editor_absoluteX="139dp" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/chooseImage"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_shape"
         android:padding="8dp"
         android:text="@string/uploadImage"
