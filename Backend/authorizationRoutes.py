@@ -88,7 +88,7 @@ class Signup(Resource):
             else:
                 conf = ''.join(["{}".format(randint(0, 9)) for num in range(6)])
                 cursor = db.cursor()
-                cursor.execute("INSERT INTO users (email, user_name , password , ConCode  )VALUES(%s, %s , MD5(%s) , %s)",(str(email), str(name), str(password),str(conf) ))
+                cursor.execute("INSERT INTO users (email, user_name , password , ConCode , primium  )VALUES(%s, %s , MD5(%s) , %s , 0)",(str(email), str(name), str(password),str(conf) ))
                 db.commit()
                 cursor.close()
                 # send email to verify the email

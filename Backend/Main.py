@@ -98,11 +98,14 @@ api.add_resource(ChangePass, '/changepass')
 api.add_resource(ChangeName, '/changename')
 api.add_resource(Profile, '/profile')
 api.add_resource(ProfileImg, '/profileImg')
+api.add_resource(Premium, '/premium')
 api.add_resource(MCQ, '/mcq')
 api.add_resource(ImgTest, '/imgtest')
 api.add_resource(VidTest, '/vidtest')
-
+api.add_resource(MatchingGame, '/matchinggame')
+api.add_resource(ChooseFeeling, '/feelinggame')
+api.add_resource(WriteNumber, '/numbersgame')
 
 if __name__ == "__main__":
-    app.run(port='5002',debug=True)
+    app.run(port='5002',debug=True , host= '127.0.0.1')
 
