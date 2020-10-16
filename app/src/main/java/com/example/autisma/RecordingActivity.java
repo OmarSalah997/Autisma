@@ -29,6 +29,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -66,8 +67,9 @@ public class RecordingActivity extends AppCompatActivity {
     private static final String TAG = "RecorderActivity";
     private Boolean started_watching = false;
     private Button captureButton;
-    private Button uploadImage ;
+    private Button uploadImage;
     public static SurfaceView mSurfaceView;
+    private int position = 1;
     public static SurfaceHolder mSurfaceHolder;
     public static Camera mCamera;
     public static boolean mPreviewRunning;
@@ -84,7 +86,7 @@ public class RecordingActivity extends AppCompatActivity {
         try {
             setContentView(R.layout.recording_activity);
             captureButton = (Button) findViewById(R.id.start_watch);
-            uploadImage=(Button) findViewById(R.id.uploadimage);
+            uploadImage = (Button) findViewById(R.id.uploadimage);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             // mediaController = new MediaController(this);
             videoview = (VideoView) findViewById(R.id.videoview);
@@ -172,30 +174,65 @@ public class RecordingActivity extends AppCompatActivity {
     }
 
     public void startWatch(View v) {
+        captureButton.setVisibility(View.INVISIBLE);
+        //  if (!videoview.isPlaying()) {
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
 
-        if (!videoview.isPlaying()) {
-            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
+        videoview.setVideoURI(uri);
+        videoview.start();
+        mIntent.putExtra("Front_Request",true);
+        startService(mIntent);
+        videoview.getLayoutParams().height = displayMetrics.heightPixels / 2;
+     //   final MediaController mediaController = new MediaController(this);
+     //   videoview.setMediaController(mediaController);
+        videoview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                if (videoview.isPlaying()) {
+                    videoview.pause();
+                    stopService(mIntent);
 
-            videoview.setVideoURI(uri);
+                } else {
+
+                    videoview.start();
+                    mIntent.putExtra("Front_Request",true);
+                    startService(mIntent);
+                }
+                return false;
+            }
+
+        });
+
+        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                //here
+                videoview.seekTo(1);
+            }
+        });
+        //here
+        if (position != 1) {
+            videoview.seekTo(position);
             videoview.start();
-            videoview.getLayoutParams().height = displayMetrics.heightPixels / 2;
-
-            mIntent.putExtra("Front_Request", true);
-
-            startService(mIntent);
-            captureButton.setText(getString(R.string.startWatching));
         } else {
 
-            stopService(mIntent);
-            videoview.pause();
-            captureButton.setText(getString(R.string.stopWatching));
+            videoview.seekTo(1);
         }
-    }
-    public void uploadImage(View v){
-        Intent intent = new Intent(this, UploadImageActivity.class);
-        startActivity(intent);}
-}
 
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
+
+        if (videoview!= null)
+        {
+            savedInstanceState.putInt("position", videoview.getCurrentPosition());
+        }
+
+        videoview.pause();
+    }
+}
 
 
 
