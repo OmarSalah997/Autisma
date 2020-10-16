@@ -83,13 +83,13 @@ public class RecordingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
+try{
             setContentView(R.layout.recording_activity);
-            captureButton = (Button) findViewById(R.id.start_watch);
+          captureButton = (Button) findViewById(R.id.start_watch);
             uploadImage = (Button) findViewById(R.id.uploadimage);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             // mediaController = new MediaController(this);
-            videoview = (VideoView) findViewById(R.id.videoview);
+            videoview = (VideoView) findViewById(R.id.video_view);
             mIntent = new Intent(RecordingActivity.this, RecorderService.class);
 
         } catch (Exception e) {

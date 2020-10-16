@@ -6,8 +6,9 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     tools:context=".RecordingActivity" >
+
     <VideoView
-        android:id="@+id/videoview"
+        android:id="@+id/video_view"
         android:layout_width="wrap_content"
         android:layout_height="563dp"
         android:layout_weight="0.5" />
