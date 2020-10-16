@@ -42,7 +42,8 @@
 
         <activity
             android:name=".MainHOME"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/mainTheme"
+            />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".signUP" />
         <activity android:name=".LOGIN">
@@ -52,10 +53,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Quiz_Activity" />
+        <activity android:name=".Quiz_Activity"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity android:name=".PersonalDetails" />
         <activity android:name=".RecordingActivity" />
-        <activity android:name=".UploadImageActivity" />
+        <activity android:name=".UploadImageActivity"
+            android:theme="@style/mainTheme"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
 
 
         <activity android:name=".Helpful_institiutions"/>
