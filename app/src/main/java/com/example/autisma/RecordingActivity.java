@@ -91,6 +91,8 @@ try{
             // mediaController = new MediaController(this);
             videoview = (VideoView) findViewById(R.id.video_view);
             mIntent = new Intent(RecordingActivity.this, RecorderService.class);
+  /*  videoview.getLayoutParams().height = displayMetrics.heightPixels / 2;
+    videoview.getLayoutParams().width = displayMetrics.widthPixels / 2;*/
 
         } catch (Exception e) {
             e.getMessage();
@@ -177,12 +179,11 @@ try{
         captureButton.setVisibility(View.INVISIBLE);
         //  if (!videoview.isPlaying()) {
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
-
         videoview.setVideoURI(uri);
         videoview.start();
         mIntent.putExtra("Front_Request",true);
         startService(mIntent);
-        videoview.getLayoutParams().height = displayMetrics.heightPixels / 2;
+
      //   final MediaController mediaController = new MediaController(this);
      //   videoview.setMediaController(mediaController);
         videoview.setOnTouchListener(new View.OnTouchListener() {

@@ -1,28 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:layout_gravity="center"
-    tools:context=".RecordingActivity" >
-
-    <VideoView
-        android:id="@+id/video_view"
-        android:layout_width="wrap_content"
-        android:layout_height="563dp"
-        android:layout_weight="0.5" />
+    tools:context=".RecordingActivity">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_weight="0.8" >
+    android:id="@+id/video_layout"
+    android:layout_height="300dp">
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        />
+</RelativeLayout>
+
     <Button
         android:id="@+id/start_watch"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_below="@id/video_layout"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_shape"
         android:gravity="center"
         android:onClick="startWatch"
@@ -30,5 +37,5 @@
         android:text="@string/startWatching"
         android:textColor="#fff"
         android:textStyle="bold" />
+
 </RelativeLayout>
-</LinearLayout>
