@@ -54,9 +54,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Artem Pelenitsyn on 22.02.16.
- */
+
 public class RecorderService extends Service implements SurfaceHolder.Callback {
     static final int REQUEST_VIDEO_CAPTURE = 1;
     private WindowManager windowManager;
