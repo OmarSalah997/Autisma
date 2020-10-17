@@ -38,6 +38,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
     private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText;
     private FloatingActionButton mFAB1;
     private FloatingActionButton mFAB2;
+    private FloatingActionButton msaveReminderFAB;
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     private long mRepeatTime;
@@ -83,7 +84,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
         mRepeatTypeText = (TextView) findViewById(R.id.set_repeat_type);
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
         mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
-
+        msaveReminderFAB=findViewById(R.id.save_reminder_fab);
         // Setup Toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(getString(R.string.editor_activity_title_new_reminder));
@@ -172,6 +173,19 @@ public class ReminderAddActivity extends AppCompatActivity implements
             mFAB1.setVisibility(View.GONE);
             mFAB2.setVisibility(View.VISIBLE);
         }
+        msaveReminderFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTitleText.setText(mTitle);
+
+                if (mTitleText.getText().toString().length() == 0)
+                    mTitleText.setError(getString(R.string.empty_message));
+
+                else {
+                    saveReminder();
+                }
+            }
+        });
     }
 
     // To save state on device rotation
@@ -297,7 +311,7 @@ public class ReminderAddActivity extends AppCompatActivity implements
 
         // Create List Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Type");
+        builder.setTitle(getString(R.string.repeat_type));
         builder.setItems(items, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int item) {
@@ -432,23 +446,10 @@ public class ReminderAddActivity extends AppCompatActivity implements
                 onBackPressed();
                 return true;
 
-            // On clicking save reminder button
-            // Update reminder
-            case R.id.save_reminder:
-                mTitleText.setText(mTitle);
-
-                if (mTitleText.getText().toString().length() == 0)
-                    mTitleText.setError("Reminder Title cannot be blank!");
-
-                else {
-                    saveReminder();
-                }
-                return true;
-
             // On clicking discard reminder button
             // Discard any changes
             case R.id.discard_reminder:
-                Toast.makeText(getApplicationContext(), "Discarded",
+                Toast.makeText(getApplicationContext(), getString(R.string.deleted),
                         Toast.LENGTH_SHORT).show();
 
                 onBackPressed();

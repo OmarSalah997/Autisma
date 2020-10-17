@@ -129,4 +129,6 @@
     <string name="Was_your_child_born_with_jaundice">هل عانى الطفل من الصفراء بعد الولادة؟</string>
     <string name="autisma_family_q">هل تم تشخيص احد افراد العائلة بالتوحد؟</string>
     <string name="messageWithLink"><a href="https://www.facebook.com/">صفحة الفيسبوك</a></string>
+    <string name="deleted">تم الحذف</string>
+    <string name="changes_discarded">لم يتم التعديل!</string>
 </resources>

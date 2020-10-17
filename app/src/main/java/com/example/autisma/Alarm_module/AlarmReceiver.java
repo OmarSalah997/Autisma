@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.os.Build;
+import android.os.PowerManager;
 import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
@@ -20,6 +21,8 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.autisma.R;
 
 import java.util.Calendar;
+
+import static android.content.Context.POWER_SERVICE;
 
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -49,7 +52,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentIntent(mClick);
+        PowerManager powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
 
+        assert powerManager != null;
+        if (!powerManager.isInteractive()){ // if screen is not already on, turn it on (get wake_lock for 10 seconds)
+            PowerManager.WakeLock wl = powerManager.newWakeLock( PowerManager.PARTIAL_WAKE_LOCK ,"Autisma:tag");
+            wl.acquire(10000);
+            PowerManager.WakeLock wl_cpu = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"Autisma:tag");
+            wl_cpu.acquire(10000);
+        }
         NotificationManagerCompat nManager = (NotificationManagerCompat) NotificationManagerCompat.from(context);
         nManager.notify(mReceivedID, mBuilder.build());
     }

@@ -138,4 +138,6 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="Was_your_child_born_with_jaundice">Was your child born with jaundice?</string>
     <string name="autisma_family_q">Has anyone in the immediate family been diagnosed with autism?</string>
     <string name="messageWithLink"><a href="https://www.facebook.com/">Facebook page</a></string>
+    <string name="deleted">Deleted</string>
+    <string name="changes_discarded">Changes discarded!</string>
 </resources>

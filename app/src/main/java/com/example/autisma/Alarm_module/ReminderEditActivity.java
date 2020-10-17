@@ -35,6 +35,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
     private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText;
     private FloatingActionButton mFAB1;
     private FloatingActionButton mFAB2;
+    private FloatingActionButton msaveReminderFAB;
     private SwitchCompat mRepeatSwitch;
     private String mTitle;
     private String mTime;
@@ -88,6 +89,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mRepeatTypeText = (TextView) findViewById(R.id.set_repeat_type);
         mFAB1 = (FloatingActionButton) findViewById(R.id.starred1);
         mFAB2 = (FloatingActionButton) findViewById(R.id.starred2);
+        msaveReminderFAB=findViewById(R.id.save_reminder_fab);
         mRepeatSwitch = (SwitchCompat) findViewById(R.id.repeat_switch);
 
         // Setup Toolbar
@@ -198,6 +200,19 @@ public class ReminderEditActivity extends AppCompatActivity implements
         mYear = Integer.parseInt(mDateSplit[2]);
         mHour = Integer.parseInt(mTimeSplit[0]);
         mMinute = Integer.parseInt(mTimeSplit[1]);
+        msaveReminderFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTitleText.setText(mTitle);
+
+                if (mTitleText.getText().toString().length() == 0)
+                    mTitleText.setError(getString(R.string.empty_message));
+
+                else {
+                    updateReminder();
+                }
+            }
+        });
     }
 
     // To save state on device rotation
@@ -297,15 +312,14 @@ public class ReminderEditActivity extends AppCompatActivity implements
     public void selectRepeatType(View v){
         final String[] items = new String[5];
 
-        items[0] = "Minute";
-        items[1] = "Hour";
-        items[2] = "Day";
-        items[3] = "Week";
-        items[4] = "Month";
-
+        items[0] = getResources().getString(R.string.minute);
+        items[1] = getResources().getString(R.string.hour);
+        items[2] = getResources().getString(R.string.day);
+        items[3] = getResources().getString(R.string.week);
+        items[4] = getResources().getString(R.string.mounth);
         // Create List Dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Type");
+        builder.setTitle(getString(R.string.repeat_type));
         builder.setItems(items, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int item) {
@@ -313,7 +327,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
                 mRepeatType = items[item];
                 mRepeatTypeText.setText(mRepeatType);
                 if(currentLangCode.equals("en"))
-                    mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+                    mRepeatText.setText("repeat every " + mRepeatNo + " " + mRepeatType + "(s)");
                 else
                     mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType);
             }
@@ -339,7 +353,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
                             mRepeatNo = Integer.toString(1);
                             mRepeatNoText.setText(mRepeatNo);
                             if(currentLangCode.equals("en"))
-                                mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+                                mRepeatText.setText("repeat every " + mRepeatNo + " " + mRepeatType + "(s)");
                             else
                                 mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType);
                         }
@@ -347,7 +361,7 @@ public class ReminderEditActivity extends AppCompatActivity implements
                             mRepeatNo = input.getText().toString().trim();
                             mRepeatNoText.setText(mRepeatNo);
                             if(currentLangCode.equals("en"))
-                                mRepeatText.setText("repeat after " + mRepeatNo + " " + mRepeatType + "(s)");
+                                mRepeatText.setText("repeat every " + mRepeatNo + " " + mRepeatType + "(s)");
                             else
                                 mRepeatText.setText("تكرار كل " + mRepeatNo + " " + mRepeatType);
                         }
@@ -438,23 +452,10 @@ public class ReminderEditActivity extends AppCompatActivity implements
                 onBackPressed();
                 return true;
 
-            // On clicking save reminder button
-            // Update reminder
-            case R.id.save_reminder:
-                mTitleText.setText(mTitle);
-
-                if (mTitleText.getText().toString().length() == 0)
-                    mTitleText.setError("Reminder Title cannot be blank!");
-
-                else {
-                    updateReminder();
-                }
-                return true;
-
             // On clicking discard reminder button
             // Discard any changes
             case R.id.discard_reminder:
-                Toast.makeText(getApplicationContext(), "Changes Discarded",
+                Toast.makeText(getApplicationContext(), getString(R.string.changes_discarded),
                         Toast.LENGTH_SHORT).show();
 
                 onBackPressed();
