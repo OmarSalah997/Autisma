@@ -12,81 +12,78 @@
 
         <Button
             android:id="@+id/button_takephoto"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
-            android:background="@drawable/button_shape"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/rect_button"
             android:text="@string/take_a_photo"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_video"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_shape"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/rect_button"
             android:text="@string/video"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintHorizontal_bias="0.442"
+            app:layout_constraintStart_toEndOf="@+id/button_takephoto"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_mcq"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_button"
+            android:text="@string/MCQ"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.442"
+            app:layout_constraintStart_toEndOf="@+id/button_doctors"
+            app:layout_constraintTop_toBottomOf="@+id/button_video" />
+
+        <Button
+            android:id="@+id/button_doctors"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_button"
+            android:text="@string/doctors"
+            android:textColor="@color/colorWhite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_takephoto" />
 
         <Button
-            android:id="@+id/button_mcq"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/button_instetutions"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/button_shape"
-            android:text="@string/MCQ"
+            android:background="@drawable/rect_button"
+            android:text="@string/institutions"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_doctors" />
 
         <Button
-            android:id="@+id/button_doctors"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_shape"
-            android:text="@string/doctors"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_video" />
-
-        <Button
-            android:id="@+id/button_instetutions"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_shape"
-            android:text="@string/institutions"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_mcq" />
-
-        <Button
             android:id="@+id/button_helpvid"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/button_shape"
+            android:background="@drawable/rect_button"
             android:text="@string/help_video"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_instetutions" />
+            app:layout_constraintHorizontal_bias="0.442"
+            app:layout_constraintStart_toEndOf="@+id/button_instetutions"
+            app:layout_constraintTop_toBottomOf="@+id/button_mcq" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
