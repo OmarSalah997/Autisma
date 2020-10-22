@@ -259,7 +259,7 @@ startRec();
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
                             //
-                              Toast.makeText(RecorderService.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                          //    Toast.makeText(RecorderService.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
