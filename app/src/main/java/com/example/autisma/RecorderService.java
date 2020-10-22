@@ -1,5 +1,6 @@
 package com.example.autisma;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -29,6 +30,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.util.Size;
 import android.view.Gravity;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
@@ -55,10 +57,11 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class RecorderService extends Service implements SurfaceHolder.Callback {
+public class RecorderService extends Service  {
     static final int REQUEST_VIDEO_CAPTURE = 1;
-    private WindowManager windowManager;
-    private SurfaceView surfaceView;
+  //  private WindowManager windowManager;
+    private SurfaceView surfaceview;
+    private SurfaceHolder mHolder;
     private Camera camera = null;
     private MediaRecorder mediaRecorder = null;
     FirebaseStorage storage;
@@ -88,20 +91,10 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
         }
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-        surfaceView = new SurfaceView(this);
 
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
-                1, 1,
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.O ?
-                        WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY :
-                        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-                PixelFormat.TRANSLUCENT
-        );
-        layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
-        windowManager.addView(surfaceView, layoutParams);
-        surfaceView.getHolder().addCallback(this);
+        surfaceview = RecordingActivity.mSurfaceView;
+        mHolder = RecordingActivity.mSurfaceHolder;
+
     }
 
 
@@ -158,8 +151,8 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
     }
 
     // Method called right after Surface created (initializing and starting MediaRecorder)
-    @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+    public void startRec() {
 
         camera = openFrontFacingCameraGingerbread();
         camera.setDisplayOrientation(90);
@@ -167,7 +160,7 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
         camera.unlock();
 
 
-        mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+        mediaRecorder.setPreviewDisplay(mHolder.getSurface());
         mediaRecorder.setCamera(camera);
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
@@ -208,14 +201,15 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
     // Stop recording and remove SurfaceView
     @Override
     public void onDestroy() {
-        mediaRecorder.stop();
+
+       mediaRecorder.stop();
         mediaRecorder.reset();
         mediaRecorder.release();
 
         camera.lock();
         camera.release();
 
-        windowManager.removeView(surfaceView);
+        //windowManager.removeView(surfaceView);
         Log.e("MEDIA RECORDER",
                 "on destroy called  ");
         uploadVideo();
@@ -239,7 +233,7 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
 
 //you can pass using intent,that which camera you want to use front/rear
         isFrontFacing = extras.getBoolean("Front_Request");
-
+startRec();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -249,14 +243,6 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
         return null;
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-    }
     private void uploadVideo() {
         filePath= Uri.fromFile(video);
 
@@ -264,7 +250,7 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
             filePath= Uri.fromFile(video);
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
-           // progressDialog.show();
+            // progressDialog.show();
 
             StorageReference ref = storageReference.child("videos/" + UUID.randomUUID().toString());
             ref.putFile(filePath)
@@ -272,8 +258,8 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                          //
-                            //  Toast.makeText(RecorderService.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            //
+                              Toast.makeText(RecorderService.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -294,6 +280,5 @@ public class RecorderService extends Service implements SurfaceHolder.Callback {
         }
     }
 }
-
 
 

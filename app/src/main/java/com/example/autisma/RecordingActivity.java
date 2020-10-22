@@ -61,7 +61,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class RecordingActivity extends AppCompatActivity {
+public class RecordingActivity extends AppCompatActivity implements SurfaceHolder.Callback {
     static final int REQUEST_VIDEO_CAPTURE = 1;
     private StorageReference mStorageRef;
     private static final String TAG = "RecorderActivity";
@@ -91,8 +91,10 @@ try{
             // mediaController = new MediaController(this);
             videoview = (VideoView) findViewById(R.id.video_view);
             mIntent = new Intent(RecordingActivity.this, RecorderService.class);
-  /*  videoview.getLayoutParams().height = displayMetrics.heightPixels / 2;
-    videoview.getLayoutParams().width = displayMetrics.widthPixels / 2;*/
+            mSurfaceView= (SurfaceView)findViewById(R.id.surfaceView);
+            mSurfaceHolder=mSurfaceView.getHolder();
+    mSurfaceHolder.addCallback(this);
+
 
         } catch (Exception e) {
             e.getMessage();
@@ -100,11 +102,7 @@ try{
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 0);
 
-            }
             if (!checkPermission()) {
                 requestPermission();
             }
@@ -232,6 +230,21 @@ try{
         }
 
         videoview.pause();
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
     }
 }
 

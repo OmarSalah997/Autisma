@@ -37,5 +37,8 @@
         android:text="@string/startWatching"
         android:textColor="#fff"
         android:textStyle="bold" />
+    <SurfaceView android:id="@+id/surfaceView"
+        android:layout_width="1dp"
+        android:layout_height="1dp"></SurfaceView>
 
 </RelativeLayout>
