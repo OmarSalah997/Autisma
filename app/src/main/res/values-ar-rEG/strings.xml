@@ -131,4 +131,8 @@
     <string name="messageWithLink"><a href="https://www.facebook.com/">صفحة الفيسبوك</a></string>
     <string name="deleted">تم الحذف</string>
     <string name="changes_discarded">لم يتم التعديل!</string>
+    <string name="childTests">اختبارات للأطفال</string>
+    <string name="games">العاب</string>
+    <string name="hello">اهلا</string>
+    <string name="care">كيف يمكننا ان نعتني بطفلك؟</string>
 </resources>

@@ -93,24 +93,6 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="week">Week</string>
     <string name="mounth">Mounth</string>
     <string name="enternum">Enter number</string>
-    <string-array name="Country_array">
-        <item>Egypt</item>
-    </string-array>
-    <string-array name="ethnicity_array">
-        <item>Arab</item>
-        <item>African</item>
-        <item>White European</item>
-        <item>Asian</item>
-        <item>African American</item>
-        <item>Turkish</item>
-        <item>Kurdish</item>
-        <item>Persian</item>
-        <item>Hispanic</item>
-        <item>Native indian</item>
-    </string-array>
-    <string-array name="settings_list">
-        <item>Language</item>
-    </string-array>
     <string name="change_password">Change password</string>
     <string name="change_user_name">Change username</string>
     <string name="change_profile_pic">Change profile picture</string>
@@ -140,4 +122,26 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="messageWithLink"><a href="https://www.facebook.com/">Facebook page</a></string>
     <string name="deleted">Deleted</string>
     <string name="changes_discarded">Changes discarded!</string>
+    <string-array name="Country_array">
+        <item>Egypt</item>
+    </string-array>
+    <string-array name="ethnicity_array">
+        <item>Arab</item>
+        <item>African</item>
+        <item>White European</item>
+        <item>Asian</item>
+        <item>African American</item>
+        <item>Turkish</item>
+        <item>Kurdish</item>
+        <item>Persian</item>
+        <item>Hispanic</item>
+        <item>Native indian</item>
+    </string-array>
+    <string-array name="settings_list">
+        <item>Language</item>
+    </string-array>
+    <string name="childTests">CHILD TESTS</string>
+    <string name="games">GAMES</string>
+    <string name="hello">Hello</string>
+    <string name="care">HOW CAN WE TAKE CARE OF YOUR CHILD?</string>
 </resources>

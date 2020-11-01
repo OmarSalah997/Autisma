@@ -35,9 +35,9 @@ public class MainHOME extends AppCompatActivity {
     private DrawerLayout Drawer_layout;
     private ActionBarDrawerToggle ToggleButton;
     private NavigationView navigation;
-    private Button quiz ,takePhoto,watchVideo,helpfulInst,doctors;
+    private Button Alarms ,child_tests,Games,helpfulInst,doctors;
     private String currentLangCode;
-    private TextView userNameTextview;
+    private TextView userNameTextview,welcomeMessage;
     private ImageView userPhotoImageview;
     private String username;
     private String user_photo;
@@ -47,10 +47,12 @@ public class MainHOME extends AppCompatActivity {
         setContentView(R.layout.activity_main_home);
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         currentLangCode=prefs.getString("my lang","");
+        welcomeMessage=findViewById(R.id.welcomeText);
+        welcomeMessage.append(" "+getString(R.string.username)+",");
         Drawer_layout=findViewById(R.id.drawer);
-        quiz=findViewById(R.id.button_mcq);
-        takePhoto=findViewById(R.id.button_takephoto);
-        watchVideo=findViewById(R.id.button_video);
+        Alarms=findViewById(R.id.button_alarms);
+        child_tests=findViewById(R.id.button_Child_tests);
+        Games=findViewById(R.id.button_Games);
         helpfulInst =findViewById(R.id.button_instetutions);
         doctors=findViewById(R.id.button_doctors);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
@@ -88,23 +90,23 @@ public class MainHOME extends AppCompatActivity {
         username=userNameTextview.getText().toString();
         userPhotoImageview=headerView.findViewById(R.id.user_photo);
         user_photo=userPhotoImageview.getDrawable().toString();
-        quiz.setOnClickListener(new View.OnClickListener() {
+        Alarms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Quiz_Activity.class));
+                startActivity(new Intent(getApplicationContext(),Alarms_main.class));
             }
         });
 
-        takePhoto.setOnClickListener(new View.OnClickListener() {
+        child_tests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),UploadImageActivity.class));
+                startActivity(new Intent(getApplicationContext(),child_tests.class));
             }
         });
-        watchVideo.setOnClickListener(new View.OnClickListener() {
+        Games.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RecordingActivity.class));
+                startActivity(new Intent(getApplicationContext(),Games.class));
             }
         });
         helpfulInst.setOnClickListener(new View.OnClickListener() {
