@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -25,11 +26,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.example.autisma.Alarm_module.Alarms_main;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
+
+import static com.example.autisma.LOGIN.IP;
 
 public class MainHOME extends AppCompatActivity {
     private DrawerLayout Drawer_layout;
@@ -45,10 +52,12 @@ public class MainHOME extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home);
+        Communication com=new Communication(this);
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
+        SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         currentLangCode=prefs.getString("my lang","");
         welcomeMessage=findViewById(R.id.welcomeText);
-        welcomeMessage.append(" "+getString(R.string.username)+",");
+        welcomeMessage.append(" "+prefs2.getString("name","")+",");
         Drawer_layout=findViewById(R.id.drawer);
         Alarms=findViewById(R.id.button_alarms);
         child_tests=findViewById(R.id.button_Child_tests);
@@ -87,6 +96,7 @@ public class MainHOME extends AppCompatActivity {
         });
         View headerView = navigation.getHeaderView(0);
         userNameTextview=(TextView)headerView.findViewById(R.id.user_name);
+        userNameTextview.setText(prefs2.getString("name",""));
         username=userNameTextview.getText().toString();
         userPhotoImageview=headerView.findViewById(R.id.user_photo);
         user_photo=userPhotoImageview.getDrawable().toString();
@@ -148,5 +158,24 @@ public void ToUserProfile(View v){
     extras.putParcelable("imagebitmap", image);
         intent.putExtra("USERPHOTO", extras);
         startActivity(intent);
+}
+
+public String getUserName(Context con){
+    Communication com=new Communication(this);
+    final String[] name = new String[1];
+    SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+    String Token  = preferences.getString("TOKEN",null);//second parameter default value.
+    String url = IP+"profile"; // route
+    JSONObject jsonBody = new JSONObject();//Json body data
+    com.REQUEST_AUTHORIZE(Token,Request.Method.GET, url, jsonBody,
+            new Communication.VolleyCallback() {
+                @Override
+                public void onSuccessResponse(JSONObject response) throws JSONException {
+
+                     name[0] = response.getString("name");
+
+                }
+            });
+    return  name[0];
 }
 }

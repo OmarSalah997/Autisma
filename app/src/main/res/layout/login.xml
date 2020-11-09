@@ -31,7 +31,7 @@
         android:background="@drawable/edit_text_style"
         android:drawableStart="@drawable/ic_baseline_account_box_24"
         android:drawablePadding="3dp"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textSize="18sp"

@@ -135,4 +135,6 @@
     <string name="games">العاب</string>
     <string name="hello">اهلا</string>
     <string name="care">كيف يمكننا ان نعتني بطفلك؟</string>
+    <string name="enterValidEmail">ادخل ايميل صحيح</string>
+    <string name="enterPass">ادخل كلمة المرور</string>
 </resources>

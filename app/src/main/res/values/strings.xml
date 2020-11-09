@@ -144,4 +144,6 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="games">GAMES</string>
     <string name="hello">Hello</string>
     <string name="care">HOW CAN WE TAKE CARE OF YOUR CHILD?</string>
+    <string name="enterValidEmail">please enter a valid email</string>
+    <string name="enterPass">please enter a password</string>
 </resources>

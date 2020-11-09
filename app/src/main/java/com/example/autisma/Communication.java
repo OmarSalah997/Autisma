@@ -1,36 +1,46 @@
-/*package com.example.test.ui.login;
-
+package com.example.autisma;
 import android.content.Context;
 import android.util.Log;
-
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
-
 public class Communication {
-    private static Context mCtx;
-    private RequestQueue requestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+    private Context mCtx;
+    private RequestQueue requestQueue ;
     public interface VolleyCallback {
-        void onSuccessResponse(JSONObject result);
+        void onSuccessResponse(JSONObject result) throws JSONException;
+    }
+    Communication(Context context){
+        this.mCtx=context;
+         this.requestQueue = Volley.newRequestQueue(mCtx);
+    }
+    public RequestQueue getRequestQueue(){
+        return requestQueue;
     }
 
-    public void REQUEST_NO_AUTHORIZE (int method, String URL, JSONObject jsonBody, final VolleyCallback callback){
+    public void REQUEST_NO_AUTHORIZE (int method, String URL, JSONObject jsonBody, final VolleyCallback callback)
+    {
 
         JsonObjectRequest JSONRequest = new JsonObjectRequest(method, URL,jsonBody ,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("VOLLEY",response.toString());
-                callback.onSuccessResponse(response);
+                try {
+                    callback.onSuccessResponse(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -44,17 +54,26 @@ public class Communication {
             }
 
         };
+        JSONRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        requestQueue.add(JSONRequest);
+        getRequestQueue().add(JSONRequest);
     }
 
 
-    public  void REQUEST_AUTHORIZE (final String TOKEN, int method, String URL, JSONObject jsonBody, final VolleyCallback callback){
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, URL,jsonBody ,new Response.Listener<JSONObject>() {
+    public  void REQUEST_AUTHORIZE (final String TOKEN, int method, String URL, JSONObject jsonBody, final VolleyCallback callback)
+    {
+        JsonObjectRequest stringRequest = new JsonObjectRequest(method, URL,jsonBody ,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("VOLLEY",response.toString());
-                callback.onSuccessResponse(response);
+                try {
+                    callback.onSuccessResponse(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -76,7 +95,7 @@ public class Communication {
         };
 
 
-        requestQueue.add(stringRequest);
+        getRequestQueue().add(stringRequest);
     }
 
-}*/
+}

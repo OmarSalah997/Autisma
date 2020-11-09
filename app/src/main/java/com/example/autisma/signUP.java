@@ -3,7 +3,6 @@ package com.example.autisma;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -11,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import com.example.autisma.Communication;
 import java.util.Locale;
 
 public class signUP extends AppCompatActivity {
