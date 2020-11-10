@@ -1,6 +1,7 @@
 package com.example.autisma;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import android.app.Activity;
@@ -56,6 +58,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.io.File;
+import java.util.UUID;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -75,7 +78,8 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
     public static boolean mPreviewRunning;
     Uri outputFileUri = null;
     public static VideoView videoview;
-    DisplayMetrics displayMetrics = new DisplayMetrics();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        private RecorderService recService=new RecorderService();
     //  MediaController mediaController ;
     Intent mIntent;
     private static final int PERMISSION_REQUEST_CODE = 200;
@@ -205,8 +209,12 @@ try{
         videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                //here
+
+                //here upload video
                 videoview.seekTo(1);
+
+   //recService.uploadVideo();
+                stopService(mIntent);
             }
         });
         //here
@@ -244,8 +252,9 @@ try{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+ stopService(mIntent);
     }
+
 }
 
 

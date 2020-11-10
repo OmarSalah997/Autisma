@@ -3,18 +3,21 @@
     android:id="@+id/quiz_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:gravity="center"
->
+    android:paddingLeft="10dp"
+    android:paddingTop="50dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+
+    >
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="20dp"
+        android:padding="8dp">
+
         <TextView
             android:id="@+id/questionNB"
             android:layout_width="wrap_content"
@@ -35,7 +38,6 @@
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
@@ -45,50 +47,57 @@
         android:text="@string/question1"
         android:textSize="20sp" />
 
-    <Button
+    <RadioGroup
+        android:id="@+id/grp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/definitely_agree"
-        android:background="@drawable/button_shape"
-        android:textColor="#fff"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp"
-        android:id="@+id/choice1"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/slightly_agree"
-        android:background="@drawable/button_shape"
-        android:textColor="#fff"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp"
-        android:id="@+id/choice2"/>
+        <RadioButton
+            android:id="@+id/choice1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_shape"
+            android:padding="8dp"
+            android:text="@string/definitely_agree"
+            android:textColor="#fff" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/slightly_disagree"
-        android:background="@drawable/button_shape"
-        android:textColor="#fff"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp"
-        android:id="@+id/choice3"/>
+        <RadioButton
+            android:id="@+id/choice2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_shape"
+            android:padding="8dp"
+            android:text="@string/slightly_agree"
+            android:textColor="#fff" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/definitely_disagree"
-        android:background="@drawable/button_shape"
-        android:textColor="#fff"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp"
-        android:id="@+id/choice4"/>
+        <RadioButton
+            android:id="@+id/choice3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_shape"
+            android:padding="8dp"
+            android:text="@string/slightly_disagree"
+            android:textColor="#fff" />
+
+        <RadioButton
+            android:id="@+id/choice4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/button_shape"
+            android:padding="8dp"
+            android:text="@string/definitely_disagree"
+            android:textColor="#fff" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="24dp"
         android:background="@drawable/button_shape"
         android:padding="8dp"
