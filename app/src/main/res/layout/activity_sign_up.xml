@@ -87,14 +87,14 @@
         app:layout_constraintTop_toBottomOf="@+id/password_signup" />
 
     <Button
-        android:id="@+id/sign_in_button2"
+        android:id="@+id/sign_up_button"
         android:layout_width="250sp"
         android:layout_height="50dp"
 
         android:layout_marginTop="20dp"
         android:background="@drawable/button_shape"
         android:fontFamily="sans-serif"
-        android:text="@string/signIn"
+        android:text="@string/Signup"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,7 +114,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button2" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />
 
     <TextView
         android:id="@+id/already_have_acc"

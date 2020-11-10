@@ -33,6 +33,12 @@ public class LOGIN extends AppCompatActivity  {
         currentLangCode = getResources().getConfiguration().locale.getLanguage();
         setContentView(R.layout.login);
         TextView ToSignUp=findViewById(R.id.to_sign_up);
+        TextView forgot_pass=findViewById(R.id.to_forgot_pass);
+        Button signin =findViewById(R.id.sign_in_button);
+        final EditText email=findViewById(R.id.username);
+        final EditText pass=findViewById(R.id.password);
+        final TextView language=findViewById(R.id.change_lang);
+
         ToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +46,7 @@ public class LOGIN extends AppCompatActivity  {
                 startActivity(intent);
             }
         });
-        TextView forgot_pass=findViewById(R.id.to_forgot_pass);
+
         forgot_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,9 +55,6 @@ public class LOGIN extends AppCompatActivity  {
             }
         });
 
-        Button signin =findViewById(R.id.sign_in_button);
-        final EditText email=findViewById(R.id.username);
-        final EditText pass=findViewById(R.id.password);
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,11 +65,13 @@ public class LOGIN extends AppCompatActivity  {
                 if(EMAIL.isEmpty())
                 {
                     Toast.makeText(LOGIN.this, getString(R.string.enterValidEmail), Toast.LENGTH_SHORT).show();
+                    email.requestFocus();
                     return;
                 }
                 if(password.isEmpty())
                 {
                     Toast.makeText(LOGIN.this, getString(R.string.enterPass), Toast.LENGTH_SHORT).show();
+                    pass.requestFocus();
                     return;
                 }
                 JSONObject jsonBody = new JSONObject();//Json body data
@@ -101,15 +106,7 @@ public class LOGIN extends AppCompatActivity  {
 
             }
         });
-        Button signInWithGoogle=findViewById(R.id.sign_with_google);
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
 
-
-        final TextView language=findViewById(R.id.change_lang);
         SharedPreferences pref= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         String lang=pref.getString("my lang","");
         language.setText(lang);
@@ -175,7 +172,6 @@ public class LOGIN extends AppCompatActivity  {
                         preferences.edit().putString("name",name).apply();
                         preferences.edit().putString("img",image).apply();
                         Intent intent= new Intent(LOGIN.this, MainHOME.class);
-
                         startActivity(intent);
 
                     }

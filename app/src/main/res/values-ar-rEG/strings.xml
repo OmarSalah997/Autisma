@@ -137,4 +137,8 @@
     <string name="care">كيف يمكننا ان نعتني بطفلك؟</string>
     <string name="enterValidEmail">ادخل ايميل صحيح</string>
     <string name="enterPass">ادخل كلمة المرور</string>
+    <string name="enterValidName">ادخل اسم مستخدم صحيح</string>
+    <string name="reEnterPass">أعد كتابة كلمة المرور</string>
+    <string name="checkMailForConfirm">رجاء مراجعة بريدك الالكتروني للوصول لرمز التأكيد</string>
+    <string name="enterConfirmCode">أدخل الرمز التأكيدي</string>
 </resources>

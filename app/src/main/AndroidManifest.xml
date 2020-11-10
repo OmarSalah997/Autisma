@@ -11,15 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        >
-        <activity android:name=".Games"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".confirm"></activity>
+        <activity
+            android:name=".Games"
             android:theme="@style/mainTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
         </activity>
-        <activity android:name=".child_tests"
+        <activity
+            android:name=".child_tests"
             android:theme="@style/mainTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
