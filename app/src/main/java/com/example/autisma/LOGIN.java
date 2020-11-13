@@ -25,10 +25,24 @@ import java.util.Locale;
 
 public class LOGIN extends AppCompatActivity  {
     private String currentLangCode;
-    public static String IP="http://192.168.194.126:5002/";
+    public static String IP="http://12d53993ce80.ngrok.io/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(checkForConfirm())
+        {
+            Intent intent= new Intent(LOGIN.this, confirm.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            this.finish();
+        }
+        if(checkForToken())
+        {
+            Intent intent= new Intent(LOGIN.this, MainHOME.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            this.finish();
+        }
         loadlocale();
         currentLangCode = getResources().getConfiguration().locale.getLanguage();
         setContentView(R.layout.login);
@@ -70,14 +84,13 @@ public class LOGIN extends AppCompatActivity  {
                 }
                 if(password.isEmpty())
                 {
-                    Toast.makeText(LOGIN.this, getString(R.string.enterPass), Toast.LENGTH_SHORT).show();
                     pass.requestFocus();
                     return;
                 }
                 JSONObject jsonBody = new JSONObject();//Json body data
                 try {
-                    jsonBody.put( "email","elnagmy45@gmail.com");
-                    jsonBody.put( "password","badr1230");
+                    jsonBody.put( "email",EMAIL);
+                    jsonBody.put( "password",password);
                    // jsonBody.put( "type","1");
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -177,5 +190,18 @@ public class LOGIN extends AppCompatActivity  {
                     }
                 });
 
+    }
+    boolean checkForConfirm()
+    {
+        SharedPreferences pref= getSharedPreferences("confirm", Activity.MODE_PRIVATE);
+        String conf=pref.getString("WaitingForConfirm","");
+        assert conf != null;
+        return conf.equals("true");
+    }
+    boolean checkForToken()
+    {
+        SharedPreferences pref= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
+        String token=pref.getString("TOKEN",null);
+        return token!=null;
     }
 }

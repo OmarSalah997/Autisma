@@ -55,6 +55,7 @@ public class MainHOME extends AppCompatActivity {
         Communication com=new Communication(this);
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
+        final String token=prefs2.getString("TOKEN",null);
         currentLangCode=prefs.getString("my lang","");
         welcomeMessage=findViewById(R.id.welcomeText);
         welcomeMessage.append(" "+prefs2.getString("name","")+",");
@@ -88,7 +89,32 @@ public class MainHOME extends AppCompatActivity {
                         Intent settings = new Intent(getApplicationContext(), Settings.class);
                         startActivity(settings);                        break;
                     case R.id.loguot:
-                        //add navigation drawer item onclick method here
+                        Communication c = new Communication(MainHOME.this);
+                        String url = IP+"logout"; // route
+                        c.REQUEST_AUTHORIZE(token,Request.Method.POST, url, new JSONObject(),
+                                new Communication.VolleyCallback() {
+                                    @Override
+                                    public void onSuccessResponse(JSONObject response) throws JSONException {
+                                        //Toast.makeText(LOGIN.this, "(CharSequence) response",Toast.LENGTH_SHORT ).show();
+                                        // do your work with response object
+                                        String result = response.getString("operation");
+                                        if(result.equals("success"))
+                                        {
+                                            SharedPreferences preferences = MainHOME.this.getSharedPreferences("MY_APP",LOGIN.MODE_PRIVATE);
+                                            preferences.edit().putString("TOKEN",null).apply();
+                                            preferences.edit().putString("name",null).apply();
+                                            preferences.edit().putString("img",null).apply();
+                                            SharedPreferences pref= getSharedPreferences("confirm", Activity.MODE_PRIVATE);
+                                            pref.edit().putString("WaitingForConfirm","false").apply();
+                                            pref.edit().putString("MAIL",null).apply();
+                                            Intent intent= new Intent(MainHOME.this, LOGIN.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            MainHOME.this.finish();
+                                        }
+
+                                    }
+                                });
                         break;
                 }
                 return false;
