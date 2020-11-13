@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.params.OutputConfiguration;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,10 +65,11 @@ public class RecorderService extends Service  {
     private SurfaceHolder mHolder;
     private Camera camera = null;
     private MediaRecorder mediaRecorder = null;
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    private Uri filePath;
-    File video ;
+    public FirebaseStorage storage;
+    public StorageReference storageReference;
+    public Uri filePath;
+    public File video ;
+    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
     @Override
     public void onCreate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {/*
@@ -212,7 +214,8 @@ public class RecorderService extends Service  {
         //windowManager.removeView(surfaceView);
         Log.e("MEDIA RECORDER",
                 "on destroy called  ");
-        uploadVideo();
+       uploadVideo();
+        video.delete();
     }
 
     private boolean checkFrontCamera(Context context) {
@@ -243,10 +246,13 @@ startRec();
         return null;
     }
 
-    private void uploadVideo() {
+    public void uploadVideo() {
         filePath= Uri.fromFile(video);
+        retriever.setDataSource(RecorderService.this, Uri.fromFile(video));
+        String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        long timeInMillisec = Long.parseLong(time);
 
-        if (video.exists()) {
+        if (video.exists()&& timeInMillisec>62000) {
             filePath= Uri.fromFile(video);
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
@@ -277,6 +283,7 @@ startRec();
                             progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
+            video.delete();
         }
     }
 }
