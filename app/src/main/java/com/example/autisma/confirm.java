@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +67,6 @@ public class confirm extends AppCompatActivity {
                                 if(result.equals("success"))
                                 {
                                     SharedPreferences preferences = confirm.this.getSharedPreferences("confirm",confirm.MODE_PRIVATE);
-                                    preferences.edit().putString("WaitingForConfirm","false").apply();
                                     String token = response.getString("token");
                                     SharedPreferences preferences2 = confirm.this.getSharedPreferences("MY_APP",confirm.MODE_PRIVATE);
                                     preferences.edit().putString("TOKEN",token).apply();
@@ -77,7 +77,9 @@ public class confirm extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
                                     Intent intent= new Intent(confirm.this, MainHOME.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
+                                    confirm.this.finish();
                                 }
                                 else
                                 {
@@ -85,6 +87,37 @@ public class confirm extends AppCompatActivity {
 
                                 }
 
+                            }
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                int err_Code=error.networkResponse.statusCode;
+                                switch (err_Code)
+                                {
+                                    case 1001:
+                                        Toast.makeText(confirm.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2001:
+                                        Toast.makeText(confirm.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2002:
+                                        Toast.makeText(confirm.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2003:
+                                        Toast.makeText(confirm.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2004:
+                                        Toast.makeText(confirm.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2005:
+                                        Toast.makeText(confirm.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2006:
+                                        Toast.makeText(confirm.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                                        break;
+
+                                    default:break;
+                                }
                             }
                         });
 
@@ -132,6 +165,11 @@ public class confirm extends AppCompatActivity {
                         preferences.edit().putString("img",image).apply();
                         Intent intent= new Intent(confirm.this, MainHOME.class);
                         startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
                     }
                 });

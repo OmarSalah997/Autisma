@@ -56,6 +56,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Sign_in_text" />
 
+    <TextView
+        android:id="@+id/newpasscode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/haveCOde"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
+
+    <TextView
+        android:id="@+id/newmailcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/haveCodeForNewMail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newpasscode" />
+
     <CheckBox
         android:id="@+id/rememberMe"
         style="@style/checkbox_style"
@@ -74,16 +94,17 @@
         android:id="@+id/sign_in_button"
         android:layout_width="250sp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
 
+        android:layout_marginTop="20dp"
         android:background="@drawable/button_shape"
         android:fontFamily="sans-serif"
         android:text="@string/signIn"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rememberMe" />
+        app:layout_constraintTop_toBottomOf="@+id/newmailcode" />
 
     <Button
         android:id="@+id/sign_with_google"
@@ -108,7 +129,7 @@
         android:textColor="#bbbbbb"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_with_google" />
 

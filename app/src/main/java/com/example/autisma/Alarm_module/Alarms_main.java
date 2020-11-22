@@ -378,10 +378,6 @@ public class Alarms_main extends AppCompatActivity {
             }
         }
 
-        // Generate random test data
-        public  ReminderItem generateDummyData() {
-            return new ReminderItem("1", "2", "3", "4", "5", "6");
-        }
 
         // Generate real data for each item
         public List<ReminderItem> generateData(int count) {

@@ -20,6 +20,7 @@ public class Communication {
     private RequestQueue requestQueue ;
     public interface VolleyCallback {
         void onSuccessResponse(JSONObject result) throws JSONException;
+        void onErrorResponse(VolleyError error);
     }
     Communication(Context context){
         this.mCtx=context;
@@ -79,6 +80,9 @@ public class Communication {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("VOLLEY", error.toString());
+                int erCode=error.networkResponse.statusCode;
+
+
             }
         }) {
             @Override
