@@ -26,10 +26,10 @@ import java.util.Locale;
 public class LOGIN extends AppCompatActivity  {
     private String currentLangCode;
     public static String IP= "http://6a2784ebb2c8.ngrok.io/";
+    public static boolean Debug_Mode_On=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if(checkForToken())
         {
             Intent intent= new Intent(LOGIN.this, MainHOME.class);
@@ -111,55 +111,65 @@ public class LOGIN extends AppCompatActivity  {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if(!Debug_Mode_On)
+                {
+                    c.REQUEST_NO_AUTHORIZE(Request.Method.POST, url, jsonBody,
+                            new Communication.VolleyCallback() {
+                                @Override
+                                public void onSuccessResponse(JSONObject response) throws JSONException {
+                                    String token = response.getString("token");
+                                    SharedPreferences preferences = LOGIN.this.getSharedPreferences("MY_APP",LOGIN.MODE_PRIVATE);
+                                    preferences.edit().putString("TOKEN",token).apply();
 
-                c.REQUEST_NO_AUTHORIZE(Request.Method.POST, url, jsonBody,
-                        new Communication.VolleyCallback() {
-                            @Override
-                            public void onSuccessResponse(JSONObject response) throws JSONException {
-                                String token = response.getString("token");
-                                SharedPreferences preferences = LOGIN.this.getSharedPreferences("MY_APP",LOGIN.MODE_PRIVATE);
-                                preferences.edit().putString("TOKEN",token).apply();
+                                    try {
+                                        getUserName(LOGIN.this);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
 
-                                try {
-                                     getUserName(LOGIN.this);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
                                 }
 
-                            }
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    int err_Code=error.networkResponse.statusCode;
+                                    switch (err_Code)
+                                    {
+                                        case 1001:
+                                            Toast.makeText(LOGIN.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2001:
+                                            Toast.makeText(LOGIN.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2002:
+                                            Toast.makeText(LOGIN.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2003:
+                                            Toast.makeText(LOGIN.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2004:
+                                            Toast.makeText(LOGIN.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2005:
+                                            Toast.makeText(LOGIN.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2006:
+                                            Toast.makeText(LOGIN.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                                            break;
 
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                int err_Code=error.networkResponse.statusCode;
-                                switch (err_Code)
-                                {
-                                    case 1001:
-                                        Toast.makeText(LOGIN.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
-                                        break;
-                                    case 2001:
-                                        Toast.makeText(LOGIN.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
-                                        break;
-                                    case 2002:
-                                        Toast.makeText(LOGIN.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
-                                        break;
-                                    case 2003:
-                                        Toast.makeText(LOGIN.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
-                                        break;
-                                    case 2004:
-                                        Toast.makeText(LOGIN.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
-                                        break;
-                                    case 2005:
-                                        Toast.makeText(LOGIN.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
-                                        break;
-                                    case 2006:
-                                        Toast.makeText(LOGIN.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
-                                        break;
+                                        default:break;
+                                    }
 
-                                    default:break;
                                 }
-
-                            }
-                        });
+                            });
+                }
+                else
+                {
+                    final SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+                    preferences.edit().putString("name","Badr").apply();
+                    preferences.edit().putString("img","").apply();
+                    Intent intent= new Intent(LOGIN.this, MainHOME.class);
+                    startActivity(intent);
+                }
 
 
 
