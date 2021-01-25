@@ -25,8 +25,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 import com.example.autisma.Alarm_module.Alarms_main;
 import com.google.android.material.navigation.NavigationView;
 
@@ -41,10 +43,7 @@ import static com.example.autisma.LOGIN.IP;
 public class MainHOME extends AppCompatActivity {
     private DrawerLayout Drawer_layout;
     private ActionBarDrawerToggle ToggleButton;
-    private NavigationView navigation;
-    private Button Alarms ,child_tests,Games,helpfulInst,doctors;
     private String currentLangCode;
-    private TextView userNameTextview,welcomeMessage;
     private ImageView userPhotoImageview;
     private String username;
     private String user_photo;
@@ -57,14 +56,14 @@ public class MainHOME extends AppCompatActivity {
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         final String token=prefs2.getString("TOKEN",null);
         currentLangCode=prefs.getString("my lang","");
-        welcomeMessage=findViewById(R.id.welcomeText);
+        TextView welcomeMessage = findViewById(R.id.welcomeText);
         welcomeMessage.append(" "+prefs2.getString("name","")+",");
         Drawer_layout=findViewById(R.id.drawer);
-        Alarms=findViewById(R.id.button_alarms);
-        child_tests=findViewById(R.id.button_Child_tests);
-        Games=findViewById(R.id.button_Games);
-        helpfulInst =findViewById(R.id.button_instetutions);
-        doctors=findViewById(R.id.button_doctors);
+        Button alarms = findViewById(R.id.button_alarms);
+        Button child_tests = findViewById(R.id.button_Child_tests);
+        Button games = findViewById(R.id.button_Games);
+        Button helpfulInst = findViewById(R.id.button_instetutions);
+        Button doctors = findViewById(R.id.button_doctors);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
         Drawer_layout.addDrawerListener(ToggleButton);
         ToggleButton.syncState();
@@ -73,7 +72,7 @@ public class MainHOME extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-        navigation=findViewById(R.id.NavigationView);
+        NavigationView navigation = findViewById(R.id.NavigationView);
 
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -114,6 +113,37 @@ public class MainHOME extends AppCompatActivity {
                                         }
 
                                     }
+
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        int err_Code=error.networkResponse.statusCode;
+                                        switch (err_Code)
+                                        {
+                                            case 1001:
+                                                Toast.makeText(MainHOME.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                                                break;
+                                            case 2001:
+                                                Toast.makeText(MainHOME.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                                                break;
+                                            case 2002:
+                                                Toast.makeText(MainHOME.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                                                break;
+                                            case 2003:
+                                                Toast.makeText(MainHOME.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                                                break;
+                                            case 2004:
+                                                Toast.makeText(MainHOME.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                                                break;
+                                            case 2005:
+                                                Toast.makeText(MainHOME.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                                                break;
+                                            case 2006:
+                                                Toast.makeText(MainHOME.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                                                break;
+
+                                            default:break;
+                                        }
+                                    }
                                 });
                         break;
                 }
@@ -121,12 +151,12 @@ public class MainHOME extends AppCompatActivity {
             }
         });
         View headerView = navigation.getHeaderView(0);
-        userNameTextview=(TextView)headerView.findViewById(R.id.user_name);
+        TextView userNameTextview = (TextView) headerView.findViewById(R.id.user_name);
         userNameTextview.setText(prefs2.getString("name",""));
-        username=userNameTextview.getText().toString();
+        username= userNameTextview.getText().toString();
         userPhotoImageview=headerView.findViewById(R.id.user_photo);
         user_photo=userPhotoImageview.getDrawable().toString();
-        Alarms.setOnClickListener(new View.OnClickListener() {
+        alarms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),Alarms_main.class));
@@ -139,7 +169,7 @@ public class MainHOME extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),child_tests.class));
             }
         });
-        Games.setOnClickListener(new View.OnClickListener() {
+        games.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),Games.class));
@@ -200,6 +230,37 @@ public String getUserName(Context con){
 
                      name[0] = response.getString("name");
 
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    int err_Code=error.networkResponse.statusCode;
+                    switch (err_Code)
+                    {
+                        case 1001:
+                            Toast.makeText(MainHOME.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2001:
+                            Toast.makeText(MainHOME.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2002:
+                            Toast.makeText(MainHOME.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2003:
+                            Toast.makeText(MainHOME.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2004:
+                            Toast.makeText(MainHOME.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2005:
+                            Toast.makeText(MainHOME.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2006:
+                            Toast.makeText(MainHOME.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                            break;
+
+                        default:break;
+                    }
                 }
             });
     return  name[0];

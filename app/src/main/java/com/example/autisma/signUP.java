@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 import com.example.autisma.Communication;
 
 import org.json.JSONException;
@@ -63,7 +64,7 @@ public class signUP extends AppCompatActivity {
             Password.requestFocus();
             return;
         }
-        if(Repassword.isEmpty())
+        if(Repassword.isEmpty()||!(Repassword.equals(password)))
         {
             Toast.makeText(signUP.this, getString(R.string.reEnterPass), Toast.LENGTH_SHORT).show();
             rewritePass.requestFocus();
@@ -74,6 +75,12 @@ public class signUP extends AppCompatActivity {
             Toast.makeText(signUP.this, getString(R.string.enterValidEmail), Toast.LENGTH_SHORT).show();
             email.requestFocus();
             return;
+        }
+        if( !passCheck(password))
+        {
+            Toast.makeText(signUP.this, getString(R.string.passlength), Toast.LENGTH_LONG).show();
+            Password.requestFocus();
+             return;
         }
 
                ///////////////////
@@ -114,6 +121,37 @@ public class signUP extends AppCompatActivity {
                                }
 
                             }
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                int err_Code=error.networkResponse.statusCode;
+                                switch (err_Code)
+                                {
+                                    case 1001:
+                                        Toast.makeText(signUP.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2001:
+                                        Toast.makeText(signUP.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2002:
+                                        Toast.makeText(signUP.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2003:
+                                        Toast.makeText(signUP.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2004:
+                                        Toast.makeText(signUP.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2005:
+                                        Toast.makeText(signUP.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 2006:
+                                        Toast.makeText(signUP.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                                        break;
+
+                                    default:break;
+                                }
+                            }
                         });
 
 
@@ -142,5 +180,28 @@ public class signUP extends AppCompatActivity {
         if(language.equals(""))
             language= Resources.getSystem().getConfiguration().locale.getLanguage();
         setLocale(language);
+    }
+    boolean passCheck(String password){
+        char element;
+        boolean correct = true;
+        if (password.length() < 8)
+        {
+            correct= false;
+        }
+        if(correct){
+            int digit = 0;
+            /* Check if the password has 2 or more digits */
+            for(int index = 0; index < password.length(); index++ )
+            {
+                element = password.charAt( index );
+                if( Character.isDigit(element) )
+                {
+                    digit++;
+                }
+            }
+            if( digit < 2 ){
+                correct= false;
+            }}
+        return  correct;
     }
 }

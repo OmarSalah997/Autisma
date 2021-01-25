@@ -7,9 +7,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false">
+
 
         <TextView
             android:id="@+id/welcomeText"
@@ -35,67 +39,46 @@
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toBottomOf="@+id/textView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
 
         <Button
             android:id="@+id/button_Child_tests"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginTop="44dp"
             android:background="@drawable/rect_button"
             android:drawableTop="@drawable/ic_baseline_child_care_24"
-            android:elevation="5dp"
             android:paddingStart="8dp"
             android:paddingTop="30dp"
             android:paddingEnd="8dp"
             android:paddingBottom="30dp"
             android:text="@string/childTests"
             android:textColor="@color/colorWhite"
-            android:translationZ="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <Button
-            android:id="@+id/button_Games"
-            android:layout_width="190dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="44dp"
-            android:background="@drawable/rect_button"
-            android:drawableTop="@drawable/ic_baseline_videogame_asset_24"
-            android:paddingStart="8dp"
-            android:paddingTop="30dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="30dp"
-            android:text="@string/games"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.466"
-            app:layout_constraintStart_toEndOf="@+id/button_Child_tests"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <Button
-            android:id="@+id/button_alarms"
-            android:layout_width="190dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rect_button"
-            android:text="@string/myAlarms"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.442"
-            app:layout_constraintStart_toEndOf="@+id/button_doctors"
-            app:layout_constraintTop_toBottomOf="@+id/button_Games"
-            android:paddingTop="30dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="30dp"
-            android:drawableTop="@drawable/ic_baseline_access_alarm_white"/>
+          />
 
         <Button
             android:id="@+id/button_doctors"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rect_button"
             android:drawableTop="@drawable/ic_baseline_local_hospital_24"
@@ -105,14 +88,14 @@
             android:paddingBottom="30dp"
             android:text="@string/doctors"
             android:textColor="@color/colorWhite"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_Child_tests" />
+      />
 
         <Button
             android:id="@+id/button_instetutions"
-            android:layout_width="190dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rect_button"
             android:drawableTop="@drawable/ic_baseline_home_work_24"
@@ -122,29 +105,67 @@
             android:paddingBottom="30dp"
             android:text="@string/institutions"
             android:textColor="@color/colorWhite"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_doctors" />
+ />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <Button
+        android:id="@+id/button_Games"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/rect_button"
+        android:drawableTop="@drawable/ic_baseline_videogame_asset_24"
+        android:paddingStart="8dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="30dp"
+        android:text="@string/games"
+        android:textColor="@color/colorWhite"
+      />
 
         <Button
-            android:id="@+id/button_helpvid"
-            android:layout_width="190dp"
+            android:id="@+id/button_alarms"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rect_button"
-            android:text="@string/help_video"
+            android:text="@string/myAlarms"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.442"
-            app:layout_constraintStart_toEndOf="@+id/button_instetutions"
-            app:layout_constraintTop_toBottomOf="@+id/button_alarms"
             android:paddingTop="30dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:paddingBottom="30dp"
-            android:drawableTop="@drawable/ic_baseline_play_circle_outline_24"/>
+            android:drawableTop="@drawable/ic_baseline_access_alarm_white"/>
 
+
+
+        <Button
+            android:id="@+id/button_helpvid"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rect_button"
+            android:text="@string/help_video"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="30dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="30dp"
+            android:drawableTop="@drawable/ic_baseline_play_circle_outline_24"/></LinearLayout>
+</LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/NavigationView"

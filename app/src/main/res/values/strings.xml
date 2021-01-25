@@ -130,6 +130,16 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="enterPass">please enter a password</string>
     <string name="enterValidName">please enter a valid name</string>
     <string name="reEnterPass">please rewrite your password</string>
+    <string name="checkMailForConfirm">please check your email for the confirmation code</string>
+    <string name="enterConfirmCode">Enter confirmation code</string>
+    <string name="forgotPassMail">please check your registered mail</string>
+    <string name="connectionError">Connection error,check your internet connection</string>
+    <string name="authFail">authorization failed, please log in again</string>
+    <string name="email_notConfirmed">email not confirmed</string>
+    <string name="invalidConfirmation">Invalid confirmation code</string>
+    <string name="mailOrPassWrong">Your email or password is incorrect</string>
+    <string name="invalidTokan">Invalid or expired token</string>
+    <string name="emailUsed">Email is alreay used</string>
     <string-array name="Country_array">
         <item>Egypt</item>
     </string-array>
@@ -148,6 +158,8 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string-array name="settings_list">
         <item>Language</item>
     </string-array>
-    <string name="checkMailForConfirm">please check your email for the confirmation code</string>
-    <string name="enterConfirmCode">Enter confirmation code</string>
+    <string name="success">Success!</string>
+    <string name="haveCOde">I have confirmation code for new password</string>
+    <string name="haveCodeForNewMail">I have code for new E-mail</string>
+    <string name="passlength">Password length should be at least 8 characters,digits and letters</string>
 </resources>

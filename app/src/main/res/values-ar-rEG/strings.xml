@@ -141,4 +141,16 @@
     <string name="reEnterPass">أعد كتابة كلمة المرور</string>
     <string name="checkMailForConfirm">رجاء مراجعة بريدك الالكتروني للوصول لرمز التأكيد</string>
     <string name="enterConfirmCode">أدخل الرمز التأكيدي</string>
+    <string name="forgotPassMail">برجاء مراجعة بريدك المسجل</string>
+    <string name="connectionError">خطأ في الشبكة,تأكد من اتصالك بالانترنت</string>
+    <string name="authFail">خطأوبرجاء اعادة تسجيل الدخول</string>
+    <string name="email_notConfirmed">لم يتم تأكيد البريد الالكتروني</string>
+    <string name="invalidConfirmation">رمز تأكيدي خاطئ</string>
+    <string name="mailOrPassWrong">خطأ في البريد الالكتروني او كلمة السر</string>
+    <string name="invalidTokan">خطأواعد تسجيل الدخول</string>
+    <string name="emailUsed">البريد الالكتروني مستخدم بالفعل</string>
+    <string name="success">نجاح!</string>
+    <string name="haveCOde">لدي رمز تأكيد لكلمة سر جديدة</string>
+    <string name="haveCodeForNewMail">لدي رمز تأكيد للبريد الالكتروني</string>
+    <string name="passlength">يجب ان تكون كلمة المرور اطول من 8 احرف وارقام</string>
 </resources>

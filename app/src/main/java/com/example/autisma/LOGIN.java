@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,17 +25,11 @@ import java.util.Locale;
 
 public class LOGIN extends AppCompatActivity  {
     private String currentLangCode;
-    public static String IP="http://2c3fc0bf64aa.ngrok.io/";
+    public static String IP= "http://6a2784ebb2c8.ngrok.io/";
+    public static boolean Debug_Mode_On=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(checkForConfirm())
-        {
-            Intent intent= new Intent(LOGIN.this, confirm.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            this.finish();
-        }
         if(checkForToken())
         {
             Intent intent= new Intent(LOGIN.this, MainHOME.class);
@@ -52,6 +46,22 @@ public class LOGIN extends AppCompatActivity  {
         final EditText email=findViewById(R.id.username);
         final EditText pass=findViewById(R.id.password);
         final TextView language=findViewById(R.id.change_lang);
+        TextView newpass=findViewById(R.id.newpasscode);
+        TextView newmail=findViewById(R.id.newmailcode);
+        newpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LOGIN.this, ConfirmNewPass.class);
+                startActivity(intent);
+            }
+        });
+        newmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LOGIN.this, confirm.class);
+                startActivity(intent);
+            }
+        });
 
         ToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,42 +88,88 @@ public class LOGIN extends AppCompatActivity  {
                 String password=pass.getText().toString();
                 if(EMAIL.isEmpty())
                 {
-                    Toast.makeText(LOGIN.this, getString(R.string.enterValidEmail), Toast.LENGTH_SHORT).show();
-                    email.requestFocus();
-                    return;
+                    //Toast.makeText(LOGIN.this, getString(R.string.enterValidEmail), Toast.LENGTH_SHORT).show();
+                    //email.requestFocus();
+                    //return;
                 }
                 if(password.isEmpty())
                 {
-                    pass.requestFocus();
-                    return;
+                    //pass.requestFocus();
+                   // return;
+                }
+                if(!passCheck(password))
+                {
+                    //Toast.makeText(LOGIN.this, getString(R.string.passlength), Toast.LENGTH_LONG).show();
+                    //pass.requestFocus();
+                    // return;
                 }
                 JSONObject jsonBody = new JSONObject();//Json body data
                 try {
-                    jsonBody.put( "email",EMAIL);
-                    jsonBody.put( "password",password);
+                    jsonBody.put( "email","elnagmy45@gmail.com");
+                    jsonBody.put( "password","badr1230");
                    // jsonBody.put( "type","1");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if(!Debug_Mode_On)
+                {
+                    c.REQUEST_NO_AUTHORIZE(Request.Method.POST, url, jsonBody,
+                            new Communication.VolleyCallback() {
+                                @Override
+                                public void onSuccessResponse(JSONObject response) throws JSONException {
+                                    String token = response.getString("token");
+                                    SharedPreferences preferences = LOGIN.this.getSharedPreferences("MY_APP",LOGIN.MODE_PRIVATE);
+                                    preferences.edit().putString("TOKEN",token).apply();
 
-                c.REQUEST_NO_AUTHORIZE(Request.Method.POST, url, jsonBody,
-                        new Communication.VolleyCallback() {
-                            @Override
-                            public void onSuccessResponse(JSONObject response) throws JSONException {
-                                //Toast.makeText(LOGIN.this, "(CharSequence) response",Toast.LENGTH_SHORT ).show();
-                                // do your work with response object
-                                String token = response.getString("token");
-                                SharedPreferences preferences = LOGIN.this.getSharedPreferences("MY_APP",LOGIN.MODE_PRIVATE);
-                                preferences.edit().putString("TOKEN",token).apply();
+                                    try {
+                                        getUserName(LOGIN.this);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
 
-                                try {
-                                     getUserName(LOGIN.this);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
                                 }
 
-                            }
-                        });
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    int err_Code=error.networkResponse.statusCode;
+                                    switch (err_Code)
+                                    {
+                                        case 1001:
+                                            Toast.makeText(LOGIN.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2001:
+                                            Toast.makeText(LOGIN.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2002:
+                                            Toast.makeText(LOGIN.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2003:
+                                            Toast.makeText(LOGIN.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2004:
+                                            Toast.makeText(LOGIN.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2005:
+                                            Toast.makeText(LOGIN.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                                            break;
+                                        case 2006:
+                                            Toast.makeText(LOGIN.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                                            break;
+
+                                        default:break;
+                                    }
+
+                                }
+                            });
+                }
+                else
+                {
+                    final SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+                    preferences.edit().putString("name","Badr").apply();
+                    preferences.edit().putString("img","").apply();
+                    Intent intent= new Intent(LOGIN.this, MainHOME.class);
+                    startActivity(intent);
+                }
 
 
 
@@ -188,20 +244,70 @@ public class LOGIN extends AppCompatActivity  {
                         startActivity(intent);
 
                     }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    int err_Code=error.networkResponse.statusCode;
+                    switch (err_Code)
+                    {
+                        case 1001:
+                            Toast.makeText(LOGIN.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2001:
+                            Toast.makeText(LOGIN.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2002:
+                            Toast.makeText(LOGIN.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2003:
+                            Toast.makeText(LOGIN.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2004:
+                            Toast.makeText(LOGIN.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2005:
+                            Toast.makeText(LOGIN.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                            break;
+                        case 2006:
+                            Toast.makeText(LOGIN.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                            break;
+
+                        default:break;
+                    }
+
+
+                    }
                 });
 
     }
-    boolean checkForConfirm()
-    {
-        SharedPreferences pref= getSharedPreferences("confirm", Activity.MODE_PRIVATE);
-        String conf=pref.getString("WaitingForConfirm","");
-        assert conf != null;
-        return conf.equals("true");
-    }
+
     boolean checkForToken()
     {
         SharedPreferences pref= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         String token=pref.getString("TOKEN",null);
         return token!=null;
+    }
+    boolean passCheck(String password){
+        char element;
+        boolean correct = true;
+        if (password.length() < 8)
+        {
+            correct= false;
+        }
+        if(correct){
+        int digit = 0;
+        /* Check if the password has 2 or more digits */
+        for(int index = 0; index < password.length(); index++ )
+        {
+            element = password.charAt( index );
+            if( Character.isDigit(element) )
+            {
+                digit++;
+            }
+        }
+        if( digit < 2 ){
+            correct= false;
+        }}
+    return  correct;
     }
 }

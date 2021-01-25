@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".confirm"></activity>
+        <activity android:name=".ConfirmNewPass"></activity>
+        <activity android:name=".confirm" />
         <activity
             android:name=".Games"
             android:theme="@style/mainTheme">
