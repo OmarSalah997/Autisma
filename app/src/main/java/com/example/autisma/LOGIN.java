@@ -25,7 +25,7 @@ import java.util.Locale;
 
 public class LOGIN extends AppCompatActivity  {
     private String currentLangCode;
-    public static String IP="http://12d53993ce80.ngrok.io/";
+    public static String IP="http://2c3fc0bf64aa.ngrok.io/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,12 +37,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.android.volley.Request;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,6 +58,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import static com.example.autisma.LOGIN.IP;
+
 public class UploadImageActivity extends AppCompatActivity {
     private Button uploadButton;
     private Button chooseButton;
@@ -60,12 +68,15 @@ public class UploadImageActivity extends AppCompatActivity {
     StorageReference storageReference;
     private Uri filePath;
     Context context ;
-
+    SharedPreferences preferences ;
+    String Token  ;
     private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.uploadimage_layout);
+        preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+        Token = preferences.getString("TOKEN",null);
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -94,6 +105,8 @@ public class UploadImageActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
+
+
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
@@ -179,6 +192,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         imageView.setImageBitmap(selectedImage);
+                        uploadtoServer(selectedImage);
                         filePath=getImageUri(context,selectedImage);
                     }
 
@@ -197,6 +211,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                 String picturePath = cursor.getString(columnIndex);
                                 filePath=data.getData();
                                 imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                uploadtoServer(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
                             }
                         }
@@ -206,6 +221,34 @@ public class UploadImageActivity extends AppCompatActivity {
             }
         }
     }
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        Log.e("encoded image",encodedImage);
+        return encodedImage;
+    }
+
+    private void uploadtoServer(Bitmap selectedImage) {
+        String bitmapstring=getStringImage(selectedImage);
+        Communication com=new Communication(UploadImageActivity.this);
+
+        String url = IP+"imgtest"; // route
+        JSONObject jsonBody = new JSONObject();
+
+        try {
+            jsonBody.put("image",bitmapstring);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        com.REQUEST_AUTHORIZE(Token, Request.Method.POST, url, jsonBody,new Communication.VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject response) throws JSONException {
+
+            }});
+    }
+
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);

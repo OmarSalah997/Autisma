@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.graphics.SurfaceTexture;
@@ -28,6 +29,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
 import android.view.Gravity;
@@ -43,6 +45,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.volley.Request;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,12 +53,19 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
+
+import static com.example.autisma.LOGIN.IP;
 
 
 public class RecorderService extends Service  {
@@ -69,9 +79,13 @@ public class RecorderService extends Service  {
     public StorageReference storageReference;
     public Uri filePath;
     public File video ;
+    SharedPreferences preferences ;
+    String Token  ;
     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
     @Override
     public void onCreate() {
+        preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+        Token = preferences.getString("TOKEN",null);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {/*
         Notification notification = new Notification.Builder(this)
                 .setContentTitle("Recording Video")
@@ -248,12 +262,19 @@ startRec();
 
     public void uploadVideo() {
         filePath= Uri.fromFile(video);
+
+        Communication com=new Communication(RecorderService.this);
+
+        String url = IP+"vidtest"; // route
+
+
         retriever.setDataSource(RecorderService.this, Uri.fromFile(video));
         String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         long timeInMillisec = Long.parseLong(time);
 
         if (video.exists()&& timeInMillisec>62000) {
             filePath= Uri.fromFile(video);
+
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             // progressDialog.show();

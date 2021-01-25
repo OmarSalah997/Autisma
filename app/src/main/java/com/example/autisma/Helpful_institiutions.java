@@ -1,12 +1,15 @@
 package com.example.autisma;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,20 +20,57 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import static com.example.autisma.LOGIN.IP;
+
 public class Helpful_institiutions extends AppCompatActivity {
-
-
+    Communication com;
+  //second parameter default value.
+    String url = IP+"institution"; // route
+   //Json body data
+   JSONObject institutions;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        com=new Communication(Helpful_institiutions.this);
         setContentView(R.layout.helpful_institutions);
-
+        final ArrayList<InstData> arrayList = new ArrayList<InstData>();
         final ListView list = findViewById(R.id.inst_list);
+        JSONObject jsonBody = new JSONObject();
+
+        com.REQUEST_NO_AUTHORIZE(Request.Method.GET, url, jsonBody,new Communication.VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject response) throws JSONException {
+
+institutions=response.getJSONObject("result");
+                Log.e("success",institutions.toString());
+                Log.e("success", String.valueOf(institutions.length()));
+
+                for (int i = 0; i <institutions.length(); i++) {
+                    JSONObject c = institutions.getJSONObject(String.valueOf(i));
+
+                    Log.e("success",c.toString());
+                    Log.e("success",c.getString("name"));
+                    arrayList.add(new InstData(c.getString("name"),c.getString("address"),"dreamidealschool",c.getString("phone"),c.getString("address"),c.getString("facebook"),c.getString("website")));
+                }
+                InstAdapter customAdapter = new InstAdapter(Helpful_institiutions.this, arrayList);
+
+                list.setAdapter(customAdapter);}
+
+        });
+
+
      //   Location loc = new Location("dummyprovider");
-        ArrayList<InstData> arrayList = new ArrayList<InstData>();
+/*
         String phonenumber="01201119781";
         String Description="مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )";
         String Location="31 Maadi Street ,Cairo";
@@ -73,9 +113,15 @@ public class Helpful_institiutions extends AppCompatActivity {
                 "https://www.facebook.com/ssc4specialneeds/","https://www.sscforspecialneeds.com/"));
         arrayList.add(new InstData("مركز المعادى للخدمات التعليمية (LRC)", "مبنى 9 ,شارع 278 -المعادى الجديدة", "lrc","01222332809",
                 "مركز المعادى للخدمات التعليمية يقدم خدمات تشخيصية واستشارية مناسبة للأطفال من جميع الأعمار الذين يعانون من مجموعة واسعة من صعوبات التعلم واضطرابات النمو و / أو مشاكل السلوك",
-                "https://www.facebook.com/LRCegypt/","http://lrcegypt.org/"));
+                "https://www.facebook.com/LRCegypt/","http://lrcegypt.org/"));*/
+    /*
+        try{
         InstAdapter customAdapter = new InstAdapter(this, arrayList);
-        list.setAdapter(customAdapter);
+
+        list.setAdapter(customAdapter);}
+        catch(Exception e){
+            e.printStackTrace();
+        }*/
         /*
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,8 +136,8 @@ public class Helpful_institiutions extends AppCompatActivity {
                 startActivity(intent);
             }
         }); */
-    }
+    }}
 
 
 
-}
+

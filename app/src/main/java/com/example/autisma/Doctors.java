@@ -4,15 +4,27 @@ package com.example.autisma;
 import android.location.Location;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.widget.ListView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class Doctors extends AppCompatActivity {
+import static com.example.autisma.LOGIN.IP;
 
+public class Doctors extends AppCompatActivity {
+    Communication com;
+    //second parameter default value.
+    String url = IP+"doctors"; // route
+    //Json body data
+    JSONObject institutions;
     /**
      * Called when the activity is first created.
      */
@@ -20,8 +32,31 @@ public class Doctors extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helpful_institutions);
-
+        com=new Communication(Doctors.this);
+        JSONObject jsonBody = new JSONObject();
         final ListView list = findViewById(R.id.inst_list);
+        final ArrayList<InstData> arrayList = new ArrayList<InstData>();
+        com.REQUEST_NO_AUTHORIZE(Request.Method.GET, url, jsonBody,new Communication.VolleyCallback() {
+            @Override
+            public void onSuccessResponse(JSONObject response) throws JSONException {
+
+                institutions=response.getJSONObject("result");
+                Log.e("success",institutions.toString());
+                Log.e("success", String.valueOf(institutions.length()));
+
+                for (int i = 0; i <institutions.length(); i++) {
+                    JSONObject c = institutions.getJSONObject(String.valueOf(i));
+
+                    Log.e("success",c.toString());
+                    Log.e("success",c.getString("name"));
+                    arrayList.add(new InstData(c.getString("name"),c.getString("address"),"doctor",c.getString("phone"),c.getString("specialization")));
+                }
+                InstAdapter customAdapter = new InstAdapter(Doctors.this, arrayList);
+
+                list.setAdapter(customAdapter);}
+
+        });
+        /*
         String phonenumber = "01201119781";
         String Description = "مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )";
         String Location = "31 Maadi Street ,Cairo";
@@ -42,7 +77,7 @@ public class Doctors extends AppCompatActivity {
         arrayList.add(new InstData("د. نهال ياسر", "مستشفى العائلة (مدينة نصر)ش محمد المقريف أمام النادي الأهلي", "doctor", "01020115115", "أخصائي النفسى للاطفال"));
         arrayList.add(new InstData("  د. هشام عبد الرحمن", "الرحاب : المركز الطبي الاول", "doctor", "01099280120", "استشاري الطب النفسي للاطفال"));
         InstAdapter customAdapter = new InstAdapter(this, arrayList);
-        list.setAdapter(customAdapter);
+        list.setAdapter(customAdapter);*/
     }
 
 }

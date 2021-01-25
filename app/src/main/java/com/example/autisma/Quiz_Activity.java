@@ -1,7 +1,9 @@
 package com.example.autisma;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import static com.example.autisma.LOGIN.IP;
 
 public class Quiz_Activity extends AppCompatActivity {
 
@@ -33,7 +42,8 @@ public class Quiz_Activity extends AppCompatActivity {
         private Boolean Chosen=false ;
         private int mScore = 0;
         private int mQuestionNumber = 0;
-
+    final SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+    String Token  = preferences.getString("TOKEN",null);
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -137,7 +147,25 @@ grp.clearCheck();
                         if((Next.getText().equals("Submit")||Next.getText().equals("ارسال")))
                             {
                             //start another activity
-                            startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
+                                Communication com=new Communication(Quiz_Activity.this);
+
+                                String url = IP+"mcq"; // route
+                                JSONObject jsonBody = new JSONObject();
+                                String answers=mAnswers.toString();
+
+                                try {
+                                    jsonBody.put( "answers",answers);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                com.REQUEST_AUTHORIZE(Token,Request.Method.POST, url, jsonBody,new Communication.VolleyCallback() {
+                                    @Override
+                                    public void onSuccessResponse(JSONObject response) throws JSONException {
+
+                                        }});
+
+
+                                        startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
                             return;
                             }
                         updateQuestion();
