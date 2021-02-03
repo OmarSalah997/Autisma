@@ -83,7 +83,7 @@ public class MainHOME extends AppCompatActivity {
                     case R.id.myalarms:
                         Intent alarms = new Intent(getApplicationContext(), Alarms_main.class);
                         startActivity(alarms);
-                       break;
+                        break;
                     case R.id.settings:
                         Intent settings = new Intent(getApplicationContext(), Settings.class);
                         startActivity(settings);                        break;
@@ -188,7 +188,6 @@ public class MainHOME extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(ToggleButton.onOptionsItemSelected(item))
@@ -205,64 +204,64 @@ public class MainHOME extends AppCompatActivity {
             recreate();
         }
     }
-public void ToUserProfile(View v){
+    public void ToUserProfile(View v){
         Intent intent=new Intent(getApplicationContext(), UserProfile.class);
         intent.putExtra("USERNAME", username);
-    userPhotoImageview.buildDrawingCache();
-    Bitmap image= userPhotoImageview.getDrawingCache();
-    Bundle extras = new Bundle();
-    extras.putParcelable("imagebitmap", image);
+        userPhotoImageview.buildDrawingCache();
+        Bitmap image= userPhotoImageview.getDrawingCache();
+        Bundle extras = new Bundle();
+        extras.putParcelable("imagebitmap", image);
         intent.putExtra("USERPHOTO", extras);
         startActivity(intent);
-}
+    }
 
-public String getUserName(Context con){
-    Communication com=new Communication(this);
-    final String[] name = new String[1];
-    SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
-    String Token  = preferences.getString("TOKEN",null);//second parameter default value.
-    String url = IP+"profile"; // route
-    JSONObject jsonBody = new JSONObject();//Json body data
-    com.REQUEST_AUTHORIZE(Token,Request.Method.GET, url, jsonBody,
-            new Communication.VolleyCallback() {
-                @Override
-                public void onSuccessResponse(JSONObject response) throws JSONException {
+    public String getUserName(Context con){
+        Communication com=new Communication(this);
+        final String[] name = new String[1];
+        SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+        String Token  = preferences.getString("TOKEN",null);//second parameter default value.
+        String url = IP+"profile"; // route
+        JSONObject jsonBody = new JSONObject();//Json body data
+        com.REQUEST_AUTHORIZE(Token,Request.Method.GET, url, jsonBody,
+                new Communication.VolleyCallback() {
+                    @Override
+                    public void onSuccessResponse(JSONObject response) throws JSONException {
 
-                     name[0] = response.getString("name");
+                        name[0] = response.getString("name");
 
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    int err_Code=error.networkResponse.statusCode;
-                    switch (err_Code)
-                    {
-                        case 1001:
-                            Toast.makeText(MainHOME.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
-                            break;
-                        case 2001:
-                            Toast.makeText(MainHOME.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
-                            break;
-                        case 2002:
-                            Toast.makeText(MainHOME.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
-                            break;
-                        case 2003:
-                            Toast.makeText(MainHOME.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
-                            break;
-                        case 2004:
-                            Toast.makeText(MainHOME.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
-                            break;
-                        case 2005:
-                            Toast.makeText(MainHOME.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
-                            break;
-                        case 2006:
-                            Toast.makeText(MainHOME.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
-                            break;
-
-                        default:break;
                     }
-                }
-            });
-    return  name[0];
-}
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        int err_Code=error.networkResponse.statusCode;
+                        switch (err_Code)
+                        {
+                            case 1001:
+                                Toast.makeText(MainHOME.this, getString(R.string.connectionError), Toast.LENGTH_LONG).show();
+                                break;
+                            case 2001:
+                                Toast.makeText(MainHOME.this, getString(R.string.authFail), Toast.LENGTH_LONG).show();
+                                break;
+                            case 2002:
+                                Toast.makeText(MainHOME.this, getString(R.string.email_notConfirmed), Toast.LENGTH_LONG).show();
+                                break;
+                            case 2003:
+                                Toast.makeText(MainHOME.this, getString(R.string.invalidConfirmation), Toast.LENGTH_LONG).show();
+                                break;
+                            case 2004:
+                                Toast.makeText(MainHOME.this, getString(R.string.mailOrPassWrong), Toast.LENGTH_LONG).show();
+                                break;
+                            case 2005:
+                                Toast.makeText(MainHOME.this, getString(R.string.invalidTokan), Toast.LENGTH_LONG).show();
+                                break;
+                            case 2006:
+                                Toast.makeText(MainHOME.this, getString(R.string.emailUsed), Toast.LENGTH_LONG).show();
+                                break;
+
+                            default:break;
+                        }
+                    }
+                });
+        return  name[0];
+    }
 }

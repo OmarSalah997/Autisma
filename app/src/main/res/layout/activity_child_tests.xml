@@ -22,6 +22,7 @@
         android:text="@string/take_a_photo"
         android:textColor="@color/colorWhite"
         android:translationZ="5dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

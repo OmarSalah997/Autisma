@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,10 +42,12 @@ public class Helpful_institiutions extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com=new Communication(Helpful_institiutions.this);
         setContentView(R.layout.helpful_institutions);
-        final ArrayList<InstData> arrayList = new ArrayList<InstData>();
         final ListView list = findViewById(R.id.inst_list);
+        final ArrayList<InstData> arrayList = new ArrayList<InstData>();
+
+        /*
+        com=new Communication(Helpful_institiutions.this);
         JSONObject jsonBody = new JSONObject();
 
         com.REQUEST_NO_AUTHORIZE(Request.Method.GET, url, jsonBody,new Communication.VolleyCallback() {
@@ -66,11 +69,16 @@ institutions=response.getJSONObject("result");
 
                 list.setAdapter(customAdapter);}
 
-        });
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+
+        });
+*/
 
      //   Location loc = new Location("dummyprovider");
-/*
+
         String phonenumber="01201119781";
         String Description="مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )";
         String Location="31 Maadi Street ,Cairo";
@@ -113,16 +121,14 @@ institutions=response.getJSONObject("result");
                 "https://www.facebook.com/ssc4specialneeds/","https://www.sscforspecialneeds.com/"));
         arrayList.add(new InstData("مركز المعادى للخدمات التعليمية (LRC)", "مبنى 9 ,شارع 278 -المعادى الجديدة", "lrc","01222332809",
                 "مركز المعادى للخدمات التعليمية يقدم خدمات تشخيصية واستشارية مناسبة للأطفال من جميع الأعمار الذين يعانون من مجموعة واسعة من صعوبات التعلم واضطرابات النمو و / أو مشاكل السلوك",
-                "https://www.facebook.com/LRCegypt/","http://lrcegypt.org/"));*/
-    /*
-        try{
+                "https://www.facebook.com/LRCegypt/","http://lrcegypt.org/"));
+
+
         InstAdapter customAdapter = new InstAdapter(this, arrayList);
 
         list.setAdapter(customAdapter);}
-        catch(Exception e){
-            e.printStackTrace();
-        }*/
-        /*
+
+      /*
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,7 +142,7 @@ institutions=response.getJSONObject("result");
                 startActivity(intent);
             }
         }); */
-    }}
+    }
 
 
 

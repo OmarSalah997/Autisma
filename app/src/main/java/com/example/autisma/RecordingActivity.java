@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -70,9 +71,11 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
     private static final String TAG = "RecorderActivity";
     private Boolean started_watching = false;
     private Button captureButton;
+    private Button nextbutton;
     private Button uploadImage;
     public static SurfaceView mSurfaceView;
     private int position = 1;
+    int video_number=0;
     public static SurfaceHolder mSurfaceHolder;
     public static Camera mCamera;
     public static boolean mPreviewRunning;
@@ -90,6 +93,7 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
 try{
             setContentView(R.layout.recording_activity);
           captureButton = (Button) findViewById(R.id.start_watch);
+          nextbutton=(Button)findViewById(R.id.next_video);
             uploadImage = (Button) findViewById(R.id.uploadimage);
             mStorageRef = FirebaseStorage.getInstance().getReference();
             // mediaController = new MediaController(this);
@@ -180,7 +184,8 @@ try{
     public void startWatch(View v) {
         captureButton.setVisibility(View.INVISIBLE);
         //  if (!videoview.isPlaying()) {
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.test);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.geom);
+
         videoview.setVideoURI(uri);
         videoview.start();
         mIntent.putExtra("Front_Request",true);
@@ -199,6 +204,7 @@ try{
 
                     videoview.start();
                     mIntent.putExtra("Front_Request",true);
+                    mIntent.putExtra("dir","geom");
                     startService(mIntent);
                 }
                 return false;
@@ -239,6 +245,57 @@ try{
 
         videoview.pause();
     }
+    public void next_video(View v){
+        stopService(mIntent);
+        video_number ++ ;
+        Uri uri = null;
+        if(video_number == 1){
+         uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bubbles);
+            mIntent.putExtra("dir","bubbles/");
+            captureButton.setVisibility(View.INVISIBLE);
+        }
+        else if(video_number == 2){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bunny);
+            mIntent.putExtra("dir","bunny/");
+        }else if(video_number ==3){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wheels);
+            mIntent.putExtra("dir","wheels/");
+
+        }else if(video_number ==4){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.balls);
+            mIntent.putExtra("dir","toys/");
+            nextbutton.setVisibility(View.INVISIBLE);
+        }
+
+
+
+        videoview.setVideoURI(uri);
+        videoview.start();
+        mIntent.putExtra("Front_Request",true);
+        startService(mIntent);
+
+        //   final MediaController mediaController = new MediaController(this);
+        //   videoview.setMediaController(mediaController);
+        videoview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                if (videoview.isPlaying()) {
+                    videoview.pause();
+                    stopService(mIntent);
+
+                } else {
+
+                    videoview.start();
+                    mIntent.putExtra("Front_Request",true);
+
+                    startService(mIntent);
+                }
+                return false;
+            }
+
+        });
+
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -247,12 +304,12 @@ try{
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+      //  stopService(mIntent);
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
- stopService(mIntent);
+       stopService(mIntent);
     }
 
 }

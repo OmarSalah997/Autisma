@@ -1,4 +1,4 @@
-package com.example.autisma;
+ package com.example.autisma;
 
 import android.app.Activity;
 import android.app.NotificationChannel;
@@ -75,17 +75,18 @@ public class RecorderService extends Service  {
     private SurfaceHolder mHolder;
     private Camera camera = null;
     private MediaRecorder mediaRecorder = null;
-    public FirebaseStorage storage;
-    public StorageReference storageReference;
-    public Uri filePath;
-    public File video ;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private Uri filePath;
+    private File video ;
     SharedPreferences preferences ;
+    String directory_touploadto;
     String Token  ;
     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
     @Override
     public void onCreate() {
-        preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
-        Token = preferences.getString("TOKEN",null);
+
+       // Token = preferences.getString("TOKEN",null);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {/*
         Notification notification = new Notification.Builder(this)
                 .setContentTitle("Recording Video")
@@ -185,7 +186,7 @@ public class RecorderService extends Service  {
 
 
         File imagesFolder = new File(
-                Environment.getExternalStorageDirectory(), "Videos");
+                Environment.getExternalStorageDirectory(), "Videos_saraaa");
         if (!imagesFolder.exists())
             imagesFolder.mkdirs(); // <----
 
@@ -229,7 +230,7 @@ public class RecorderService extends Service  {
         Log.e("MEDIA RECORDER",
                 "on destroy called  ");
        uploadVideo();
-        video.delete();
+     //  video.delete();
     }
 
     private boolean checkFrontCamera(Context context) {
@@ -250,6 +251,7 @@ public class RecorderService extends Service  {
 
 //you can pass using intent,that which camera you want to use front/rear
         isFrontFacing = extras.getBoolean("Front_Request");
+        directory_touploadto=extras.getString("dir","geom/");
 startRec();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -272,19 +274,22 @@ startRec();
         String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         long timeInMillisec = Long.parseLong(time);
 
-        if (video.exists()&& timeInMillisec>62000) {
+     //   if (video.exists()&& timeInMillisec>62000)
+        if(video.exists())
+        {
             filePath= Uri.fromFile(video);
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
-            // progressDialog.show();
+          //   progressDialog.show();
 
-            StorageReference ref = storageReference.child("videos/" + UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child(directory_touploadto+ UUID.randomUUID().toString());
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
+                            video.delete();
                             //
                           //    Toast.makeText(RecorderService.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
@@ -304,7 +309,7 @@ startRec();
                             progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
-            video.delete();
+        //    video.delete();
         }
     }
 }

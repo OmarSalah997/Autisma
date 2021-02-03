@@ -2,25 +2,49 @@ package com.example.autisma;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.example.autisma.LOGIN.IP;
 
@@ -42,12 +66,28 @@ public class Quiz_Activity extends AppCompatActivity {
         private Boolean Chosen=false ;
         private int mScore = 0;
         private int mQuestionNumber = 0;
-    final SharedPreferences preferences = getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
-    String Token  = preferences.getString("TOKEN",null);
+
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private Uri filePath;
+    private File answersFile ;
+
+    String Token  ;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.quiz_activity);
+            storage = FirebaseStorage.getInstance();
+            storageReference = storage.getReference();
+            File answersFolder = new File(
+                    Environment.getExternalStorageDirectory(), "autisma_answers");
+            if (!answersFolder.exists())
+                answersFolder.mkdirs(); // <----
+
+            answersFile = new File(answersFolder, System.currentTimeMillis()+".txt");  //file name + extension is .txt
+            SharedPreferences preferences ;
+            preferences= getSharedPreferences("MY_APP",Activity.MODE_PRIVATE);
+            Token=preferences.getString("TOKEN",null);
             if(getSupportActionBar()!=null)
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             ActionBar actionBar = getSupportActionBar();
@@ -147,6 +187,7 @@ grp.clearCheck();
                         if((Next.getText().equals("Submit")||Next.getText().equals("ارسال")))
                             {
                             //start another activity
+                                /*
                                 Communication com=new Communication(Quiz_Activity.this);
 
                                 String url = IP+"mcq"; // route
@@ -162,10 +203,31 @@ grp.clearCheck();
                                     @Override
                                     public void onSuccessResponse(JSONObject response) throws JSONException {
 
-                                        }});
+                                        }
 
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
 
-                                        startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
+                                    }
+                                });*/
+                                String answers=mAnswers.toString();
+                                // write to file to upload to firebase
+                                FileOutputStream fOut = null;
+                                try {
+                                    fOut = new FileOutputStream(answersFile);
+                                    OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                                    myOutWriter.append(answers);
+
+                                    myOutWriter.close();
+
+                                    fOut.flush();
+                                    fOut.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                upload_tofirebase();
+                                startActivity(new Intent(getApplicationContext(),PersonalDetails.class));
                             return;
                             }
                         updateQuestion();
@@ -194,6 +256,47 @@ grp.clearCheck();
         return mQuestions[a];
     }
 
+public void upload_tofirebase(){
 
+    if(answersFile.exists())
+    {
+        filePath= Uri.fromFile(answersFile);
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Uploading...");
+        //   progressDialog.show();
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                .setContentType("text/plain")
+                .build();
+        StorageReference ref = storageReference.child("questions/"+ UUID.randomUUID().toString());
+        ref.putFile(filePath,metadata)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                       answersFile.delete();
+                        //
+                        //    Toast.makeText(RecorderService.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(Quiz_Activity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                .getTotalByteCount());
+                        progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                    }
+                });
+        //    video.delete();
+    }
 }
+}
+
+

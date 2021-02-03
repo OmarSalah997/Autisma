@@ -11,6 +11,8 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,10 +34,13 @@ public class Doctors extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.helpful_institutions);
-        com=new Communication(Doctors.this);
-        JSONObject jsonBody = new JSONObject();
         final ListView list = findViewById(R.id.inst_list);
         final ArrayList<InstData> arrayList = new ArrayList<InstData>();
+        /*
+        com=new Communication(Doctors.this);
+        JSONObject jsonBody = new JSONObject();
+
+
         com.REQUEST_NO_AUTHORIZE(Request.Method.GET, url, jsonBody,new Communication.VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject response) throws JSONException {
@@ -54,14 +59,17 @@ public class Doctors extends AppCompatActivity {
                 InstAdapter customAdapter = new InstAdapter(Doctors.this, arrayList);
 
                 list.setAdapter(customAdapter);}
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-        });
-        /*
+            }
+        });*/
+
         String phonenumber = "01201119781";
         String Description = "مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )";
         String Location = "31 Maadi Street ,Cairo";
         //   Location loc = new Location("dummyprovider");
-        ArrayList<InstData> arrayList = new ArrayList<InstData>();
+
         arrayList.add(new InstData("د. منى الشيخ", "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "01099221443", "أستاذ الطب النفسي كلية الطب جامعة عين شمس – إستشاري وحدة الأطفال والمراهقين مستشفى د. عادل صادق"));
         //  arrayList.add(new InstData("Dr. Taha Aloush",  "", "doctor",phonenumber,Description));
         arrayList.add(new InstData("د. منال عمر", "39 ش الامام على - الدور 4-ميدان الاسماعيلية - مصر الجديدة", "doctor", "01008811351", "استشارى الطب النفسى"));
@@ -77,7 +85,7 @@ public class Doctors extends AppCompatActivity {
         arrayList.add(new InstData("د. نهال ياسر", "مستشفى العائلة (مدينة نصر)ش محمد المقريف أمام النادي الأهلي", "doctor", "01020115115", "أخصائي النفسى للاطفال"));
         arrayList.add(new InstData("  د. هشام عبد الرحمن", "الرحاب : المركز الطبي الاول", "doctor", "01099280120", "استشاري الطب النفسي للاطفال"));
         InstAdapter customAdapter = new InstAdapter(this, arrayList);
-        list.setAdapter(customAdapter);*/
+        list.setAdapter(customAdapter);
     }
 
 }

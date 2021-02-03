@@ -38,6 +38,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.example.autisma.Communication.VolleyCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -242,11 +244,17 @@ public class UploadImageActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        com.REQUEST_AUTHORIZE(Token, Request.Method.POST, url, jsonBody,new Communication.VolleyCallback() {
+        com.REQUEST_AUTHORIZE(Token, Request.Method.POST, url, jsonBody,new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject response) throws JSONException {
 
-            }});
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
