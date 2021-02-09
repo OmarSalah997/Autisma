@@ -70,8 +70,10 @@ public class MainHOME extends AppCompatActivity {
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar !=null)
-            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        if(actionBar !=null){
+         //   actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+         //actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         NavigationView navigation = findViewById(R.id.NavigationView);
 
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

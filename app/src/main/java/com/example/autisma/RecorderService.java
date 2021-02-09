@@ -185,10 +185,13 @@ public class RecorderService extends Service  {
                 (CamcorderProfile.QUALITY_LOW));
 
 
-        File imagesFolder = new File(
-                Environment.getExternalStorageDirectory(), "Videos_saraaa");
+   /*     File imagesFolder = new File(getExternalFilesDir("VIDEOS_AUTISM"),System.currentTimeMillis()
+                + ".mp4");
         if (!imagesFolder.exists())
-            imagesFolder.mkdirs(); // <----
+            imagesFolder.mkdirs(); // <---- */
+        File imagesFolder = new File(getApplicationContext().getFilesDir(),"autisma");
+        if (!imagesFolder.exists())
+            imagesFolder.mkdirs(); // <---- */
 
         video = new File(imagesFolder, System.currentTimeMillis()
                 + ".mp4");  //file name + extension is .mp4
@@ -214,6 +217,8 @@ public class RecorderService extends Service  {
 
 
     }
+
+
 
     // Stop recording and remove SurfaceView
     @Override
