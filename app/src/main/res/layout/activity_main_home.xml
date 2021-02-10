@@ -13,13 +13,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false">
-
-
         <TextView
             android:id="@+id/welcomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:text="@string/hello"
             android:textColor="@android:color/black"
@@ -31,7 +29,6 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@string/care"
@@ -52,16 +49,14 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1"
-        >
-
+        android:layout_weight="1">
         <Button
             android:id="@+id/button_Child_tests"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/rect_button"
             android:drawableTop="@drawable/ic_baseline_child_care_24"
             android:paddingStart="8dp"
@@ -69,10 +64,7 @@
             android:paddingEnd="8dp"
             android:paddingBottom="30dp"
             android:text="@string/childTests"
-            android:textColor="@color/colorWhite"
-
-          />
-
+            android:textColor="@color/colorWhite" />
         <Button
             android:id="@+id/button_doctors"
             android:layout_width="match_parent"
@@ -119,7 +111,7 @@
         android:layout_height="120dp"
         android:layout_marginEnd="8dp"
             android:layout_marginStart="4dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rect_button"
         android:drawableTop="@drawable/ic_baseline_videogame_asset_24"
         android:paddingStart="8dp"
@@ -166,7 +158,6 @@
 </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/NavigationView"
             android:layout_width="wrap_content"

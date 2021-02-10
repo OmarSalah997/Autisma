@@ -20,15 +20,15 @@ public class child_tests extends AppCompatActivity {
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
 
-        takePhotoTest=findViewById(R.id.button_takephoto_test);
+
         videoTest=findViewById(R.id.button_video_test);
         MCQ=findViewById(R.id.button_mcq);
-        takePhotoTest.setOnClickListener(new View.OnClickListener() {
+       /* takePhotoTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),UploadImageActivity.class));
             }
-        });
+        })*/;
         videoTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
