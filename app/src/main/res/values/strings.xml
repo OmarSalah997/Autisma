@@ -140,6 +140,37 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="mailOrPassWrong">Your email or password is incorrect</string>
     <string name="invalidTokan">Invalid or expired token</string>
     <string name="emailUsed">Email is alreay used</string>
+    <string name="success">Success!</string>
+    <string name="haveCOde">I have confirmation code for new password</string>
+    <string name="haveCodeForNewMail">I have code for new E-mail</string>
+    <string name="passlength">Password length should be at least 8 characters,digits and letters</string>
+    <string name="How_old">How old is your child?</string>
+    <string name="m16_30">16-30 months</string>
+    <string name="m18_72">18-72 months</string>
+    <string name="M_chat_q">What is M-chat chicklist?</string>
+    <string name="Mchat_def">The Modified Checklist for Autism in Toddlers, is a screener that will ask a series of 20 questions about your child’s behavior. It\'s intended for toddlers between 16 and 30 months of age. The results will let you know if a further evaluation may be needed. You can use the results of the screener to discuss any concerns that you may have with your child’s healthcare provider.</string>
+    <string name="start_mchat">Start the survey</string>
+    <string name="Mchat1">1.If you point at something across the room, does your child look at it? (For Example, if you point at a toy or an animal, does your child look at the toy or animal?)</string>
+    <string name="Mchat2">2.Have you ever wondered if your child might be deaf?</string>
+    <string name="Mchat3">3.Does your child play pretend or make-believe? (For Example, pretend to drink from an empty cup, pretend to talk on a phone, or pretend to feed a doll or stuffed animal?)</string>
+    <string name="Mchat4">4.Does your child like climbing on things? (For Example, furniture, playground equipment, or stairs)</string>
+    <string name="Mchat5">5.Does your child make unusual finger movements near his or her eyes? (For Example, does your child wiggle his or her fingers close to his or her eyes?)</string>
+    <string name="Mchat6">6.Does your child point with one finger to ask for something or to get help? (For Example, pointing to a snack or toy that is out of reach)</string>
+    <string name="Mchat7">7.Does your child point with one finger to show you something interesting? (For Example, pointing to an airplane in the sky or a big truck in the road)</string>
+    <string name="Mchat8">8.s your child interested in other children? (For Example, does your child watch other children, smile at them, or go to them?)</string>
+    <string name="Mchat9">9.Does your child show you things by bringing them to you or holding them up for you to see — not to get help, but just to share? (For Example, showing you a flower, a stuffed animal, or a toy truck)</string>
+    <string name="Mchat10">10.Does your child respond when you call his or her name? (For Example, does he or she look up, talk or babble, or stop what he or she is doing when you call his or her name?)</string>
+    <string name="Mchat11">11.When you smile at your child, does he or she smile back at you?</string>
+    <string name="Mchat12">12.Does your child get upset by everyday noises? (For Example, does your child scream or cry to noise such as a vacuum cleaner or loud music?)</string>
+    <string name="Mchat13">13.Does your child walk?</string>
+    <string name="Mchat14">14.Does your child look you in the eye when you are talking to him or her, playing with him or her, or dressing him or her?</string>
+    <string name="Mchat15">15.Does your child try to copy what you do? (For Example, wave bye-bye, clap, or make a funny noise when you do)</string>
+    <string name="Mchat16">16.If you turn your head to look at something, does your child look around to see what you are looking at?</string>
+    <string name="Mchat17">Does your child try to get you to watch him or her? (For Example, does your child look at you for praise, or say “look” or “watch me”?)</string>
+    <string name="Mchat18">Does your child understand when you tell him or her to do something? (For Example, if you don\'t point, can your child understand “put the book on the chair” or “bring me the blanket”?)</string>
+    <string name="Mchat19">19.If something new happens, does your child look at your face to see how you feel about it? (For Example, if he or she hears a strange or funny noise, or sees a new toy, will he or she look at your face?)</string>
+    <string name="Mchat20">20.Does your child like movement activities? (For Example, being swung or bounced on your knee)</string>
+    <string name="ansrall">Please make sure to answer all questions!</string>
     <string-array name="Country_array">
         <item>Egypt</item>
     </string-array>
@@ -158,8 +189,8 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string-array name="settings_list">
         <item>Language</item>
     </string-array>
-    <string name="success">Success!</string>
-    <string name="haveCOde">I have confirmation code for new password</string>
-    <string name="haveCodeForNewMail">I have code for new E-mail</string>
-    <string name="passlength">Password length should be at least 8 characters,digits and letters</string>
+    <string name="score">Score</string>
+    <string name="score_10">The score indicates low risk, but if your child is younger than 24 months, or you have other concerns you should talk to your doctor about rescreening.</string>
+    <string name="score_35">The score indicates medium risk. This means you should to take your child to his or her doctor for a follow-up screening. You can also seek early intervention services for your child.</string>
+    <string name="score_40_upove">Score indicates high risk. This means you should to take your child to his or her doctor for a full evaluation. You should also begin early intervention services for your child.</string>
 </resources>

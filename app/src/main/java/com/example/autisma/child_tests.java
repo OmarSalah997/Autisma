@@ -38,7 +38,7 @@ public class child_tests extends AppCompatActivity {
         MCQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Quiz_Activity.class));
+                startActivity(new Intent(getApplicationContext(),questions_Home.class));
             }
         });
     }

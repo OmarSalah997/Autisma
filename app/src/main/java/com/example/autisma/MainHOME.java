@@ -71,10 +71,9 @@ public class MainHOME extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){ actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-         actionBar.setDisplayHomeAsUpEnabled(true);
+         //actionBar.setDisplayHomeAsUpEnabled(true);
         }
         NavigationView navigation = findViewById(R.id.NavigationView);
-
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
