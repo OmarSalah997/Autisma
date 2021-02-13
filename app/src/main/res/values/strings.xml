@@ -1,4 +1,10 @@
 <resources>
+    <string name="emptyname">Please Enter your name</string>
+    <string name="start">Start</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="welcome_in_autizme_n">Welcome in Autizme \n</string>
+    <string name="we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now">We provide services to parents who\nhas an Autistic child. You will enjoy\nscreening, Games, Helpful Tips and \nmore... Start Now!</string>
+
     <string name="app_name">Autisma</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -79,10 +85,10 @@ He/She often notices small sounds when others do not</string>
 He/She usually concentrates more on the whole picture rather than the small details</string>
     <string name="question3">
 In a social group ,He/She can easily keep track of several different peoples conversations</string>
-    <string name="question4">He/She finds it easy to go back and fourth between different activites</string>
+    <string name="question4">He/She finds it easy to go back and fourth between different activities</string>
     <string name="question5">He/She does not know how to keep a conversation going with his/her peers</string>
     <string name="question6">He/She is good at social chit-chat</string>
-    <string name="question7">When He/She reads a story,he finds it difficult to work out the charachter s intenons or feelings</string>
+    <string name="question7">When He/She reads a story,he finds it difficult to work out the character s intenons or feelings</string>
     <string name="question8">When He/She was in preschool,he/she used to enjoy playing games involving pretending with other children</string>
     <string name="question9">He/She finds it easy to work out what someone is thinking or feeling just by looking at their face</string>
     <string name="question10">He/She finds it hard to make new friends</string>
@@ -91,7 +97,7 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="hour">Hour</string>
     <string name="day">Day</string>
     <string name="week">Week</string>
-    <string name="mounth">Mounth</string>
+    <string name="mounth">Month</string>
     <string name="enternum">Enter number</string>
     <string name="change_password">Change password</string>
     <string name="change_user_name">Change username</string>
@@ -193,4 +199,5 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="score_10">The score indicates low risk, but if your child is younger than 24 months, or you have other concerns you should talk to your doctor about rescreening.</string>
     <string name="score_35">The score indicates medium risk. This means you should to take your child to his or her doctor for a follow-up screening. You can also seek early intervention services for your child.</string>
     <string name="score_40_upove">Score indicates high risk. This means you should to take your child to his or her doctor for a full evaluation. You should also begin early intervention services for your child.</string>
+
 </resources>

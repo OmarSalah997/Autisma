@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Autisma</string>
+    <string name="start">أبدأ</string>
+    <string name="enter_your_name">أكتب اسمك</string>
+    <string name="welcome_in_autizme_n">أهلا بك فى Autizma </string>
+    <string name="we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now">نحن نقدم خدمات للآباء الذين لديهم   n\طفل مصاب بالتوحد. ستستمتع باستخدام البرنامج من خلال الفحص والألعاب والنصائح المفيدة \n والمزيد … ابدأ الآن!</string>
+
+    <string name="emptyname">من فضلك اكتب اسمك</string>
     <string name="username">اسم المستخدم</string>
     <string name="password">كلمة السر</string>
     <string name="rememberme">تذكّرني</string>
