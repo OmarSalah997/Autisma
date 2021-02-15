@@ -5,58 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WelcomeActivity">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12sp">
     <TextView
         android:id="@+id/confirm_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="72sp"
         android:text="@string/welcome_in_autizme_n"
         android:textColor="@android:color/black"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:layout_marginBottom="12sp"
+        android:layout_centerInParent="true"
+        />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12sp">
     <TextView
-
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.623"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_text_view" />
-
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:layout_marginBottom="12sp"
+        android:layout_centerInParent="true"
+        />
+        </RelativeLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12sp">
     <EditText
-
         android:id="@+id/uname"
         android:layout_width="250sp"
         android:layout_height="50dp"
-        android:layout_marginTop="152dp"
         android:background="@drawable/edit_text_style"
         android:hint="@string/enter_your_name"
-        android:paddingStart="8dp"
+        android:paddingStart="20dp"
         android:paddingEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_text_view" />
+        android:layout_marginBottom="12sp"
+        android:layout_centerInParent="true"
 
+        />
+</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12sp">
     <Button
         android:id="@+id/start_button"
-        android:layout_width="158dp"
-        android:layout_height="76dp"
-        android:layout_marginBottom="256dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_shape"
         android:fontFamily="sans-serif"
         android:text="@string/start"
         android:textColor="@color/colorWhite"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_centerInParent="true"
+        />
+        </RelativeLayout>
+</LinearLayout>
+</ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

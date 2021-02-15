@@ -11,6 +11,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import java.util.Objects;
+
 public class opening extends AppCompatActivity {
     Animation updown;
     Animation fade;
@@ -27,7 +29,7 @@ public class opening extends AppCompatActivity {
         name.setAnimation(fade);
         logo.setAnimation(updown);
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
-        if (!prefs2.getString("name", "").equals("")){
+        if (!Objects.equals(prefs2.getString("name", ""), "")){
             final Intent intent = new Intent(this, MainHOME.class);
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -38,7 +40,6 @@ public class opening extends AppCompatActivity {
 
         }
         else {
-
             final Intent intent = new Intent(this, WelcomeActivity.class);
             new Handler().postDelayed(new Runnable() {
                 @Override

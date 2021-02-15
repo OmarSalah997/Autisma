@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class MainHOME extends AppCompatActivity {
     private ImageView userPhotoImageview;
     private String username;
     private String user_photo;
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,8 @@ public class MainHOME extends AppCompatActivity {
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         final String token=prefs2.getString("TOKEN",null);
-        currentLangCode=prefs.getString("my lang","");
+        //currentLangCode=prefs.getString("my lang","");
+        currentLangCode=getResources().getConfiguration().locale.getLanguage();
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         welcomeMessage.append(" "+prefs2.getString("name","")+",");
         Drawer_layout=findViewById(R.id.drawer);
@@ -70,9 +73,10 @@ public class MainHOME extends AppCompatActivity {
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null){ actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-         //actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        if(actionBar!=null){
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+       }
         NavigationView navigation = findViewById(R.id.NavigationView);
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -196,14 +200,14 @@ public class MainHOME extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    @Override
+  /*  @Override
     public void onResume() {
         super.onResume();
         if (!currentLangCode.equals(getResources().getConfiguration().locale.getLanguage())) {
             currentLangCode = getResources().getConfiguration().locale.getLanguage();
             recreate();
         }
-    }
+    }*/
     public void ToUserProfile(View v){
         Intent intent=new Intent(getApplicationContext(), UserProfile.class);
         intent.putExtra("USERNAME", username);
