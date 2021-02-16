@@ -57,8 +57,10 @@ public class MainHOME extends AppCompatActivity {
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         final String token=prefs2.getString("TOKEN",null);
-        //currentLangCode=prefs.getString("my lang","");
-        currentLangCode=getResources().getConfiguration().locale.getLanguage();
+        currentLangCode=prefs.getString("my lang","");
+        assert currentLangCode != null;
+        if(currentLangCode.equals(""))
+            currentLangCode=getResources().getConfiguration().locale.getLanguage();
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         welcomeMessage.append(" "+prefs2.getString("name","")+",");
         Drawer_layout=findViewById(R.id.drawer);
@@ -200,14 +202,15 @@ public class MainHOME extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-  /*  @Override
+    @Override
     public void onResume() {
         super.onResume();
-        if (!currentLangCode.equals(getResources().getConfiguration().locale.getLanguage())) {
-            currentLangCode = getResources().getConfiguration().locale.getLanguage();
+        String t=getResources().getConfiguration().locale.getLanguage();
+        if (!currentLangCode.equals(t)) {
+            currentLangCode=getResources().getConfiguration().locale.getLanguage();
             recreate();
         }
-    }*/
+    }
     public void ToUserProfile(View v){
         Intent intent=new Intent(getApplicationContext(), UserProfile.class);
         intent.putExtra("USERNAME", username);
