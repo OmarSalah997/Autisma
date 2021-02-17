@@ -32,8 +32,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
                 final SharedPreferences preferences = getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
                 preferences.edit().putString("name",name.getText().toString()).apply();
-
-
                 Intent intent = new Intent(getApplicationContext(), MainHOME.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

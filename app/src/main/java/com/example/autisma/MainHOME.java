@@ -52,15 +52,13 @@ public class MainHOME extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadlocale();
+        currentLangCode = getResources().getConfiguration().locale.getLanguage();
         setContentView(R.layout.activity_main_home);
         Communication com=new Communication(this);
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         final String token=prefs2.getString("TOKEN",null);
-        currentLangCode=prefs.getString("my lang","");
-        assert currentLangCode != null;
-        if(currentLangCode.equals(""))
-            currentLangCode=getResources().getConfiguration().locale.getLanguage();
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         welcomeMessage.append(" "+prefs2.getString("name","")+",");
         Drawer_layout=findViewById(R.id.drawer);
@@ -205,9 +203,8 @@ public class MainHOME extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        String t=getResources().getConfiguration().locale.getLanguage();
-        if (!currentLangCode.equals(t)) {
-            currentLangCode=getResources().getConfiguration().locale.getLanguage();
+        if (!currentLangCode.equals(getResources().getConfiguration().locale.getLanguage())) {
+            currentLangCode = getResources().getConfiguration().locale.getLanguage();
             recreate();
         }
     }
@@ -271,4 +268,23 @@ public class MainHOME extends AppCompatActivity {
                 });
         return  name[0];
     }
+    private void setLocale(String s) {
+        Locale locale= new Locale(s);
+        Locale.setDefault(locale);
+        Configuration config=new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor= getSharedPreferences("settings_lang",MODE_PRIVATE).edit();
+        editor.putString("my lang",s);
+        editor.apply();
+    }
+
+    private void loadlocale() {
+        SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
+        String language=prefs.getString("my lang","");
+        if(language.equals(""))
+            language=Resources.getSystem().getConfiguration().locale.getLanguage();
+        setLocale(language);
+    }
+
 }

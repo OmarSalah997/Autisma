@@ -15,17 +15,15 @@
     android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12sp">
+            android:layout_height="wrap_content">
     <TextView
         android:id="@+id/confirm_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="72sp"
-        android:text="@string/welcome_in_autizme_n"
+        android:text="@string/welcome_in_autizma_n"
         android:textColor="@android:color/black"
         android:textSize="30sp"
-        android:layout_marginBottom="12sp"
         android:layout_centerInParent="true"
         />
         </RelativeLayout>
