@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/How_old"
+        android:text="@string/choose_tst"
         android:textSize="35sp" />
 
 
@@ -37,23 +37,33 @@
         android:layout_marginTop="20sp">
 
         <Button
-            android:id="@+id/btn_age_16"
+            android:id="@+id/btn_mchat"
             android:layout_width="match_parent"
             android:background="@drawable/button_shape"
             android:layout_marginBottom="20sp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/m16_30"
+            android:text="@string/mChatBtn"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"/>
         <Button
-            android:id="@+id/btn_age_18"
+            android:id="@+id/btn_gilliam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
             android:background="@drawable/button_shape"
             android:layout_weight="1"
-            android:text="@string/m18_72"
+            android:text="@string/gilliam"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/btn_10q"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:background="@drawable/button_shape"
+            android:layout_weight="1"
+            android:text="@string/Q_10"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"/>
     </LinearLayout>

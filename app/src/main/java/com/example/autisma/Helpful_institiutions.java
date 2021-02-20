@@ -6,6 +6,8 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -29,6 +31,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.example.autisma.LOGIN.IP;
 
@@ -42,6 +45,7 @@ public class Helpful_institiutions extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadlocale();
         setContentView(R.layout.helpful_institutions);
         final ListView list = findViewById(R.id.inst_list);
         final ArrayList<InstData> arrayList = new ArrayList<InstData>();
@@ -142,6 +146,26 @@ institutions=response.getJSONObject("result");
                 startActivity(intent);
             }
         }); */
+
+
+    private void setLocale(String s) {
+        Locale locale= new Locale(s);
+        Locale.setDefault(locale);
+        Configuration config=new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor= getSharedPreferences("settings_lang",MODE_PRIVATE).edit();
+        editor.putString("my lang",s);
+        editor.apply();
+    }
+
+    private void loadlocale() {
+        SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
+        String language=prefs.getString("my lang","");
+        if(language.equals(""))
+            language= Resources.getSystem().getConfiguration().locale.getLanguage();
+        setLocale(language);
+    }
     }
 
 

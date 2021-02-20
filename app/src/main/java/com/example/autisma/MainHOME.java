@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -268,7 +267,7 @@ public class MainHOME extends AppCompatActivity {
                 });
         return  name[0];
     }
-    private void setLocale(String s) {
+    public void setLocale(String s) {
         Locale locale= new Locale(s);
         Locale.setDefault(locale);
         Configuration config=new Configuration();
@@ -279,7 +278,7 @@ public class MainHOME extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadlocale() {
+    public void loadlocale() {
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         String language=prefs.getString("my lang","");
         if(language.equals(""))
