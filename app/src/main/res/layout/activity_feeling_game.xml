@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/preview"
+    tools:context=".feeling_game">
+
+    <ImageView
+        android:id="@+id/feeling_image"
+        android:layout_width="337dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="343dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/happy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/what_feeling_does_appear" />
+
+    <Button
+        android:id="@+id/happy"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="43dp"
+        android:background="@drawable/happyemojy"
+        app:layout_constraintBottom_toTopOf="@+id/angry"
+        app:layout_constraintEnd_toStartOf="@+id/sad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feeling_image" />
+
+    <Button
+        android:id="@+id/sad"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="37dp"
+        android:background="@drawable/sademogi"
+        app:layout_constraintBottom_toBottomOf="@+id/angry"
+        app:layout_constraintEnd_toStartOf="@+id/angry"
+        app:layout_constraintStart_toEndOf="@+id/happy"
+        app:layout_constraintTop_toTopOf="@+id/angry" />
+
+    <Button
+        android:id="@+id/angry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/angryemoji"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sad"
+        app:layout_constraintTop_toBottomOf="@+id/happy" />
+</androidx.constraintlayout.widget.ConstraintLayout>

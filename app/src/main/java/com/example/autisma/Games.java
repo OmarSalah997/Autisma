@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -24,6 +25,8 @@ public class Games extends AppCompatActivity {
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
 
+        Intent intent = new Intent(getApplicationContext(), feeling_game.class);
+        startActivity(intent);
     }
     private void setLocale(String s) {
         Locale locale= new Locale(s);
