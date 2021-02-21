@@ -1,15 +1,19 @@
 package com.example.autisma;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,16 +23,17 @@ public class feeling_game extends AppCompatActivity {
     Button s;
     Button a;
     ImageView img;
-    String[] feelings = {"happy" , "sad","angry"};
+    String[] feelings = {"happy", "sad","angry"};
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feeling_game);
 
-        h=(Button) findViewById(R.id.happy);
-        s=(Button) findViewById(R.id.sad);
-        a=(Button) findViewById(R.id.angry);
-        img=(ImageView) findViewById(R.id.feeling_image);
+        h = findViewById(R.id.happy);
+        s = findViewById(R.id.sad);
+        a = findViewById(R.id.angry);
+        img = findViewById(R.id.feeling_image);
         Random rd = new Random(); // creating Random object
 
         int feelingIndex = rd.ints(0, 2).findFirst().getAsInt();
@@ -36,8 +41,11 @@ public class feeling_game extends AppCompatActivity {
         int imgIndex = rd.ints(1, 5).findFirst().getAsInt();
 
         int resId = this.getResources().getIdentifier(feelings[feelingIndex]+ imgIndex,"drawable",this.getPackageName());
-
-        img.setImageResource(resId);
+        Picasso.get()
+                .load(resId)
+                .resize(760, 720)
+                .into(img);
+        //img.setImageResource(resId);
 
         h.setOnClickListener(new View.OnClickListener() {
             @Override
