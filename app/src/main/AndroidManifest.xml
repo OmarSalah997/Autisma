@@ -64,7 +64,7 @@
                 android:value="com.example.autisma.MainHOME" />
         </activity>
         <activity android:name=".PersonalDetails" />
-        <activity android:name=".RecordingActivity" />
+        <activity android:screenOrientation="landscape" android:configChanges="orientation|keyboardHidden" android:name=".RecordingActivity" />
         <activity
             android:name=".UploadImageActivity"
             android:theme="@style/mainTheme">
@@ -72,6 +72,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.child_tests" />
         </activity>
+        <activity android:name=".pressDotActivity" />
         <activity android:name=".Helpful_institiutions" />
         <activity android:name=".Doctors" />
         <activity android:name=".Profile" />

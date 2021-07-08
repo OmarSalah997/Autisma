@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -77,6 +78,7 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
     public static SurfaceView mSurfaceView;
     private int position = 1;
     int video_number=0;
+    int autistic_child=0;
     public static SurfaceHolder mSurfaceHolder;
     public static Camera mCamera;
     public static boolean mPreviewRunning;
@@ -86,6 +88,7 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
         private RecorderService recService=new RecorderService();
     //  MediaController mediaController ;
     Intent mIntent;
+    Intent previousIntent;
     private static final int PERMISSION_REQUEST_CODE = 200;
 
     @Override
@@ -99,6 +102,8 @@ try{
             mStorageRef = FirebaseStorage.getInstance().getReference();
             // mediaController = new MediaController(this);
             videoview = (VideoView) findViewById(R.id.video_view);
+            previousIntent=getIntent();
+            autistic_child=previousIntent.getIntExtra("autistic_child",0);
             mIntent = new Intent(RecordingActivity.this, RecorderService.class);
             mSurfaceView= (SurfaceView)findViewById(R.id.surfaceView);
             mSurfaceHolder=mSurfaceView.getHolder();
@@ -116,6 +121,7 @@ try{
                 requestPermission();
             }
         }
+
         // videoview.setMediaController(mediaController);
     }
 
@@ -184,11 +190,23 @@ try{
     }
 
     public void startWatch(View v) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        android.widget.RelativeLayout.LayoutParams params = (android.widget.RelativeLayout.LayoutParams) videoview.getLayoutParams();
+        params.width = metrics.widthPixels;
+        params.height = metrics.heightPixels;
+        params.leftMargin = 0;
+        videoview.setLayoutParams(params);
         captureButton.setVisibility(View.INVISIBLE);
+       // setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //  if (!videoview.isPlaying()) {
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.geom);
 
         videoview.setVideoURI(uri);
+        if(autistic_child ==0)
+            mIntent.putExtra("dir","geom/");
+        else
+            mIntent.putExtra("dir","geom_a/");
         videoview.start();
         mIntent.putExtra("Front_Request",true);
         startService(mIntent);
@@ -206,7 +224,7 @@ try{
 
                     videoview.start();
                     mIntent.putExtra("Front_Request",true);
-                    mIntent.putExtra("dir","geom");
+
                     startService(mIntent);
                 }
                 return false;
@@ -253,24 +271,111 @@ try{
         Uri uri = null;
         if(video_number == 1){
          uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bubbles);
+         if(autistic_child ==0)
             mIntent.putExtra("dir","bubbles/");
+         else
+             mIntent.putExtra("dir","bubbles_a/");
             captureButton.setVisibility(View.INVISIBLE);
         }
         else if(video_number == 2){
             uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bunny);
+            if(autistic_child ==0)
             mIntent.putExtra("dir","bunny/");
+            else
+                mIntent.putExtra("dir","bunny_a/");
         }else if(video_number ==3){
             uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.wheels);
+            if(autistic_child ==0)
             mIntent.putExtra("dir","wheels/");
+            else
+                mIntent.putExtra("dir","wheels_a/");
 
         }else if(video_number ==4){
             uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.balls);
+            if(autistic_child ==0)
             mIntent.putExtra("dir","toys/");
-            nextbutton.setVisibility(View.INVISIBLE);
+            else
+                mIntent.putExtra("dir","toys_a/");
+
         }
+        else if(video_number ==5){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.alarm);
+            if(autistic_child ==0)
+                mIntent.putExtra("dir","alarm/");
+            else
+                mIntent.putExtra("dir","alarm_a/");
+
+        }else if(video_number ==6){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.fireworks);
+            if(autistic_child ==0)
+                mIntent.putExtra("dir","fireworks/");
+            else
+                mIntent.putExtra("dir","fireworks_a/");
+        }else if(video_number ==7){
+
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.ezayk);
+            if(autistic_child ==0)
+                mIntent.putExtra("dir","say_name/");
+            else
+                mIntent.putExtra("dir","say_name_a/");
+nextbutton.setText("Next");
+        }
+        else if(video_number ==8){
+
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.emotions);
+
+                mIntent.putExtra("dir","do not record");
 
 
+        }
+        else if(video_number ==9){
 
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.surprised_child);
+            if(autistic_child ==0)
+            mIntent.putExtra("dir","surprised_child/");
+            else
+                mIntent.putExtra("dir","surprised_child_a/");
+
+        }
+        else if(video_number ==10){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sad_child);
+            if(autistic_child ==0)
+            mIntent.putExtra("dir","sad_child/");
+            else
+                mIntent.putExtra("dir","sad_child_a/");
+
+
+        }
+        else if(video_number ==11){
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.smiling_child);
+            if(autistic_child ==0)
+                mIntent.putExtra("dir","smiling_child/");
+            else
+                mIntent.putExtra("dir","smiling_child_a/");
+
+        }
+        else if(video_number ==12){
+
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.angry_child);
+            if(autistic_child ==0)
+                mIntent.putExtra("dir","angry_child/");
+            else
+                mIntent.putExtra("dir","angry_child_a/");
+
+        }
+        else if(video_number ==13){
+
+            uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dot);
+
+                mIntent.putExtra("dir","do not record");
+
+            nextbutton.setText("Play");
+        }
+        else if(video_number ==14){
+
+            Intent myIntent = new Intent(getApplicationContext(), pressDotActivity.class);
+            startActivity(myIntent);
+        }
         videoview.setVideoURI(uri);
         videoview.start();
         mIntent.putExtra("Front_Request",true);
