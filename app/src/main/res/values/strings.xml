@@ -234,6 +234,9 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="g40">Becomes upset when routines are changed.</string>
     <string name="g41">Responds negatively or with temper tantrums when given commands, requests, or directions.</string>
     <string name="g42">Lines up objects in a precise, orderly fashion and becomes upset when the order is disturbed.</string>
+    <string name="HowOldChild">How old is your child?</string>
+    <string name="toddler">1.5 Years - 2.5 Years</string>
+    <string name="moreThan2">More than 2.5 Years</string>
     <string-array name="Country_array">
         <item>Egypt</item>
     </string-array>
@@ -252,5 +255,10 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string-array name="settings_list">
         <item>Language</item>
     </string-array>
+    <string name="Toddler_intro">The following test is a 35 seconds video played for your child and his reaction will be recorded, please make sure that the device is on landscape mode and well fixed in front of the child, it\'s preferred to make the child sit in a clear background with a minimum amount of movement. Please make sure that the child\'s face is clearly visible to the front camera.</string>
+    <string name="landscape">Please keep the device on landscape mode</string>
+    <string name="GlowScore">This result indicates low risk. However, if you are still worried you should check with a doctor.</string>
+    <string name="GmediumScore">This result indicates medium risk. It\'s required to repeat the test after 2 weeks or to check with a doctor.</string>
+    <string name="GhighScore">This result indicates high risk. It\'s required to check with a doctor immediately.</string>
 
 </resources>

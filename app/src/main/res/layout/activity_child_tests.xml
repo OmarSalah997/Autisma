@@ -18,25 +18,34 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/HowOldChild"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textSize="20sp" />
+
     <Button
-        android:id="@+id/button_video_test"
+        android:id="@+id/toddlers"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rect_button"
-        android:drawableTop="@drawable/ic_baseline_videocam_24"
         android:paddingStart="8dp"
         android:paddingTop="20dp"
         android:paddingEnd="8dp"
         android:paddingBottom="20dp"
-        android:text="@string/video"
+        android:text="@string/toddler"
         android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_takephoto_test" />
     <Button
-        android:id="@+id/button_mcq"
+        android:id="@+id/morethan2yrs"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
@@ -44,12 +53,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/rect_button"
-        android:drawableTop="@drawable/ic_baseline_mcq_24"
         android:paddingStart="8dp"
         android:paddingTop="30dp"
         android:paddingEnd="8dp"
         android:paddingBottom="25dp"
-        android:text="@string/MCQ"
+        android:text="@string/moreThan2"
         android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_video_test" />
