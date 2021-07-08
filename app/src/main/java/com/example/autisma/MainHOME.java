@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -47,15 +47,17 @@ public class MainHOME extends AppCompatActivity {
     private ImageView userPhotoImageview;
     private String username;
     private String user_photo;
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadlocale();
+        currentLangCode = getResources().getConfiguration().locale.getLanguage();
         setContentView(R.layout.activity_main_home);
         Communication com=new Communication(this);
         SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
         SharedPreferences prefs2= getSharedPreferences("MY_APP", Activity.MODE_PRIVATE);
         final String token=prefs2.getString("TOKEN",null);
-        currentLangCode=prefs.getString("my lang","");
         TextView welcomeMessage = findViewById(R.id.welcomeText);
         welcomeMessage.append(" "+prefs2.getString("name","")+",");
         Drawer_layout=findViewById(R.id.drawer);
@@ -70,12 +72,11 @@ public class MainHOME extends AppCompatActivity {
         if(getSupportActionBar()!=null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar !=null){
-         //   actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-         //actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        if(actionBar!=null){
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+       }
         NavigationView navigation = findViewById(R.id.NavigationView);
-
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -266,4 +267,23 @@ public class MainHOME extends AppCompatActivity {
                 });
         return  name[0];
     }
+    public void setLocale(String s) {
+        Locale locale= new Locale(s);
+        Locale.setDefault(locale);
+        Configuration config=new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor= getSharedPreferences("settings_lang",MODE_PRIVATE).edit();
+        editor.putString("my lang",s);
+        editor.apply();
+    }
+
+    public void loadlocale() {
+        SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
+        String language=prefs.getString("my lang","");
+        if(language.equals(""))
+            language=Resources.getSystem().getConfiguration().locale.getLanguage();
+        setLocale(language);
+    }
+
 }

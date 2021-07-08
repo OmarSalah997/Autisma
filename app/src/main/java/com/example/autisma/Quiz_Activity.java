@@ -247,8 +247,6 @@ grp.clearCheck();
             questionNB.setText(Integer.toString(mQuestionNumber));
 
         }
-
-
         private void updateScore(int point) {
 
         }

@@ -4,76 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/agetext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/age"
         android:textColor="@color/colorDarkBlue"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/age"
-        app:layout_constraintStart_toStartOf="@+id/age" />
+         />
 
     <EditText
         android:id="@+id/age"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="87dp"
-        android:layout_marginBottom="87dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/edit_text_style"
         android:drawablePadding="3dp"
         android:hint="@string/enterChildAge"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/checkbox_male"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
+        android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/gendertext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
         android:text="@string/gender"
         android:textColor="@color/colorDarkBlue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
     <CheckBox
+        android:layout_weight="1"
         android:id="@+id/checkbox_male"
         style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
         android:text="@string/male"
         app:layout_constraintStart_toStartOf="@+id/gendertext"
         app:layout_constraintTop_toBottomOf="@+id/gendertext" />
 
     <CheckBox
+        android:layout_weight="1"
         android:id="@+id/checkbox_female"
         style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
         android:text="@string/female"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkbox_male"
-        app:layout_constraintStart_toStartOf="@+id/checkbox_male" />
-
+        app:layout_constraintStart_toStartOf="@+id/checkbox_male" /></LinearLayout></LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/ethnicityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="19dp"
         android:text="@string/Ethnicity"
         android:textColor="@color/colorDarkBlue"
@@ -84,76 +104,67 @@
     <Spinner
         android:id="@+id/ethnicity_spinner"
         style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ethnicityText" />
-
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="4dp"
         android:text="@string/Was_your_child_born_with_jaundice"
         android:textColor="@color/colorDarkBlue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ethnicity_spinner" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="12dp">
     <CheckBox
+        android:layout_weight="1"
         android:id="@+id/checkbox_yes_jaundice"
         style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
         android:text="@string/yes"
         app:layout_constraintBaseline_toBaselineOf="@+id/checkbox_no_jaundice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question" />
 
-    <!--
-    <TextView
-        android:id="@+id/question3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:text="Country of Residence"
-        android:textColor="@color/colorDarkBlue"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkbox_yes_family" />
-
-    <Spinner
-        android:id="@+id/country_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/question3"
-        tools:layout_editor_absoluteX="0dp" />
-      -->
-
     <CheckBox
+        android:layout_weight="1"
         android:id="@+id/checkbox_no_jaundice"
         style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="368dp"
         android:text="@string/no"
         app:layout_constraintStart_toStartOf="@+id/checkbox_yes_jaundice"
         app:layout_constraintTop_toTopOf="parent" />
-
+    </LinearLayout></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/question2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="28dp"
         android:text="@string/autisma_family_q"
         android:textColor="@color/colorDarkBlue"
@@ -161,41 +172,49 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkbox_yes_jaundice" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="12dp">
     <CheckBox
-        android:id="@+id/checkbox_no_family"
-        style="@style/checkbox_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="108dp"
-        android:text="@string/no"
-        app:layout_constraintStart_toStartOf="@+id/checkbox_yes_family"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox_no_jaundice" />
-
-    <CheckBox
+        android:layout_weight="1"
         android:id="@+id/checkbox_yes_family"
         style="@style/checkbox_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/yes"
-        app:layout_constraintBaseline_toBaselineOf="@+id/checkbox_no_family"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question2" />
-
-    <Button
-        android:id="@+id/Finish"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:text="@string/yes" />
+    <CheckBox
+        android:layout_weight="1"
+        android:id="@+id/checkbox_no_family"
+        style="@style/checkbox_style"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="@string/no"
+        />
+
+
+</LinearLayout></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/Finish"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_shape"
         android:padding="8dp"
         android:text="@string/done"
         android:textColor="#fff"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkbox_yes_family" />
-
+        />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

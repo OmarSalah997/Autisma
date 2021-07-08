@@ -93,6 +93,7 @@ public class Settings extends AppCompatActivity {
         SharedPreferences.Editor editor= getSharedPreferences("settings_lang",MODE_PRIVATE).edit();
         editor.putString("my lang",s);
         editor.apply();
+        String t=getResources().getConfiguration().locale.getLanguage();
     }
 
     private void loadlocale() {
