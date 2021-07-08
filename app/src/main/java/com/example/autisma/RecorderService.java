@@ -257,6 +257,7 @@ public class RecorderService extends Service  {
 //you can pass using intent,that which camera you want to use front/rear
         isFrontFacing = extras.getBoolean("Front_Request");
         directory_touploadto=extras.getString("dir","geom/");
+        if(directory_touploadto != "do not record")
 startRec();
         return super.onStartCommand(intent, flags, startId);
     }

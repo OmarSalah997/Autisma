@@ -47,6 +47,7 @@ public class child_tests extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),questions_Home.class));
+
             }
         });
     }
