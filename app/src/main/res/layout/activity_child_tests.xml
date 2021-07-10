@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:titleTextColor="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".child_tests">
@@ -62,18 +63,6 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_video_test" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_autistic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="#000000"
-                    android:cursorVisible="true"
-                    android:state_focused="true"
-                    android:text="Are you doing this test for an autistic child ?"
-                    android:textSize="24sp"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="115dp" />
 </LinearLayout>
         </RelativeLayout>
     </ScrollView>

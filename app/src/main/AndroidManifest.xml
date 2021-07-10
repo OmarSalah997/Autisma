@@ -12,11 +12,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ToddlerTestIntro"></activity>
+        <activity android:name=".EmotionTest"></activity>
+        <activity
+            android:name=".Main5Q"
+            android:theme="@style/mainTheme" />
+        <activity
+            android:name=".ToddlerResult"
+            android:screenOrientation="portrait"
+            android:theme="@style/mainTheme" />
+        <activity
+            android:name=".ToddlerTestIntro"
+            android:theme="@style/mainTheme" />
         <activity android:name=".feeling_game" />
-        <activity android:name=".Gilliam_score" />
-        <activity android:name=".Gilliam_main" />
-        <activity android:name=".Gilliam_info" />
+        <activity
+            android:name=".Gilliam_score"
+            android:theme="@style/mainTheme" />
+        <activity
+            android:name=".Gilliam_main"
+            android:theme="@style/mainTheme" />
+        <activity
+            android:name=".Gilliam_info"
+            android:theme="@style/mainTheme" />
         <activity
             android:name=".opening"
             android:noHistory="true">
@@ -90,7 +106,10 @@
                 android:value="com.example.autisma.MainHOME" />
         </activity>
         <activity android:name=".PersonalDetails" />
-        <activity android:screenOrientation="landscape" android:configChanges="orientation|keyboardHidden" android:name=".RecordingActivity" />
+        <activity
+            android:name=".RecordingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".UploadImageActivity"
             android:theme="@style/mainTheme">

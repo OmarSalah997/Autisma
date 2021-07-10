@@ -1,66 +1,32 @@
 package com.example.autisma;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.hardware.Camera;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.media.CamcorderProfile;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.IBinder;
-import android.provider.Settings;
+
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.MediaController;
-import android.widget.RadioButton;
-import android.widget.SeekBar;
 
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Toast;
 import android.widget.VideoView;
-
-import java.io.File;
-import java.util.UUID;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -82,6 +48,7 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
     public static SurfaceHolder mSurfaceHolder;
     public static Camera mCamera;
     public static boolean mPreviewRunning;
+    int score5Q =0;
     Uri outputFileUri = null;
     public static VideoView videoview;
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -90,31 +57,27 @@ public class RecordingActivity extends AppCompatActivity implements SurfaceHolde
     Intent mIntent;
     Intent previousIntent;
     private static final int PERMISSION_REQUEST_CODE = 200;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        score5Q = intent.getIntExtra("5Qscore",0);
 try{
-            setContentView(R.layout.recording_activity);
-          captureButton = (Button) findViewById(R.id.start_watch);
-          nextbutton=(Button)findViewById(R.id.next_video);
-            uploadImage = (Button) findViewById(R.id.uploadimage);
-            mStorageRef = FirebaseStorage.getInstance().getReference();
-            // mediaController = new MediaController(this);
-            videoview = (VideoView) findViewById(R.id.video_view);
-            previousIntent=getIntent();
-            autistic_child=previousIntent.getIntExtra("autistic_child",0);
-            mIntent = new Intent(RecordingActivity.this, RecorderService.class);
-            mSurfaceView= (SurfaceView)findViewById(R.id.surfaceView);
-            mSurfaceHolder=mSurfaceView.getHolder();
+    setContentView(R.layout.recording_activity);
+    captureButton = (Button) findViewById(R.id.start_watch);
+    uploadImage = (Button) findViewById(R.id.uploadimage);
+    mStorageRef = FirebaseStorage.getInstance().getReference();
+    // mediaController = new MediaController(this);
+    videoview = (VideoView) findViewById(R.id.video_view);
+    previousIntent=getIntent();
+    autistic_child=previousIntent.getIntExtra("autistic_child",0);
+    mIntent = new Intent(RecordingActivity.this, RecorderService.class);
+    mSurfaceView= (SurfaceView)findViewById(R.id.surfaceView);
+    mSurfaceHolder=mSurfaceView.getHolder();
     mSurfaceHolder.addCallback(this);
-
-
-        } catch (Exception e) {
+    } catch (Exception e) {
             e.getMessage();
         }
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             if (!checkPermission()) {
@@ -124,20 +87,16 @@ try{
 
         // videoview.setMediaController(mediaController);
     }
-
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
         int result3=ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
-
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
-
         ActivityCompat.requestPermissions(this, new String[]{RECORD_AUDIO, CAMERA, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-
     }
 
     @Override
@@ -145,10 +104,8 @@ try{
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
-
                     boolean locationAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-
                     if (locationAccepted && cameraAccepted)
                         Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
                     else {
@@ -235,12 +192,15 @@ try{
         videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-
                 //here upload video
                 videoview.seekTo(1);
-
-   //recService.uploadVideo();
+                //recService.uploadVideo();
                 stopService(mIntent);
+                //Here we should calc the precentage and add to score5Q
+                Intent toResult= new Intent(RecordingActivity.this, ToddlerResult.class);
+                toResult.putExtra("ToddlerScore", score5Q);
+                RecordingActivity.this.startActivity(toResult);
+
             }
         });
         //here
@@ -248,7 +208,6 @@ try{
             videoview.seekTo(position);
             videoview.start();
         } else {
-
             videoview.seekTo(1);
         }
 
@@ -257,15 +216,13 @@ try{
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
         super.onSaveInstanceState(savedInstanceState);
-
         if (videoview!= null)
         {
             savedInstanceState.putInt("position", videoview.getCurrentPosition());
         }
-
         videoview.pause();
     }
-    public void next_video(View v){
+   /* public void next_video(View v){
         stopService(mIntent);
         video_number ++ ;
         Uri uri = null;
@@ -403,17 +360,13 @@ nextbutton.setText("Next");
         });
 
     }
-
+*/
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-
-    }
-
+    public void surfaceCreated(SurfaceHolder holder) { }
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
       //  stopService(mIntent);
     }
-
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
        stopService(mIntent);

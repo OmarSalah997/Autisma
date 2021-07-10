@@ -3,66 +3,71 @@ package com.example.autisma;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Locale;
+public class ToddlerResult extends AppCompatActivity {
 
-public class Gilliam_score extends AppCompatActivity {
-    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadlocale();
-        setContentView(R.layout.activity_gilliam_score);
+        setContentView(R.layout.activity_toddler_result);
+        Intent intent = getIntent();
+        final int Result=intent.getIntExtra("ToddlerScore",0);
+        Button ToMCHAT=findViewById(R.id.proceed_to_MCHAT);
+        ToMCHAT.setVisibility(View.INVISIBLE);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-        Intent intent = getIntent();
-        int score = intent.getIntExtra("totalScore",0);
-        int Stereotyped_Behaviors_score = intent.getIntExtra("Stereotyped_Behaviors_score",0);
-        int Communication_Behaviors_score = intent.getIntExtra("Communication_Behaviors_score",0);
-        int Social_Interaction_Behaviors_score = intent.getIntExtra("Social_Interaction_Behaviors_score",0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         TextView details=findViewById(R.id.Gscore_details);
         com.github.lzyzsd.circleprogress.DonutProgress Scorebar=findViewById(R.id.Gscore_progress);
-        if(score<=69)
+        if(Result<=6)
         {
-            float f=((float) score/(float)126)*100;
+            float f=((float) Result/(float)24)*100;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.GREEN);
-            details.setText(R.string.GlowScore);
+            details.setText(R.string.ToddlerLow);
         }
-        if(score>70 & score<=84)
+        if(Result>13 & Result<=18)
         {
-            float f=((float) score/(float)126)*100;
+            float f=((float) Result/(float)24)*100;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.YELLOW);
-            details.setText(R.string.GmediumScore);
+            details.setText(R.string.ToddlerMedium);
         }
-        if(score>=85)
+        if(Result>=19)
         {
-            float f=((float) score/(float)126)*100;
+            float f=((float) Result/(float)24)*100;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.RED);
-            details.setText(R.string.GhighScore);
+            details.setText(R.string.ToddlerHigh);
+            ToMCHAT.setVisibility(View.VISIBLE);
         }
         Button done=findViewById(R.id.gilliam_done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), MainHOME.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        ToMCHAT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), M_chat_info.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
@@ -76,22 +81,4 @@ public class Gilliam_score extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    private void loadlocale() {
-        SharedPreferences prefs= getSharedPreferences("settings_lang", Activity.MODE_PRIVATE);
-        String language=prefs.getString("my lang","");
-        if(language.equals(""))
-            language= Resources.getSystem().getConfiguration().locale.getLanguage();
-        setLocale(language);
-    }
-    private void setLocale(String s) {
-        Locale locale= new Locale(s);
-        Locale.setDefault(locale);
-        Configuration config=new Configuration();
-        config.setLocale(locale);
-        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-        SharedPreferences.Editor editor= getSharedPreferences("settings_lang",MODE_PRIVATE).edit();
-        editor.putString("my lang",s);
-        editor.apply();
-    }
-
 }
