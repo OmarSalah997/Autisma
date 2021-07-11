@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    tools:context=".Gilliam_score">
+    tools:context=".ToddlerResult">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,6 +43,18 @@
             android:layout_marginStart="12sp"
             android:layout_marginEnd="12sp"/>
         <Button
+            android:id="@+id/proceed_to_MCHAT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:layout_marginBottom="20sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginStart="12sp"
+            android:layout_marginEnd="12sp"
+            android:text="@string/ProceedMCHAT"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"/>
+        <Button
             android:id="@+id/gilliam_done"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,5 +66,6 @@
             android:text="@string/done"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

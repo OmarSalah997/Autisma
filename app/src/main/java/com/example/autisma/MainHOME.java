@@ -90,7 +90,7 @@ public class MainHOME extends AppCompatActivity {
                     case R.id.settings:
                         Intent settings = new Intent(getApplicationContext(), Settings.class);
                         startActivity(settings);                        break;
-                    case R.id.loguot:
+                   /* case R.id.loguot:
                         Communication c = new Communication(MainHOME.this);
                         String url = IP+"logout"; // route
                         c.REQUEST_AUTHORIZE(token,Request.Method.POST, url, new JSONObject(),
@@ -148,7 +148,7 @@ public class MainHOME extends AppCompatActivity {
                                         }
                                     }
                                 });
-                        break;
+                        break;*/
                 }
                 return false;
             }

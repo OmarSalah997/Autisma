@@ -16,7 +16,7 @@ import android.widget.Button;
 import java.util.Locale;
 
 public class child_tests extends AppCompatActivity {
-    private Button  takePhotoTest,videoTest,MCQ;
+    private Button  takePhotoTest,toddlers,morethan2yrs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,26 +27,30 @@ public class child_tests extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
-
-  //      takePhotoTest=findViewById(R.id.button_takephoto_test);
-        videoTest=findViewById(R.id.button_video_test);
-        MCQ=findViewById(R.id.button_mcq);
-   /*     takePhotoTest.setOnClickListener(new View.OnClickListener() {
+        toddlers=findViewById(R.id.toddlers);
+        morethan2yrs=findViewById(R.id.morethan2yrs);
+       /* takePhotoTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),UploadImageActivity.class));
             }
-        });*/
-        videoTest.setOnClickListener(new View.OnClickListener() {
+        })*/;
+        toddlers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RecordingActivity.class));
+                Intent Tomcq= new Intent(child_tests.this, Main5Q.class);
+                Tomcq.putExtra("Age", 200);
+                child_tests.this.startActivity(Tomcq);
+                //startActivity(new Intent(getApplicationContext(),ToddlerTestIntro.class));
             }
         });
-        MCQ.setOnClickListener(new View.OnClickListener() {
+        morethan2yrs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),questions_Home.class));
+                Intent Tomcq= new Intent(child_tests.this, Main5Q.class);
+                Tomcq.putExtra("Age", 300);
+                child_tests.this.startActivity(Tomcq);
+               // startActivity(new Intent(getApplicationContext(),questions_Home.class));
 
             }
         });

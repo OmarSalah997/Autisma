@@ -3,9 +3,9 @@
     <string name="start">Start</string>
     <string name="enter_your_name">Enter your name</string>
     <string name="welcome_in_autizma_n">Welcome to Autizma</string>
-    <string name="we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now">We provide services to parents who has an Autistic child. You will enjoy screening, Games, Helpful Tips and more… Start Now!</string>
+    <string name="we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now">We provide services to parents who has an Autistic child. shuch as Screening, Games, Helpful tips and more… Start Now!</string>
     <string name="what_feeling_does_appear">What feeling does appear?</string>
-    <string name="app_name">Autisma</string>
+    <string name="app_name">Autizma</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="rememberme">Remember me</string>
@@ -234,6 +234,29 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="g40">Becomes upset when routines are changed.</string>
     <string name="g41">Responds negatively or with temper tantrums when given commands, requests, or directions.</string>
     <string name="g42">Lines up objects in a precise, orderly fashion and becomes upset when the order is disturbed.</string>
+    <string name="HowOldChild">How old is your child?</string>
+    <string name="toddler">1.5 Years - 2.5 Years</string>
+    <string name="moreThan2">More than 2.5 Years</string>
+    <string name="Toddler_intro">The following test is a 35 seconds video played for your child and his reaction will be recorded, please make sure that the device is on landscape mode and well fixed in front of the child, it\'s preferred to make the child sit in a clear background with a minimum amount of movement. Please make sure that the child\'s face is clearly visible to the front camera.</string>
+    <string name="landscape">Please keep the device on landscape mode</string>
+    <string name="GlowScore">This result indicates low risk. However, if you are still worried you should check with a doctor.</string>
+    <string name="GmediumScore">This result indicates medium risk. It\'s required to repeat the test after 2 weeks or to check with a doctor.</string>
+    <string name="GhighScore">This result indicates high risk. It\'s required to check with a doctor immediately.</string>
+    <string name="sixquestions">/ 6 questions</string>
+    <string name="never">Never</string>
+    <string name="Rarely">Rarely</string>
+    <string name="sometimes">Sometimes</string>
+    <string name="always">Always</string>
+    <string name="Mq1">Does the child mind being hugged?</string>
+    <string name="Mq2">Does the child like to spin around himself?</string>
+    <string name="Mq3">Does he/she arrange his toys in order behind each other?</string>
+    <string name="Mq4">Does he/she always prefer to sleep on the cold floor?</string>
+    <string name="Mq5">Is he/she always attached to one specific toy other than the others?</string>
+    <string name="Mq6">Does the child get annoyed by loud noises exaggeratedly?</string>
+    <string name="ProceedMCHAT">Proceed to MCHAT test</string>
+    <string name="ToddlerLow">This result indicates a low risk of autism, nothing to worry about, but you can check with a doctor if you are still concerned.</string>
+    <string name="ToddlerMedium">This result indicates a medium risk of autism, you need to re-run the test after 2 weeks, or check with a doctor if you are concerned.</string>
+    <string name="ToddlerHigh">This result indicates a high risk of autism, we strongly encourage you to proceed to the next test.</string>
     <string-array name="Country_array">
         <item>Egypt</item>
     </string-array>

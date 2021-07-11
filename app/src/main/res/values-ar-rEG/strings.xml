@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Autisma</string>
+    <string name="app_name">Autizma</string>
     <string name="start">أبدأ</string>
     <string name="enter_your_name">أكتب اسمك</string>
     <string name="welcome_in_autizma_n">أهلا بك فى Autizma </string>
-    <string name="we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now">نحن نقدم خدمات للآباء الذين لديهم   طفل مصاب بالتوحد. ستستمتع باستخدام البرنامج من خلال الفحص والألعاب والنصائح المفيدة   والمزيد … ابدأ الآن!</string>
+    <string name="we_provide_services_to_parents_who_n_has_an_autistic_child_you_will_enjoy_nscreening_games_helpful_tips_and_nmore_start_now">نحن نقدم خدمات للآباء الذين لديهم   طفل مصاب بالتوحد. كالفحص والألعاب والنصائح المفيدة   والمزيد … ابدأ الآن!</string>
     <string name="what_feeling_does_appear"> ما الشعور الظاهر امامك ؟ </string>
 
 
@@ -245,4 +245,27 @@
     <string name="g40">يصبح منزعجًا عندما يتم تغيير الروتين.</string>
     <string name="g41">يستجيب بشكل سلبي أو بنوبات غضب عند إعطاء أوامر أو طلبات أو توجيهات.</string>
     <string name="g42">يرتب الأشياء بطريقة دقيقة ومنظمة ويصبح منزعجًا عند الإخلال بالترتيب.</string>
+    <string name="HowOldChild">كم عمر طفلك؟</string>
+    <string name="toddler">سنة ونصف الى سنتين ونصف</string>
+    <string name="moreThan2">أكبر من سنتين ونصف</string>
+    <string name="Toddler_intro">الاختبار التالي عبارة عن فيديو مدته 35 ثانية يتم تشغيله لطفلك وسيتم تسجيل رد فعله ، يرجى التأكد من أن الجهاز في الوضع الأفقي ومثبت جيدًا أمام الطفل ، ويفضل جعل الطفل يجلس في خلفية واضحة مع الحد الأدنى من الحركة. يرجى التأكد من أن وجه الطفل واضح للكاميرا الأمامية.</string>
+    <string name="landscape">يرجى إبقاء الجهاز في الوضع الأفقي</string>
+    <string name="GlowScore">هذه النتيجة تشير إلى مخاطر منخفضة. ومع ذلك ، إذا كنت لا تزال قلقًا ، يجب عليك مراجعة الطبيب.</string>
+    <string name="GmediumScore">هذه النتيجة تشير إلى مخاطر متوسطة. يلزم إعادة الاختبار بعد أسبوعين أو مراجعة الطبيب.</string>
+    <string name="GhighScore">هذه النتيجة تشير إلى مخاطر عالية. مطلوب مراجعة الطبيب على الفور.</string>
+    <string name="sixquestions">/ 6 سؤال</string>
+    <string name="never">أبداً</string>
+    <string name="Rarely">نادراً</string>
+    <string name="sometimes">أحياناً</string>
+    <string name="always">دائماً</string>
+    <string name="Mq1">هل يمانع الطفل أن تحتضنه؟</string>
+    <string name="Mq2">هل يحب الطفل الدوران حول نفسه؟</string>
+    <string name="Mq3">هل يرتب ألعابه في ترتيب خلف بعضها البعض؟</string>
+    <string name="Mq4">هل يفضل دائما النوم على الأرض الباردة؟</string>
+    <string name="Mq5">هل هو مرتبط دائمًا بلعبة معينة غير الألعاب الأخرى؟</string>
+    <string name="Mq6">هل ينزعج الطفل من الاصوات العالية انزعاجا مبالغ فيه؟</string>
+    <string name="ProceedMCHAT">انتقل الى اختبار القائمة الموحدة</string>
+    <string name="ToddlerLow">تشير هذه النتيجة إلى انخفاض خطر الإصابة بالتوحد ، لا داعي للقلق ، ولكن يمكنك مراجعة الطبيب إذا كنت لا تزال قلقًا.</string>
+    <string name="ToddlerMedium">تشير هذه النتيجة إلى وجود خطر متوسط للإصابة بالتوحد ، فأنت بحاجة إلى إعادة إجراء الاختبار بعد أسبوعين ، أو استشارة الطبيب إذا كنت قلقًا.</string>
+    <string name="ToddlerHigh">تشير هذه النتيجة إلى ارتفاع مخاطر الإصابة بالتوحد ، ونحن نشجعك بشدة على المضي قدمًا في الاختبار التالي.</string>
 </resources>
