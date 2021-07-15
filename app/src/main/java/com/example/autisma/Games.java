@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.Locale;
 
@@ -13,7 +15,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Games extends AppCompatActivity {
-
+    Button emotionGame;
+    Button GuessNumGame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,9 +27,17 @@ public class Games extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        emotionGame=findViewById(R.id.emo);
+        GuessNumGame=findViewById(R.id.guess);
+        emotionGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), feeling_game.class);
+                startActivity(intent);
+            }
 
-        Intent intent = new Intent(getApplicationContext(), feeling_game.class);
-        startActivity(intent);
+        });
+
     }
     private void setLocale(String s) {
         Locale locale= new Locale(s);

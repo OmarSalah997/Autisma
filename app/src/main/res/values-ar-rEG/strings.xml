@@ -272,4 +272,6 @@
     <string name="Res_AV">ستكون النتيجة متاحة قريبا</string>
     <string name="warning">تحذير</string>
     <string name="resLost">إذا لم تكمل الاختبار, لن يتم احتساب النتيجة.</string>
+    <string name="EmotionsGame">لعبة التعرّف على المشاعر</string>
+    <string name="GuessNum">لعبة تخمين الرقم</string>
 </resources>

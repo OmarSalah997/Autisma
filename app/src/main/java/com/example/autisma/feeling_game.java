@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Random;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class feeling_game extends AppCompatActivity {
@@ -30,7 +31,13 @@ public class feeling_game extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feeling_game);
-
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         h = findViewById(R.id.happy);
         s = findViewById(R.id.sad);
         a = findViewById(R.id.angry);

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.autisma">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera"
@@ -14,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EmotionTest"></activity>
+        <activity android:name=".EmotionTest" />
         <activity
             android:name=".Main5Q"
             android:theme="@style/mainTheme"
@@ -38,7 +37,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
         </activity>
-        <activity android:name=".feeling_game" />
+        <activity android:name=".feeling_game"
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".Gilliam_score"
             android:theme="@style/mainTheme" >
