@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.util.Base64;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -70,14 +71,15 @@ public class faceDetection {
                             // Task completed successfully
                             for (Face face : faces) {
                                 Rect bounds = face.getBoundingBox();
-                                if(bounds.left>0 & bounds.right<image.getWidth())
+                                if(bounds.left>0 & bounds.top>0 & bounds.right<image.getWidth())
                                 {
+                                    Bitmap cropped;
                                        int hcorrect;
                                        if (bounds.top+bounds.height()>image.getHeight())
                                            hcorrect=480-bounds.top;
                                        else
                                            hcorrect=bounds.height();
-                                       Bitmap cropped=Bitmap.createBitmap(image,bounds.left ,bounds.top,bounds.width(),hcorrect);
+                                       cropped=Bitmap.createBitmap(image,bounds.left ,bounds.top,bounds.width(),hcorrect);
                                        // Paint paint = new Paint();
                                        // paint.setStrokeWidth(6);
                                        // paint.setColor(Color.RED);
@@ -86,8 +88,19 @@ public class faceDetection {
                                        // Canvas canvas = new Canvas(tempBitmap);
                                        //canvas.drawBitmap(Objects.requireNonNull(finalImage.getBitmapInternal()),0,0,null);
                                         //canvas.drawRoundRect(new RectF(bounds.left, bounds.top, bounds.right, bounds.bottom), 2, 2, paint);
-                                        saveToInternalStorage(cropped, "Face"+ finalI);
-                                        if(finalI==339)
+                                    if(mode==2)
+                                    {
+                                        Bitmap resized;
+                                        if(cropped.getHeight()>0 & cropped.getWidth()>0)
+                                        {
+                                            resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
+                                            saveToInternalStorage(resized, "Face"+ finalI,mode);
+                                        }
+                                    }
+                                    else
+                                        saveToInternalStorage(cropped, "Face"+ finalI,mode);
+
+                                        if(finalI==frames.size()-1)
                                             DetectionComplete=true;
                             }}
                         }
@@ -103,12 +116,15 @@ public class faceDetection {
             });}
         }
     }
-    private String saveToInternalStorage(Bitmap bitmapImage,String name){
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = new File(context.getExternalFilesDir(null),"autizma");
-        // Create imageDir
+    private String saveToInternalStorage(Bitmap bitmapImage,String name,int mode){
+        File directory;
+        if(mode==2)
+        { directory= new File(context.getExternalFilesDir(null),"emotion");
+            if (!directory.exists())
+                directory.mkdirs();
+        }
+        else directory = new File(context.getExternalFilesDir(null),"autizma");
         File mypath=new File(directory,name + ".jpg");
-
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(mypath);

@@ -42,7 +42,7 @@ public class VideoToFrames {
         File video = new File(imagesFolder, "V1" + ".mp4");
         video.delete();
         try {
-            faceDetection D= new faceDetection(context,frames,mode);
+            faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
             D.detect();
             while (!D.DetectionComplete)
             {
