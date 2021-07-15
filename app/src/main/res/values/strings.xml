@@ -275,5 +275,9 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string-array name="settings_list">
         <item>Language</item>
     </string-array>
+    <string name="PleaseWait">Please wait...</string>
+    <string name="Res_AV">The result will be available soon</string>
+    <string name="warning">Warning</string>
+    <string name="resLost">If you didn\'t complete the test, the result will be gone.</string>
 
 </resources>

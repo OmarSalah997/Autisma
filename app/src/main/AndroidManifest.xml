@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.autisma">
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true"/>
     <application
         android:allowBackup="false"
         android:icon="@drawable/app_icon_200x200no_title"
@@ -15,18 +17,35 @@
         <activity android:name=".EmotionTest"></activity>
         <activity
             android:name=".Main5Q"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".ToddlerResult"
             android:screenOrientation="portrait"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".ToddlerTestIntro"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity android:name=".feeling_game" />
         <activity
             android:name=".Gilliam_score"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".Gilliam_main"
             android:theme="@style/mainTheme" />
@@ -143,16 +162,11 @@
             android:enabled="true"
             android:exported="true" />
     </application>
-
     <compatible-screens>
         <screen
             android:screenDensity="hdpi"
             android:screenSize="normal" />
     </compatible-screens>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -164,7 +178,4 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 </manifest>

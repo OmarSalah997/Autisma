@@ -1,8 +1,6 @@
 package com.example.autisma;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +10,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Main5Q extends AppCompatActivity {
     int total_score=0;
     int questionNumber=1;
@@ -19,6 +21,8 @@ public class Main5Q extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5_q);
+
+
         Intent intent = getIntent();
         final int childage=intent.getIntExtra("Age",0);//200 = toddler , 300= bigger than toddler
         if(getSupportActionBar()!=null)
@@ -80,4 +84,31 @@ public class Main5Q extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if(questionNumber>1)
+        {
+            final AlertDialog.Builder warning = new AlertDialog.Builder(this);
+            warning.setIcon(R.drawable.ic_baseline_g_translate_24);
+            warning.setTitle(R.string.warning);
+            warning.setMessage(R.string.resLost);
+            warning.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    Intent intent = new Intent(getBaseContext(), child_tests.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+             AlertDialog alert= warning.create(); ;
+                alert.show();
+
+        }
     }
+
+}

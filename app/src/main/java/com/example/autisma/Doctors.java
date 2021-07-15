@@ -5,24 +5,15 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.location.Location;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.widget.ListView;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.Request;
-import com.android.volley.VolleyError;
-
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.autisma.LOGIN.IP;
 

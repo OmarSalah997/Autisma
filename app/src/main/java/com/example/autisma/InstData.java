@@ -1,7 +1,5 @@
 package com.example.autisma;
 
-import android.location.Location;
-
 class InstData {
     String InstName;
     String loc;

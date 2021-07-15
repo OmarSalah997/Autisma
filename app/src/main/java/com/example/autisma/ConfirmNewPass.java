@@ -1,7 +1,5 @@
 package com.example.autisma;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.autisma.LOGIN.IP;
 

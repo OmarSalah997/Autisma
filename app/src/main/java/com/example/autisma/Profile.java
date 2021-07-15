@@ -1,17 +1,15 @@
 package com.example.autisma;
 
-import android.content.Context;
-
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Profile extends AppCompatActivity {

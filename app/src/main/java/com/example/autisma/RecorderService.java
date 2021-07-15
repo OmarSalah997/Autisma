@@ -1,74 +1,43 @@
  package com.example.autisma;
 
-import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.ProgressDialog;
-import android.app.Service;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.graphics.SurfaceTexture;
-import android.hardware.camera2.params.OutputConfiguration;
-import android.media.MediaMetadataRetriever;
-import android.media.MediaRecorder;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.IBinder;
+ import android.annotation.SuppressLint;
+ import android.app.NotificationChannel;
+ import android.app.NotificationManager;
+ import android.app.ProgressDialog;
+ import android.app.Service;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
+ import android.hardware.Camera;
+ import android.media.CamcorderProfile;
+ import android.media.MediaMetadataRetriever;
+ import android.media.MediaRecorder;
+ import android.net.Uri;
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.os.IBinder;
+ import android.util.Log;
+ import android.view.SurfaceHolder;
+ import android.view.SurfaceView;
+ import android.widget.Toast;
 
-import android.annotation.TargetApi;
-import android.app.Notification;
-import android.content.Context;
-import android.graphics.PixelFormat;
+ import com.google.android.gms.tasks.OnFailureListener;
+ import com.google.android.gms.tasks.OnSuccessListener;
+ import com.google.firebase.storage.FirebaseStorage;
+ import com.google.firebase.storage.OnProgressListener;
+ import com.google.firebase.storage.StorageReference;
+ import com.google.firebase.storage.UploadTask;
 
-import android.media.CamcorderProfile;
-import android.os.AsyncTask;
-import android.os.Binder;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.provider.Settings;
-import android.util.Base64;
-import android.util.Log;
-import android.util.Size;
-import android.view.Gravity;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.TextureView;
-import android.view.WindowManager;
-import android.widget.Toast;
-import android.widget.VideoView;
+ import java.io.File;
+ import java.util.UUID;
 
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.android.volley.Request;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-import java.util.UUID;
-
-import static com.example.autisma.LOGIN.IP;
-
+ import static com.example.autisma.LOGIN.IP;
 
 public class RecorderService extends Service  {
+    public static Uri Videopath=null;
     static final int REQUEST_VIDEO_CAPTURE = 1;
   //  private WindowManager windowManager;
     private SurfaceView surfaceview;
@@ -79,9 +48,7 @@ public class RecorderService extends Service  {
     private StorageReference storageReference;
     private Uri filePath;
     private File video ;
-    SharedPreferences preferences ;
     String directory_touploadto;
-    String Token  ;
     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
     @Override
     public void onCreate() {
@@ -169,6 +136,7 @@ public class RecorderService extends Service  {
 
     // Method called right after Surface created (initializing and starting MediaRecorder)
 
+    @SuppressLint("SetWorldReadable")
     public void startRec() {
 
         camera = openFrontFacingCameraGingerbread();
@@ -182,21 +150,24 @@ public class RecorderService extends Service  {
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mediaRecorder.setProfile(CamcorderProfile.get
-                (CamcorderProfile.QUALITY_LOW));
+                (CamcorderProfile.QUALITY_480P));
+
+
 
 
    /*     File imagesFolder = new File(getExternalFilesDir("VIDEOS_AUTISM"),System.currentTimeMillis()
                 + ".mp4");
         if (!imagesFolder.exists())
             imagesFolder.mkdirs(); // <---- */
-        File imagesFolder = new File(getApplicationContext().getFilesDir(),"autisma");
+        File imagesFolder = new File(getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
         if (!imagesFolder.exists())
             imagesFolder.mkdirs(); // <---- */
 
-        video = new File(imagesFolder, System.currentTimeMillis()
-                + ".mp4");  //file name + extension is .mp4
+        video = new File(imagesFolder, "V1" + ".mp4");  //file name + extension is .mp4
 
-
+          Videopath= Uri.fromFile(video);//.getAbsolutePath();
+                  //Uri.fromFile(new File(videoResource));
+        //=Uri.fromFile(video);
         mediaRecorder.setOutputFile(video.getAbsolutePath());
 
         Log.e("Media", video.getAbsolutePath());
@@ -208,7 +179,6 @@ public class RecorderService extends Service  {
         }
         try {
             mediaRecorder.start();
-
         } catch (Exception e) {
             Log.e("MEDIA RECORDER",
                     "MEDIA failed to start: ");
@@ -217,9 +187,6 @@ public class RecorderService extends Service  {
 
 
     }
-
-
-
     // Stop recording and remove SurfaceView
     @Override
     public void onDestroy() {
@@ -234,7 +201,7 @@ public class RecorderService extends Service  {
         //windowManager.removeView(surfaceView);
         Log.e("MEDIA RECORDER",
                 "on destroy called  ");
-       uploadVideo();
+       //uploadVideo();
      //  video.delete();
     }
 
@@ -267,7 +234,6 @@ startRec();
     public IBinder onBind(Intent intent) {
         return null;
     }
-
     public void uploadVideo() {
         filePath= Uri.fromFile(video);
 
