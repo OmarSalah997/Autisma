@@ -421,7 +421,9 @@ nextbutton.setText("Next");
     public void surfaceDestroyed(SurfaceHolder holder) {
        stopService(mIntent);
     }
-
+    @Override
+    public void onBackPressed () {
+    }
 
 }
 

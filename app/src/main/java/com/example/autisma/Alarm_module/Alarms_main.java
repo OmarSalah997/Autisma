@@ -2,6 +2,7 @@
 package com.example.autisma.Alarm_module;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
@@ -55,7 +58,7 @@ public class Alarms_main extends AppCompatActivity {
         rb = new ReminderDatabase(getApplicationContext());
 
         // Initialize views
-         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         FloatingActionButton mAddReminderButton = (FloatingActionButton) findViewById(R.id.add_reminder);
         mList = (RecyclerView) findViewById(R.id.reminder_list);
         mNoReminderView = (TextView) findViewById(R.id.no_reminder_text);
@@ -75,7 +78,14 @@ public class Alarms_main extends AppCompatActivity {
         // Setup toolbar
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.app_name);
-
+        //mToolbar.setTextAlignment(Paint.Align.LEFT);
+        mToolbar.setNavigationIcon(getDrawable(R.drawable.ic_baseline_arrow_back_24));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         // On clicking the floating action button
         mAddReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +97,7 @@ public class Alarms_main extends AppCompatActivity {
 
         // Initialize alarm
         mAlarmReceiver = new AlarmReceiver();
+
     }
 
     // Create context menu for long press actions
