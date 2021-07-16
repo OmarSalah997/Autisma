@@ -24,25 +24,16 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
-
-import static com.example.autisma.RecorderService.Videopath;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import wseemann.media.FFmpegMediaMetadataRetriever;
+
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;

@@ -19,7 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Settings extends AppCompatActivity {
+public class UserSettings extends AppCompatActivity {
     private Dialog Select_lang;
     private ListView list;
     @Override

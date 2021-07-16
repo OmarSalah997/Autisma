@@ -77,4 +77,10 @@ public class Profile extends AppCompatActivity {
             weblayout.setVisibility(View.INVISIBLE);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(Profile.this,Helpful_institiutions.class);
+        startActivity(intent);
+    }
 }

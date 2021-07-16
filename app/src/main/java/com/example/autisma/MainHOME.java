@@ -24,7 +24,6 @@ import com.google.android.material.navigation.NavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -83,7 +82,7 @@ public class MainHOME extends AppCompatActivity {
                         startActivity(alarms);
                         break;
                     case R.id.settings:
-                        Intent settings = new Intent(getApplicationContext(), Settings.class);
+                        Intent settings = new Intent(getApplicationContext(), UserSettings.class);
                         startActivity(settings);                        break;
                    /* case R.id.loguot:
                         Communication c = new Communication(MainHOME.this);

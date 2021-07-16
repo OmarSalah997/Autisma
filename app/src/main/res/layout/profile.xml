@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/whitegrey"
     android:orientation="vertical">
-
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="372dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,12 +54,11 @@
                 android:layout_height="match_parent"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="ftyuguy"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="280dp"
                 android:layout_marginRight="20dp"
-                android:textColor="#FFF">
+                android:textColor="@color/colorDarkBlue">
 
             </TextView>
 
@@ -66,19 +67,20 @@
 
 
     </RelativeLayout>
-
+</ScrollView>
     <LinearLayout
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp">
 
             <ImageView
                 android:layout_width="36dp"
@@ -91,16 +93,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
                 android:text="Maadi,Cairo"
                 android:textStyle="bold" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp">
 
             <ImageView
                 android:layout_width="36dp"
@@ -112,7 +115,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:text="+266 225 225"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -122,7 +126,8 @@
             android:orientation="horizontal"
             android:layout_marginTop="15dp"
             android:id="@+id/fb_layout"
-            android:paddingLeft="25dp" >
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp">
 
             <ImageView
                 android:layout_width="36dp"
@@ -133,10 +138,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/facebookLink"
-                android:paddingLeft="20dp"
-                android:text="صفحة الفيسبوك"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/facepage"
                 android:clickable="true"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:focusable="true" />
 
         </LinearLayout>
         <LinearLayout
@@ -145,19 +152,22 @@
             android:orientation="horizontal"
             android:layout_marginTop="15dp"
             android:id="@+id/web_layout"
-            android:paddingLeft="25dp" >
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp">
 
             <ImageView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/icons8_internet" />
+                android:src="@drawable/icons8_internet"
+                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
                 android:id="@+id/websiteLink"
-                android:text="الموقع الالكترونى"
+                android:text="@string/website"
                 android:textStyle="bold" />
 
         </LinearLayout>

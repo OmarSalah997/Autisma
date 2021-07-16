@@ -274,4 +274,9 @@
     <string name="resLost">إذا لم تكمل الاختبار, لن يتم احتساب النتيجة.</string>
     <string name="EmotionsGame">لعبة التعرّف على المشاعر</string>
     <string name="GuessNum">لعبة تخمين الرقم</string>
+    <string name="accessLocation">"برجاء اعطاء إذن الوصول الى موقعك للتطبيق "</string>
+    <string name="ok">حسناً</string>
+    <string name="accessDenied">الوصول غير متاح</string>
+    <string name="website">الموقع الإلكتروني</string>
+    <string name="facepage">صفحة الفيسبوك</string>
 </resources>
