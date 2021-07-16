@@ -11,8 +11,9 @@
     <com.microsoft.maps.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="500sp"
+        android:layout_height="450dp"
         android:layout_weight="1"
+        android:layout_marginBottom="10dp"
         />
     <ListView
         android:id="@+id/inst_list"

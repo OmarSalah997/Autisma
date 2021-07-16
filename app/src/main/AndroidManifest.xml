@@ -141,12 +141,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.child_tests" />
         </activity>
-        <activity android:name=".pressDotActivity" />
+        <activity android:name=".pressDotActivity"
+            android:theme="@style/mainTheme"/>
         <activity android:name=".Helpful_institiutions"
-            android:noHistory="true"/>
-        <activity android:name=".Doctors" />
+            android:noHistory="true"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
+        <activity android:name=".Doctors"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity android:name=".Profile"
-            android:noHistory="true"/>
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".Alarm_module.Alarms_main"
             android:label="@string/app_name" />

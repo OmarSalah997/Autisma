@@ -1,9 +1,13 @@
 package com.example.autisma;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,8 +25,6 @@ public class Main5Q extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5_q);
-
-
         Intent intent = getIntent();
         final int childage=intent.getIntExtra("Age",0);//200 = toddler , 300= bigger than toddler
         if(getSupportActionBar()!=null)
@@ -79,22 +81,22 @@ public class Main5Q extends AppCompatActivity {
                         {
                             Qnumber.setText(String.valueOf(questionNumber));
                         }
-
                 }
             }
         });
     }
-
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        if(questionNumber==1)
+        {super.onBackPressed();
+        return;}
         if(questionNumber>1)
         {
             final AlertDialog.Builder warning = new AlertDialog.Builder(this);
             warning.setIcon(R.drawable.ic_baseline_g_translate_24);
             warning.setTitle(R.string.warning);
             warning.setMessage(R.string.resLost);
-            warning.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+            warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
             {
                 @Override
                 public void onClick(DialogInterface dialog, int which)
@@ -105,10 +107,17 @@ public class Main5Q extends AppCompatActivity {
                     finish();
                 }
             });
-             AlertDialog alert= warning.create(); ;
-                alert.show();
-
+            warning.setNegativeButton(getString(R.string.cancel),new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+                warning.show();
         }
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) { onBackPressed();  return true; }
+        return super.onOptionsItemSelected(item);
+    }
 }

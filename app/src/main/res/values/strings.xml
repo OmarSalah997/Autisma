@@ -286,5 +286,20 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="accessDenied">Access Denied</string>
     <string name="website">Website</string>
     <string name="facepage">Facebook page</string>
+    <string name="Dreamschool">Dream school</string>
+    <string name="Happyworldschool">Happy world school</string>
+    <string name="ElYousreschool">El Yousre school</string>
+    <string name="Zaiedmedicalcenter">Zaied medical center</string>
+    <string name="Goldenmedicalcenter">Golden medical center</string>
+    <string name="Dr.Hannan">Dr.Hannan mahmod speech center</string>
+    <string name="Alwaysfriends">Always friends treatment center</string>
+    <string name="EgyptianAssociation">Egyptian Association for Autism</string>
+    <string name="EbnyFoundation">Ebny Foundation for Autism</string>
+    <string name="KayanAssociation">Kayan Association</string>
+    <string name="TheEgyptianCanadian">The Egyptian-Canadian Center</string>
+    <string name="SwedishCenter">Swedish Center For Special Needs</string>
+    <string name="MaadiCenter">Maadi Center for Educational Services</string>
+    <string name="Dr.Mona">Dr.Mona elshikh</string>
+    <string name="Dr.Manal">Dr.Manal Omar</string>
 
 </resources>
