@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EmotionTest" />
+        <activity android:name=".EmotionTest"
+            android:theme="@style/mainTheme"/>
         <activity
             android:name=".Main5Q"
             android:theme="@style/mainTheme"

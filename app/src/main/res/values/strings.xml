@@ -301,5 +301,9 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="MaadiCenter">Maadi Center for Educational Services</string>
     <string name="Dr.Mona">Dr.Mona elshikh</string>
     <string name="Dr.Manal">Dr.Manal Omar</string>
+    <string name="Dr.maha">Dr.Maha Emad Eldin</string>
+    <string name="Dr.Souad">Dr.Souad Musa</string>
+    <string name="Emotest1">The following test is designed to determine a child\'s ability to understand emotions</string>
+    <string name="Emotest2">An image representing an emotion will appear for 3 seconds, once it appears the child must imitate the same emotion with his face so the camera can capture it, then press next to display the next image.</string>
 
 </resources>

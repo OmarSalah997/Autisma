@@ -294,4 +294,8 @@
     <string name="MaadiCenter">مركز المعادي للخدمات التعليمية</string>
     <string name="Dr.Mona">د.منى الشيخ</string>
     <string name="Dr.Manal">د.منال عمر</string>
+    <string name="Dr.maha">د.مها عماد الدين</string>
+    <string name="Dr.Souad">د.سعاد موسى</string>
+    <string name="Emotest1">تم تصميم الاختبار التالي لتحديد قدرة الطفل على فهم المشاعر</string>
+    <string name="Emotest2">ستظهر صورة تمثل عاطفة لمدة 3 ثوان ، بمجرد ظهورها يجب على الطفل تقليد نفس المشاعر بوجهه حتى تتمكن الكاميرا من التقاطها ، ثم اضغط على التالي لعرض الصورة التالية.</string>
 </resources>

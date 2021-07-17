@@ -58,8 +58,8 @@ public class Doctors extends AppCompatActivity {
         mPinLayer = new MapElementLayer();
         Helpful_institiutions.pin p1= new Helpful_institiutions.pin(30.12183384226699, 31.368656918354688, getString(R.string.Dr_Mona));
         Helpful_institiutions.pin p2= new Helpful_institiutions.pin(30.09660215940048, 31.332898316503414, getString(R.string.Dr_Manal));
-        Helpful_institiutions.pin p3= new Helpful_institiutions.pin(29.96518362865358, 31.276615931850795, getString(R.string.ElYousreschool));
-        Helpful_institiutions.pin p4= new Helpful_institiutions.pin(30.06357704537131, 31.212207540302487, getString(R.string.Zaiedmedicalcenter));
+        Helpful_institiutions.pin p3= new Helpful_institiutions.pin(29.96518362865358, 31.276615931850795, getString(R.string.Dr_maha));
+        Helpful_institiutions.pin p4= new Helpful_institiutions.pin(30.06357704537131, 31.212207540302487, getString(R.string.Dr_Souad));
         Helpful_institiutions.pin p5= new Helpful_institiutions.pin(30.087603346677867, 31.33889943184763, getString(R.string.Goldenmedicalcenter));
         Helpful_institiutions.pin p6= new Helpful_institiutions.pin(29.982979680365673, 31.31432811835838, getString(R.string.Dr_Hannan));
         Helpful_institiutions.pin p7= new Helpful_institiutions.pin(30.010486153250756, 31.28853283184964, getString(R.string.Alwaysfriends));
@@ -113,8 +113,8 @@ public class Doctors extends AppCompatActivity {
 
         arrayList.add(new InstData(getString(R.string.Dr_Mona), "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "01099221443", "أستاذ الطب النفسي كلية الطب جامعة عين شمس – إستشاري وحدة الأطفال والمراهقين مستشفى د. عادل صادق"));
         arrayList.add(new InstData(getString(R.string.Dr_Manal), "39 ش الامام على - الدور 4-ميدان الاسماعيلية - مصر الجديدة", "doctor", "01008811351", "استشارى الطب النفسى"));
-        arrayList.add(new InstData("د. مها عماد الدين", "5 ش 216،, معادي السرايات الغربية، حي المعادي", "doctor", "0225210734", " إستشارى الطب النفسى للأطفال والمراهقين"));
-        arrayList.add(new InstData("د. سعاد موسى", " 197 أ ش 26 يوليو ميدان سفنكس، الجيزة، العجوزة", "doctor", "02233022027", "أستاذ طب نفسي أطفال"));
+        arrayList.add(new InstData(getString(R.string.Dr_maha), "5 ش 216،, معادي السرايات الغربية، حي المعادي", "doctor", "0225210734", " إستشارى الطب النفسى للأطفال والمراهقين"));
+        arrayList.add(new InstData(getString(R.string.Dr_Souad), " 197 أ ش 26 يوليو ميدان سفنكس، الجيزة، العجوزة", "doctor", "02233022027", "أستاذ طب نفسي أطفال"));
         arrayList.add(new InstData("د. هالة حماد", "95 ب ش الميرغنى برج الشمس أمام ماكدونالدز المطار مصر الجديدة،", "doctor", "02222914419", "استشاري الطب النفسي \" المركز الاستشاري البريطاني للاطفال والمراهقين"));
         arrayList.add(new InstData("د. داليا مصطفى", "9 شارع المختار-الروضة-المنيل", "doctor", "01021760100", " أستاذ أمراض التخاطب بكلية الطب - جامعة القاهرة"));
         arrayList.add(new InstData("د. طارق السحراوي", "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "0226205757", "مدرس الطب النفسى كلية الطب جامعة عين شمس – إستشارى وحدة الأطفال مستشفى د. عادل صادق"));
