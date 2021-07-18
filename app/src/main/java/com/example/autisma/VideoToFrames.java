@@ -8,10 +8,13 @@ import android.graphics.Path;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 
+import com.google.mlkit.vision.face.FaceLandmark;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
@@ -21,6 +24,7 @@ public class VideoToFrames {
     private int mode;
     public final ArrayList<Bitmap> frames= new ArrayList<>();
     public ArrayList<Bitmap> croppedframes=new ArrayList<>();
+    public List<FaceLandmark> landmarks;
     public VideoToFrames(int mode) {
         this.mode=mode;
     }
@@ -56,6 +60,7 @@ public class VideoToFrames {
                         int dummy;
                     }
                     croppedframes=D.Croppedframes;
+                    landmarks=D.landmarks;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -67,10 +72,10 @@ public class VideoToFrames {
                 Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
                 if(bmp2!=null)
                 {
-                    Matrix matrix = new Matrix();
-                    matrix.postRotate(270);
-                    Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
-                    frames.add(b3);
+                   // Matrix matrix = new Matrix();
+                   // matrix.postRotate(270);
+                   // Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
+                    frames.add(bmp2);
                 }
 
                 //saveToInternalStorage(bmp2,String.valueOf(i),context);
@@ -88,6 +93,7 @@ public class VideoToFrames {
                     int dummy;
                 }
                 croppedframes=D.Croppedframes;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

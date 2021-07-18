@@ -27,6 +27,7 @@ import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
+import com.google.mlkit.vision.face.FaceLandmark;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -121,6 +122,7 @@ public class ToddlerResult extends AppCompatActivity {
             Scorebar.setVisibility(View.VISIBLE);
             done.setVisibility(View.VISIBLE);
             frames=converter.croppedframes;
+            List<FaceLandmark> landmarks=converter.landmarks;
             if(Result<=6)
             {
                 float f=((float) Result/(float)24)*100;
