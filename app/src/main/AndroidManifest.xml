@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.autisma">
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:allowBackup="false"
         android:icon="@drawable/app_icon_200x200no_title"
@@ -11,22 +13,47 @@
         android:roundIcon="@mipmap/ic_launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".EmotionTest"></activity>
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true">
+        <activity android:name=".EmotionTest"
+            android:theme="@style/mainTheme"/>
         <activity
             android:name=".Main5Q"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".ToddlerResult"
             android:screenOrientation="portrait"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".ToddlerTestIntro"
-            android:theme="@style/mainTheme" />
-        <activity android:name=".feeling_game" />
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
+        <activity android:name=".feeling_game"
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".Gilliam_score"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".Gilliam_main"
             android:theme="@style/mainTheme" />
@@ -86,7 +113,7 @@
         </activity>
         <activity android:name=".Change_password" />
         <activity
-            android:name=".Settings"
+            android:name=".UserSettings"
             android:theme="@style/Theme.AppCompat.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -117,10 +144,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.child_tests" />
         </activity>
-        <activity android:name=".pressDotActivity" />
-        <activity android:name=".Helpful_institiutions" />
-        <activity android:name=".Doctors" />
-        <activity android:name=".Profile" />
+        <activity android:name=".pressDotActivity"
+            android:theme="@style/mainTheme"/>
+        <activity android:name=".Helpful_institiutions"
+            android:noHistory="true"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
+        <activity android:name=".Doctors"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
+        <activity android:name=".Profile"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".Alarm_module.Alarms_main"
             android:label="@string/app_name" />
@@ -143,16 +187,11 @@
             android:enabled="true"
             android:exported="true" />
     </application>
-
     <compatible-screens>
         <screen
             android:screenDensity="hdpi"
             android:screenSize="normal" />
     </compatible-screens>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -164,7 +203,4 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 </manifest>

@@ -8,16 +8,17 @@
     tools:context=".Alarm_module.Alarms_main"
     >
 
-    <androidx.appcompat.widget.Toolbar
+     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="?attr/actionBarSize"
-
         app:contentInsetLeft="0dp"
         app:contentInsetStart="16dp"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@drawable/gradient_color" />
+         android:background="@drawable/gradient_color"
+         android:textAlignment="textEnd">
+     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reminder_list"

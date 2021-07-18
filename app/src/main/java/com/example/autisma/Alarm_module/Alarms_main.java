@@ -1,6 +1,8 @@
 
 package com.example.autisma.Alarm_module;
+
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -8,14 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
@@ -23,6 +22,7 @@ import com.bignerdranch.android.multiselector.MultiSelector;
 import com.bignerdranch.android.multiselector.SwappingHolder;
 import com.example.autisma.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +31,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 public class Alarms_main extends AppCompatActivity {
     private RecyclerView mList;
     private SimpleAdapter mAdapter;
@@ -51,7 +58,7 @@ public class Alarms_main extends AppCompatActivity {
         rb = new ReminderDatabase(getApplicationContext());
 
         // Initialize views
-         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         FloatingActionButton mAddReminderButton = (FloatingActionButton) findViewById(R.id.add_reminder);
         mList = (RecyclerView) findViewById(R.id.reminder_list);
         mNoReminderView = (TextView) findViewById(R.id.no_reminder_text);
@@ -71,7 +78,14 @@ public class Alarms_main extends AppCompatActivity {
         // Setup toolbar
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.app_name);
-
+        //mToolbar.setTextAlignment(Paint.Align.LEFT);
+        mToolbar.setNavigationIcon(getDrawable(R.drawable.ic_baseline_arrow_back_24));
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         // On clicking the floating action button
         mAddReminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +97,7 @@ public class Alarms_main extends AppCompatActivity {
 
         // Initialize alarm
         mAlarmReceiver = new AlarmReceiver();
+
     }
 
     // Create context menu for long press actions

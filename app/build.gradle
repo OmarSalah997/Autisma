@@ -1,18 +1,22 @@
+apply from: 'secrets.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
     defaultConfig {
         applicationId "com.example.autisma"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -20,7 +24,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        buildTypes.each {
+            it.buildConfigField "String", "CREDENTIALS_KEY", "\"$credentialsKey\""
+        }
     }
+    buildFeatures {
+        mlModelBinding true
+    }
+
 }
 
 dependencies {
@@ -39,7 +50,10 @@ dependencies {
     // Declare the dependency for the Cloud Storage library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-storage'
-   // implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.2.0'
+    // implementation 'com.google.firebase:firebase-auth:16.0.5'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -51,5 +65,9 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15'
+    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.15'
+    implementation 'com.google.mlkit:face-detection:16.1.2'
+    implementation 'com.microsoft.maps:maps-sdk:1.2.0'
 
 }

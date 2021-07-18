@@ -1,0 +1,4 @@
+#Sun Jul 11 22:10:47 EET 2021
+base.0=F\:\\Autisma\\java\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

@@ -10,6 +10,7 @@
         <item name="titleTextColor">@android:color/white</item>
         <item name="subtitleTextColor">@android:color/white</item>
         <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_baseline_arrow_back_24</item>
     </style>
 <style name="checkbox_style">
     parent="@style/Widget.AppCompat.CompoundButton.CheckBox"

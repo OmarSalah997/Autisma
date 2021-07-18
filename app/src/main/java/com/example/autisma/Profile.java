@@ -1,17 +1,16 @@
 package com.example.autisma;
 
-import android.content.Context;
-
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Profile extends AppCompatActivity {
@@ -24,6 +23,11 @@ public class Profile extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
         getIntent().hasExtra("inst_img");
         String profile_name = getIntent().getStringExtra("inst_name");
         String img_name = getIntent().getStringExtra("inst_img");
@@ -78,5 +82,12 @@ public class Profile extends AppCompatActivity {
             LinearLayout weblayout = findViewById(R.id.web_layout);
             weblayout.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(Profile.this,Helpful_institiutions.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,11 +1,5 @@
 package com.example.autisma;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -14,16 +8,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +24,13 @@ import com.google.android.material.navigation.NavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import static com.example.autisma.LOGIN.IP;
 
@@ -88,7 +82,7 @@ public class MainHOME extends AppCompatActivity {
                         startActivity(alarms);
                         break;
                     case R.id.settings:
-                        Intent settings = new Intent(getApplicationContext(), Settings.class);
+                        Intent settings = new Intent(getApplicationContext(), UserSettings.class);
                         startActivity(settings);                        break;
                    /* case R.id.loguot:
                         Communication c = new Communication(MainHOME.this);

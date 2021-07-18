@@ -1,7 +1,5 @@
 package com.example.autisma;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +10,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class opening extends AppCompatActivity {
     Animation updown;

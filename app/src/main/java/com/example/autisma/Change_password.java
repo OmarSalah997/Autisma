@@ -1,8 +1,8 @@
 package com.example.autisma;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Change_password extends AppCompatActivity {
 

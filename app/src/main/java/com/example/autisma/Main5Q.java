@@ -1,16 +1,22 @@
 package com.example.autisma;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Main5Q extends AppCompatActivity {
     int total_score=0;
@@ -75,9 +81,43 @@ public class Main5Q extends AppCompatActivity {
                         {
                             Qnumber.setText(String.valueOf(questionNumber));
                         }
-
                 }
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        if(questionNumber==1)
+        {super.onBackPressed();
+        return;}
+        if(questionNumber>1)
+        {
+            final AlertDialog.Builder warning = new AlertDialog.Builder(this);
+            warning.setIcon(R.drawable.ic_baseline_g_translate_24);
+            warning.setTitle(R.string.warning);
+            warning.setMessage(R.string.resLost);
+            warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    Intent intent = new Intent(getBaseContext(), child_tests.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            warning.setNegativeButton(getString(R.string.cancel),new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+                warning.show();
+        }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) { onBackPressed();  return true; }
+        return super.onOptionsItemSelected(item);
+    }
+}
