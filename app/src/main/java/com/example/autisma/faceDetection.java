@@ -20,6 +20,7 @@ import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
+import com.google.mlkit.vision.face.FaceLandmark;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,8 +42,10 @@ public class faceDetection {
         Uri imgPath;
         Bitmap image;
         int mode;
+        int x=0;
         ArrayList<Bitmap> frames;
         ArrayList<Bitmap> Croppedframes= new ArrayList<>();
+    List<FaceLandmark> landmarks;
     public faceDetection(Context context,ArrayList<Bitmap> frames,int mode) throws IOException {
         this.context=context;
         imgPath=Uri.parse(context.getExternalFilesDir(null)+"/autizma/");
@@ -52,6 +55,7 @@ public class faceDetection {
     public void detect() throws IOException {
         FaceDetectorOptions LandMarksOn = new FaceDetectorOptions.Builder()
                 .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+                .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
                 .build();
         FaceDetector detector = FaceDetection.getClient(LandMarksOn);
         for(int i=0; i<frames.size();i++){
@@ -96,6 +100,7 @@ public class faceDetection {
                                         if(cropped!=null) {
                                       //      saveToInternalStorage(cropped, "Face" + finalI, mode);
                                             Croppedframes.add(cropped);
+                                          landmarks=face.getAllLandmarks();
                                         }
                                     }
 
@@ -108,7 +113,7 @@ public class faceDetection {
                 @Override
                 public void onComplete(@NonNull Task<List<Face>> task) {
                     {
-                        int z;
+
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -116,7 +121,15 @@ public class faceDetection {
                     public void onFailure(@NonNull Exception e) {
                         int fail;
                     }
-                });}
+                });
+                while (!result.isComplete());
+                {
+                    int f;
+                }
+                x++;
+                if(x==frames.size()-1)
+                    DetectionComplete=true;
+            }
 
         }
     }

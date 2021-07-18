@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
@@ -61,6 +63,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
     ImageView img;
     MediaRecorder mMediaRecorder;
     File mCurrentFile;
+    Button ToDotTest;
     private String myCameraID;
     private CameraManager myCameraManager;
     private CameraDevice myCameraDevice;
@@ -106,7 +109,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         if (!checkPermission()) {
             requestPermission();
         }
-        Button ToDotTest=findViewById(R.id.emotion_done);
+         ToDotTest=findViewById(R.id.emotion_done);
         ToDotTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,10 +125,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     instructions.setVisibility(View.GONE);
                     cameraPreview.setVisibility(View.VISIBLE);
                     img.setVisibility(View.VISIBLE);
-                   // OpencameraPreview();
+                    ToDotTest.setVisibility(View.INVISIBLE);
                     Picasso.get()
                             .load(R.drawable.happy3)
-                            .resize(760, 720)
+                            .resize(800, 760)
                             .into(img);
                     try {
                         happy1[0] =captureEmotion("happy1");
@@ -137,12 +140,13 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 if(clickCount==2)
                 {
                     clickCount++;
+                  //  ToDotTest.setVisibility(View.INVISIBLE);
                     Picasso.get()
                             .load(R.drawable.sad4)
                             .resize(760, 720)
                             .into(img);
                     try {
-                         sad1[0] =captureEmotion("sad1");
+                  //       sad1[0] =captureEmotion("sad1");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -154,12 +158,13 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 if(clickCount==3)
                 {
                     clickCount++;
+                  //  ToDotTest.setVisibility(View.INVISIBLE);
                     Picasso.get()
                             .load(R.drawable.happy5)
                             .resize(760, 720)
                             .into(img);
                     try {
-                         happy2[0] =captureEmotion("happy2");
+                   //      happy2[0] =captureEmotion("happy2");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -170,12 +175,13 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 if(clickCount==4)
                 {
                     clickCount++;
+                  //  ToDotTest.setVisibility(View.INVISIBLE);
                     Picasso.get()
                             .load(R.drawable.angry2)
                             .resize(760, 720)
                             .into(img);
                     try {
-                         angry1[0] =captureEmotion("angry1");
+                       //  angry1[0] =captureEmotion("angry1");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -186,12 +192,13 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 if(clickCount==5)
                 {
                     clickCount++;
+                   // ToDotTest.setVisibility(View.INVISIBLE);
                     Picasso.get()
                             .load(R.drawable.happy7)
                             .resize(760, 720)
                             .into(img);
                     try {
-                         happy3[0] =captureEmotion("happy3");
+                        // happy3[0] =captureEmotion("happy3");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -205,7 +212,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     VideoToFrames v1=new VideoToFrames(2);
                     v1.convert(happy1[0],getBaseContext());
                     happy1Frames=v1.croppedframes;
-                    v1=new VideoToFrames(2);
+                    /*v1=new VideoToFrames(2);
                     v1.convert(sad1[0],getBaseContext());
                     sad1Frames=v1.croppedframes;
                     v1=new VideoToFrames(2);
@@ -216,7 +223,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     v1=new VideoToFrames(2);
                     angry1Frames=v1.croppedframes;
                     v1.convert(happy3[0],getBaseContext());
-                    happy3Frames=v1.croppedframes;
+                    happy3Frames=v1.croppedframes;*/
                     finish();
                 }
             }
@@ -237,6 +244,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             myCameraDevice.close();
             myCameraDevice = null;
         }
+
     };
 
     private void openCamera() {
@@ -253,39 +261,12 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         }
     }
 
-/*
-    public void OpencameraPreview(){
-        SurfaceTexture mySurfaceTexture = cameraPreview.getSurfaceTexture();
-        Surface mySurface = new Surface(mySurfaceTexture);
-        try {
-            myCaptureRequestBuilder = myCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            myCaptureRequestBuilder.addTarget(mySurface);
-            myCameraDevice.createCaptureSession(Arrays.asList(mySurface), new CameraCaptureSession.StateCallback() {
-                        @Override
-                        public void onConfigured(@NonNull CameraCaptureSession session) {
-                            myCameraCaptureSession = session;
-                            myCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-                            try {
-                                myCameraCaptureSession.setRepeatingRequest(myCaptureRequestBuilder.build(), null, null);
-                            } catch (CameraAccessException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                        }
-                    }, null
-            );
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-}
-*/
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         cameraPreview.setSurfaceTextureListener(this); }
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+
     }
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
@@ -313,6 +294,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     public void run() {
                         try {
                             stopRecordingVideo();
+                            ToDotTest.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -340,7 +322,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         mMediaRecorder.setVideoSize(640, 480);
         mMediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        mMediaRecorder.setOrientationHint(270);
+        mMediaRecorder.setOrientationHint(0);
         mMediaRecorder.prepare();
         return vpath;
     }

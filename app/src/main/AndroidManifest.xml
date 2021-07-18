@@ -17,7 +17,9 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true">
         <activity android:name=".EmotionTest"
-            android:theme="@style/mainTheme"/>
+            android:theme="@style/mainTheme"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".Main5Q"
             android:theme="@style/mainTheme"
