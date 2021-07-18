@@ -3,8 +3,10 @@ package com.example.autisma;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Path;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -40,6 +42,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -55,7 +58,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
     TextureView cameraPreview;
     TextView instructions;
     int clickCount=0;
-    Button next;
     ImageView img;
     MediaRecorder mMediaRecorder;
     File mCurrentFile;
@@ -68,10 +70,21 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
     private CaptureRequest.Builder myCaptureRequestBuilder2;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    private ArrayList<Bitmap> happy1Frames=new ArrayList<>();
+    private ArrayList<Bitmap> happy2Frames=new ArrayList<>();
+    private ArrayList<Bitmap> happy3Frames=new ArrayList<>();
+    private ArrayList<Bitmap> sad1Frames=new ArrayList<>();
+    private ArrayList<Bitmap> angry1Frames=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         final int score = intent.getIntExtra("5Qscore",0);
+        final Uri[] happy1 = new Uri[1];
+        final Uri[] happy2 = new Uri[1];
+        final Uri[] happy3 = new Uri[1];
+        final Uri[] sad1 = new Uri[1];
+        final Uri[] angry1 = new Uri[1];
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion_test);
         instructions=findViewById(R.id.instructions);
@@ -107,6 +120,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 {
                     clickCount++;
                     instructions.setVisibility(View.GONE);
+                    cameraPreview.setVisibility(View.VISIBLE);
                     img.setVisibility(View.VISIBLE);
                    // OpencameraPreview();
                     Picasso.get()
@@ -114,7 +128,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                       captureEmotion("happy1");
+                        happy1[0] =captureEmotion("happy1");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -128,10 +142,12 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                        captureEmotion("sad1");
+                         sad1[0] =captureEmotion("sad1");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                     return;
 
                 }
@@ -143,7 +159,8 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                        captureEmotion("happy2");
+                         happy2[0] =captureEmotion("happy2");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -158,7 +175,8 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                        captureEmotion("angry1");
+                         angry1[0] =captureEmotion("angry1");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -173,14 +191,34 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                        captureEmotion("happy3");
+                         happy3[0] =captureEmotion("happy3");
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     return;
                 }
-                Intent myIntent = new Intent(getApplicationContext(), pressDotActivity.class);
-                startActivity(myIntent);
+                if(clickCount>5)
+                {
+                    Intent myIntent = new Intent(getApplicationContext(), pressDotActivity.class);
+                    startActivity(myIntent);
+                    VideoToFrames v1=new VideoToFrames(2);
+                    v1.convert(happy1[0],getBaseContext());
+                    happy1Frames=v1.croppedframes;
+                    v1=new VideoToFrames(2);
+                    v1.convert(sad1[0],getBaseContext());
+                    sad1Frames=v1.croppedframes;
+                    v1=new VideoToFrames(2);
+                    v1.convert(happy2[0],getBaseContext());
+                    happy2Frames=v1.croppedframes;
+                    v1=new VideoToFrames(2);
+                    v1.convert(angry1[0],getBaseContext());
+                    v1=new VideoToFrames(2);
+                    angry1Frames=v1.croppedframes;
+                    v1.convert(happy3[0],getBaseContext());
+                    happy3Frames=v1.croppedframes;
+                    finish();
+                }
             }
         });
     }
@@ -215,7 +253,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         }
     }
 
-
+/*
     public void OpencameraPreview(){
         SurfaceTexture mySurfaceTexture = cameraPreview.getSurfaceTexture();
         Surface mySurface = new Surface(mySurfaceTexture);
@@ -242,33 +280,27 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             e.printStackTrace();
         }
 }
-
+*/
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        cameraPreview.setSurfaceTextureListener(this);
-    }
-
+        cameraPreview.setSurfaceTextureListener(this); }
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
     }
-
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
         return false;
     }
-
     @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-    }
-    public void captureEmotion(final String path) throws Exception {
+    public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {}
+    public Uri captureEmotion(final String path) throws Exception {
+        final Uri[] vpath = new Uri[1];
         runOnUiThread(
                 new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            setUpMediaRecorder(EmotionTest.this,getBaseContext(),path);
+                          vpath[0] =  setUpMediaRecorder(EmotionTest.this,getBaseContext(),path);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -288,39 +320,33 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 }
                 ,
                 4000);
+        return vpath[0];
     }
-    private void setUpMediaRecorder(Activity activity,Context context,String path) throws IOException {
+    private Uri setUpMediaRecorder(Activity activity,Context context,String path) throws IOException {
         if (null == activity) {
-            return;
+            return null;
         }
         mMediaRecorder = new MediaRecorder();
-        //.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        /**
-         * create video output file
-         */
         File imagesFolder = new File(getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
         if (!imagesFolder.exists())
             imagesFolder.mkdirs();
-         mCurrentFile= new File(imagesFolder, path + ".mp4");
-        /**
-         * set output file in media recorder
-         */
+        mCurrentFile= new File(imagesFolder, path + ".mp4");
+        Uri vpath=Uri.parse(mCurrentFile.getPath());
         mMediaRecorder.setOutputFile(mCurrentFile.getPath());
         CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_480P);
         mMediaRecorder.setVideoFrameRate(profile.videoFrameRate);
-        mMediaRecorder.setVideoSize(720, 480);
+        mMediaRecorder.setVideoSize(640, 480);
         mMediaRecorder.setVideoEncodingBitRate(profile.videoBitRate);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setOrientationHint(270);
         mMediaRecorder.prepare();
+        return vpath;
     }
 
     public void startRecordingVideo() {
-        if (!cameraPreview.isAvailable()) {
-            return;
-        }
+        if (!cameraPreview.isAvailable()) {return; }
         try {
             SurfaceTexture texture = cameraPreview.getSurfaceTexture();
             texture.setDefaultBufferSize(cameraPreview.getWidth(),cameraPreview.getHeight());
@@ -329,12 +355,9 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             Surface previewSurface = new Surface(texture);
             surfaces.add(previewSurface);
             myCaptureRequestBuilder.addTarget(previewSurface);
-            //MediaRecorder setup for surface
             Surface recorderSurface = mMediaRecorder.getSurface();
             surfaces.add(recorderSurface);
-
             myCaptureRequestBuilder.addTarget(recorderSurface);
-            // Start a capture session
             try{
             myCameraDevice.createCaptureSession(surfaces,
                     new CameraCaptureSession.StateCallback() {
@@ -369,14 +392,13 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             e.printStackTrace();
         }
     }
+    /*
     private void startBackgroundThread() {
         mBackgroundThread = new HandlerThread("CameraBackground");
         mBackgroundThread.start();
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
     }
-    /**
-     * Stops the background thread and its {@link Handler}.
-     */
+
     private void stopBackgroundThread() {
         mBackgroundThread.quitSafely();
         try {
@@ -386,9 +408,8 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     public void stopRecordingVideo() throws Exception {
-
         try {
             myCameraCaptureSession2.stopRepeating();
             myCameraCaptureSession2.abortCaptures();
@@ -398,8 +419,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         // Stop recording
         mMediaRecorder.stop();
         mMediaRecorder.reset();
-        //OpencameraPreview();
-
     }
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{RECORD_AUDIO, CAMERA, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
@@ -409,5 +428,30 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
         int result3=ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
         return result1==PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED && result3==PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        final AlertDialog.Builder warning = new AlertDialog.Builder(this);
+        warning.setIcon(R.drawable.ic_baseline_g_translate_24);
+        warning.setTitle(R.string.warning);
+        warning.setMessage(R.string.resLost);
+        warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(getBaseContext(), child_tests.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        warning.setNegativeButton(getString(R.string.cancel),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        warning.show();
     }
 }

@@ -1,8 +1,12 @@
 package com.example.autisma;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.graphics.Path;
 import android.net.Uri;
+import android.provider.OpenableColumns;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,7 +19,8 @@ import static com.example.autisma.RecorderService.Videopath;
 
 public class VideoToFrames {
     private int mode;
-    private final ArrayList<Bitmap> frames= new ArrayList<>();
+    public final ArrayList<Bitmap> frames= new ArrayList<>();
+    public ArrayList<Bitmap> croppedframes=new ArrayList<>();
     public VideoToFrames(int mode) {
         this.mode=mode;
     }
@@ -29,27 +34,63 @@ public class VideoToFrames {
             {
             }
         }
-        for (int i = 0; i< 340; i++)
+        if(mode==1)//eye gaze
         {
-            FFmpegMediaMetadataRetriever.Metadata met=  retriever.getMetadata();
-            Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
-            frames.add(bmp2);
-            //saveToInternalStorage(bmp2,String.valueOf(i),context);
-        }
-        retriever.release();
-        Videopath=null;
-        File imagesFolder = new File(context.getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
-        File video = new File(imagesFolder, "V1" + ".mp4");
-        video.delete();
-        try {
-            faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
-            D.detect();
-            while (!D.DetectionComplete)
+            for (int i = 0; i< 340; i++)
             {
-                int dummy;
+                Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
+                if(bmp2!=null)
+                    frames.add(bmp2);
+                //saveToInternalStorage(bmp2,String.valueOf(i),context);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+                retriever.release();
+                Videopath=null;
+                File imagesFolder = new File(context.getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
+                File video = new File(imagesFolder, "V1" + ".mp4");
+                video.delete();
+                try {
+                    faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
+                    D.detect();
+                    while (!D.DetectionComplete)
+                    {
+                        int dummy;
+                    }
+                    croppedframes=D.Croppedframes;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+        if(mode==2)//emotion test
+        {
+            for (int i = 0; i<35; i++)
+            {
+                Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
+                if(bmp2!=null)
+                {
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(270);
+                    Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
+                    frames.add(b3);
+                }
+
+                //saveToInternalStorage(bmp2,String.valueOf(i),context);
+            }
+            retriever.release();
+            File imagesFolder = new File(context.getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
+            String fileName=getFileName(videopath,context);
+            File video = new File(imagesFolder, fileName );
+            video.delete();
+            try {
+                faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
+                D.detect();
+                while (!D.DetectionComplete)
+                {
+                    int dummy;
+                }
+                croppedframes=D.Croppedframes;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return true;
     }
@@ -77,4 +118,9 @@ public class VideoToFrames {
         }
         return directory.getAbsolutePath();
     }
-}
+    public String getFileName(Uri uri,Context context) {
+        if (uri != null) {
+            String[] splits = uri.getPath().split(File.separator);
+            return splits[splits.length - 1]; }
+        return null;
+}}

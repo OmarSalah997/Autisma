@@ -31,6 +31,7 @@ import com.google.mlkit.vision.face.FaceDetectorOptions;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,6 +50,8 @@ public class ToddlerResult extends AppCompatActivity {
     com.github.lzyzsd.circleprogress.DonutProgress Scorebar;
     TextView scoretxt;
     Button done;
+    private ArrayList<Bitmap> frames= new ArrayList<>();
+    VideoToFrames converter=new VideoToFrames(1); //mode =1 : eyegaze   mode = 2 : emotion
     int Result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,7 @@ public class ToddlerResult extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
         Intent intent = new Intent(getBaseContext(), MainHOME.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -106,7 +110,6 @@ public class ToddlerResult extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public class MyAsyncTask extends AsyncTask<Void, Void, String> {
         @Override protected String doInBackground(Void... params) {
-            VideoToFrames converter=new VideoToFrames(2); //mode =1 : eyegaze   mode = 2 : emotion
             converter.convert(Videopath,getBaseContext());
             return "Executed";
         }
@@ -117,6 +120,7 @@ public class ToddlerResult extends AppCompatActivity {
             details.setVisibility(View.VISIBLE);
             Scorebar.setVisibility(View.VISIBLE);
             done.setVisibility(View.VISIBLE);
+            frames=converter.croppedframes;
             if(Result<=6)
             {
                 float f=((float) Result/(float)24)*100;
