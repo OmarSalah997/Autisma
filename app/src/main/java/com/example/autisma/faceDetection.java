@@ -122,6 +122,7 @@ public class faceDetection {
                         int fail;
                     }
                 });
+                if (mode==2){
                 while (!result.isComplete());
                 {
                     int f;
@@ -129,7 +130,7 @@ public class faceDetection {
                 x++;
                 if(x==frames.size()-1)
                     DetectionComplete=true;
-            }
+            }}
 
         }
     }
