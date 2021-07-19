@@ -60,6 +60,7 @@ public class MainHOME extends AppCompatActivity {
         Button games = findViewById(R.id.button_Games);
         Button helpfulInst = findViewById(R.id.button_instetutions);
         Button doctors = findViewById(R.id.button_doctors);
+        Button helpvid=findViewById(R.id.button_helpvid);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
         Drawer_layout.addDrawerListener(ToggleButton);
         ToggleButton.syncState();
@@ -184,6 +185,14 @@ public class MainHOME extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Doctors.class));
             }
         });
+        helpvid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),EmotionTest.class));
+
+            }
+        });
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

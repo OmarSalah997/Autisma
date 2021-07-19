@@ -143,18 +143,12 @@ public class RecorderService extends Service  {
         camera.setDisplayOrientation(90);
         mediaRecorder = new MediaRecorder();
         camera.unlock();
-
-
         mediaRecorder.setPreviewDisplay(mHolder.getSurface());
         mediaRecorder.setCamera(camera);
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mediaRecorder.setProfile(CamcorderProfile.get
                 (CamcorderProfile.QUALITY_480P));
-
-
-
-
    /*     File imagesFolder = new File(getExternalFilesDir("VIDEOS_AUTISM"),System.currentTimeMillis()
                 + ".mp4");
         if (!imagesFolder.exists())
@@ -164,7 +158,6 @@ public class RecorderService extends Service  {
             imagesFolder.mkdirs(); // <---- */
 
         video = new File(imagesFolder, "V1" + ".mp4");  //file name + extension is .mp4
-
           Videopath= Uri.fromFile(video);//.getAbsolutePath();
                   //Uri.fromFile(new File(videoResource));
         //=Uri.fromFile(video);
@@ -184,8 +177,6 @@ public class RecorderService extends Service  {
                     "MEDIA failed to start: ");
             //  e.printStackTrace();
         }
-
-
     }
     // Stop recording and remove SurfaceView
     @Override

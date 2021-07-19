@@ -116,7 +116,6 @@ public class ToddlerResult extends AppCompatActivity {
         }
         @Override protected void onPostExecute(String result) {
             loading.setVisibility(View.INVISIBLE);
-            //wait.setVisibility(View.INVISIBLE);
             scoretxt.setVisibility(View.VISIBLE);
             details.setVisibility(View.VISIBLE);
             Scorebar.setVisibility(View.VISIBLE);

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 
@@ -28,14 +30,21 @@ public class VideoToFrames {
     public VideoToFrames(int mode) {
         this.mode=mode;
     }
+    private static int exifToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+        else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+        return 0;
+    }
     public boolean convert(Uri videopath, Context context)
     {
         FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
         if(videopath!=null) {
             try {
                 retriever.setDataSource((videopath).toString());
-            }catch (RuntimeException ignored)
+            }catch (RuntimeException e)
             {
+                e.printStackTrace();
             }
         }
         if(mode==1)//eye gaze
@@ -67,31 +76,29 @@ public class VideoToFrames {
         }
         if(mode==2)//emotion test
         {
-            for (int i = 0; i<35; i++)
+            for (int i = 0; i<37; i++)
             {
-                Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
+                Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
                 if(bmp2!=null)
                 {
-                   // Matrix matrix = new Matrix();
-                   // matrix.postRotate(270);
-                   // Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
-                    frames.add(bmp2);
-                }
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(270);
+                    Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
+                    Bitmap b4 = Bitmap.createScaledBitmap(b3, 720, 480,false);
+                    frames.add(b4);
+                    //saveToInternalStorage(bmp2,String.valueOf(i),context);
 
-                //saveToInternalStorage(bmp2,String.valueOf(i),context);
+                }
             }
             retriever.release();
-            File imagesFolder = new File(context.getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
+            File imagesFolder = new File(context.getExternalFilesDir(null),"autizma");
             String fileName=getFileName(videopath,context);
             File video = new File(imagesFolder, fileName );
             video.delete();
             try {
                 faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
                 D.detect();
-                while (!D.DetectionComplete)
-                {
-                    int dummy;
-                }
+                while (!D.DetectionComplete);
                 croppedframes=D.Croppedframes;
 
             } catch (IOException e) {
