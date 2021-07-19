@@ -531,18 +531,18 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     happy3Frames = converter.croppedframes;
                     try {
                         ModelAdam0 model = ModelAdam0.newInstance(getBaseContext());
-
-                        // Creates inputs for reference.
                         TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
                         TensorImage  I = new TensorImage();
-                        I.load(happy1Frames.get(0));
-                        inputFeature0.loadBuffer(I.getBuffer());
+                        for(int i=0;i<happy1Frames.size();i++)
+                        {
+                            I.load(happy1Frames.get(i));
+                            inputFeature0.loadBuffer(I.getBuffer());
+                            ModelAdam0.Outputs outputs = model.process(inputFeature0);
+                            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+                            float[] happy1=outputFeature0.getFloatArray();
+                            float max=max(happy1);
+                        }
 
-                        // Runs model inference and gets result.
-                        ModelAdam0.Outputs outputs = model.process(inputFeature0);
-                        TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-                        // Releases model resources if no longer used.
                         model.close();
                     } catch (IOException e) {
                         // TODO Handle the exception
@@ -554,5 +554,13 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             }
         }
     }
-
+    public static float max(float[] t) {
+        float maximum = t[0];   // start with the first value
+        for (int i=1; i<t.length; i++) {
+            if (t[i] > maximum) {
+                maximum = t[i];   // new maximum
+            }
+        }
+        return maximum;
+    }
 }
