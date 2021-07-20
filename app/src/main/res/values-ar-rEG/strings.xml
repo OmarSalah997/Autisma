@@ -308,4 +308,6 @@
     <string name="happydisc">مدرسة هابي وورلد ( مؤسسة ألاء لذوي الاحتياجات الخاصة )</string>
     <string name="carfour">طريق كارفور الرئيسى - بجوار مركز شباب زهراء المعادى</string>
     <string name="yousrDisc">مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )</string>
+    <string name="YourLocation">موقعك</string>
+    <string name="kmaway">كم</string>
 </resources>

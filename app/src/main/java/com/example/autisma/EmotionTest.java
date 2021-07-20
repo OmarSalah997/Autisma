@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -36,6 +37,7 @@ import com.example.autisma.ml.ModelAdam0;
 import com.squareup.picasso.Picasso;
 
 import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
@@ -531,6 +533,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 case 1:
                     happy1Frames = converter.croppedframes;
                     try {
+
                         EmotionClassification model = EmotionClassification.newInstance(getBaseContext());
                         TensorImage I=new TensorImage(DataType.UINT8);
                         ByteBuffer buff=ByteBuffer.allocate(9216);

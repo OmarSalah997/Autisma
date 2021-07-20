@@ -315,5 +315,7 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="happydisc">Happy World School (Alaa Foundation for Special Needs)</string>
     <string name="carfour">Carrefour main road - next to Zahraa Maadi Youth Center</string>
     <string name="yousrDisc">Al Yusr School for Special Cases (Early Intervention - Academic Delay - Cerebral Palsy - Autism - Learning Difficulties)</string>
+    <string name="YourLocation">Your location</string>
+    <string name="kmaway">Km away</string>
 
 </resources>

@@ -1,24 +1,30 @@
 package com.example.autisma;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.microsoft.maps.Geopoint;
 import com.microsoft.maps.MapElementLayer;
@@ -30,16 +36,23 @@ import com.microsoft.maps.MapView;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import static com.example.autisma.LOGIN.IP;
 
 public class Doctors extends AppCompatActivity {
     private MapView mMapView;
-    private final LocationManager locationMangaer = null;
+    private LocationManager locationMangaer = null;
+    Location mlocation;
+    private static final int REQUEST = 112;
+    private Context mContext = Doctors.this;
+    double lat=0,lont=0;
     private MapElementLayer mPinLayer;
     /**
      * Called when the activity is first created.
@@ -56,6 +69,29 @@ public class Doctors extends AppCompatActivity {
         mMapView.onCreate(savedInstanceState);
         mMapView.setCredentialsKey(BuildConfig.CREDENTIALS_KEY);
         mPinLayer = new MapElementLayer();
+        String[] PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        if (!hasPermissions(mContext, PERMISSIONS)) {
+            ActivityCompat.requestPermissions((Activity) mContext, PERMISSIONS, REQUEST);
+        }
+        if (hasPermissions(mContext, PERMISSIONS)) {
+            if(getLocation())
+            {
+                Drawable d = getResources().getDrawable(R.drawable.ic_redloc);
+                Bitmap pinBitmap = drawableToBitmap(d); // your pin graphic
+                MapImage im = new MapImage(pinBitmap);
+                MapIcon pushpin = new MapIcon();
+                Geopoint G;     // your pin lat-long coordinates
+                lat=mlocation.getLatitude();
+                lont=mlocation.getLongitude();
+                G = new Geopoint(mlocation.getLatitude(), mlocation.getLongitude());
+                String title = getString(R.string.YourLocation);// title to be shown next to the pin
+                pushpin.setLocation(G);
+                pushpin.setTitle(title);
+                pushpin.setImage(im);
+                mPinLayer.getElements().add(pushpin);
+
+            }
+        }
         Helpful_institiutions.pin p1= new Helpful_institiutions.pin(30.12183384226699, 31.368656918354688, getString(R.string.Dr_Mona));
         Helpful_institiutions.pin p2= new Helpful_institiutions.pin(30.09660215940048, 31.332898316503414, getString(R.string.Dr_Manal));
         Helpful_institiutions.pin p3= new Helpful_institiutions.pin(29.96518362865358, 31.276615931850795, getString(R.string.Dr_maha));
@@ -77,18 +113,18 @@ public class Doctors extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final ListView list = findViewById(R.id.inst_list);
         final ArrayList<InstData> arrayList = new ArrayList<InstData>();
-        arrayList.add(new InstData(getString(R.string.Dr_Mona), "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "01099221443", "أستاذ الطب النفسي كلية الطب جامعة عين شمس – إستشاري وحدة الأطفال والمراهقين مستشفى د. عادل صادق"));
-        arrayList.add(new InstData(getString(R.string.Dr_Manal), "39 ش الامام على - الدور 4-ميدان الاسماعيلية - مصر الجديدة", "doctor", "01008811351", "استشارى الطب النفسى"));
-        arrayList.add(new InstData(getString(R.string.Dr_maha), "5 ش 216،, معادي السرايات الغربية، حي المعادي", "doctor", "0225210734", " إستشارى الطب النفسى للأطفال والمراهقين"));
-        arrayList.add(new InstData(getString(R.string.Dr_Souad), " 197 أ ش 26 يوليو ميدان سفنكس، الجيزة، العجوزة", "doctor", "02233022027", "أستاذ طب نفسي أطفال"));
-        arrayList.add(new InstData("د. هالة حماد", "95 ب ش الميرغنى برج الشمس أمام ماكدونالدز المطار مصر الجديدة،", "doctor", "02222914419", "استشاري الطب النفسي \" المركز الاستشاري البريطاني للاطفال والمراهقين"));
-        arrayList.add(new InstData("د. داليا مصطفى", "9 شارع المختار-الروضة-المنيل", "doctor", "01021760100", " أستاذ أمراض التخاطب بكلية الطب - جامعة القاهرة"));
-        arrayList.add(new InstData("د. طارق السحراوي", "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "0226205757", "مدرس الطب النفسى كلية الطب جامعة عين شمس – إستشارى وحدة الأطفال مستشفى د. عادل صادق"));
-        arrayList.add(new InstData(" د. رانيا قاسم", " 13 محمد عوض من مكرم عبيد-مدينة نصر", "doctor", "01140601044", "استشاري و مدرس الطب النفسي بكلية الطب جامعة عين شمس"));
-        arrayList.add(new InstData("د. أحمد رمزي", "الزقازيق : شارع الغشام", "doctor", "01009323164", "أخصائي الطب النفسي "));
-        arrayList.add(new InstData("د. نهى حجاج", "ميت غمر-شارع الجيش-برج النيل", "doctor", "011238709", "رئيس قسم أمراض المخ و الأعصاب و الطب النفسي للاطفال و البالغين بمستشفي ميت غمر"));
-        arrayList.add(new InstData("د. نهال ياسر", "مستشفى العائلة (مدينة نصر)ش محمد المقريف أمام النادي الأهلي", "doctor", "01020115115", "أخصائي النفسى للاطفال"));
-        arrayList.add(new InstData("  د. هشام عبد الرحمن", "الرحاب : المركز الطبي الاول", "doctor", "01099280120", "استشاري الطب النفسي للاطفال"));
+        arrayList.add(new InstData(getString(R.string.Dr_Mona), "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "01099221443","أستاذ الطب النفسي كلية الطب جامعة عين شمس – إستشاري وحدة الأطفال والمراهقين مستشفى د. عادل صادق",distance(30.12183384226699, 31.368656918354688,lat,lont)));
+        arrayList.add(new InstData(getString(R.string.Dr_Manal), "39 ش الامام على - الدور 4-ميدان الاسماعيلية - مصر الجديدة", "doctor", "01008811351", "استشارى الطب النفسى",distance(30.09660215940048, 31.332898316503414,lat,lont)));
+        arrayList.add(new InstData(getString(R.string.Dr_maha), "5 ش 216،, معادي السرايات الغربية، حي المعادي", "doctor", "0225210734"," إستشارى الطب النفسى للأطفال والمراهقين",distance(29.96518362865358, 31.276615931850795,lat,lont)));
+        arrayList.add(new InstData(getString(R.string.Dr_Souad), " 197 أ ش 26 يوليو ميدان سفنكس، الجيزة، العجوزة", "doctor", "02233022027","أستاذ طب نفسي أطفال",distance(30.06357704537131, 31.212207540302487,lat,lont)));
+        arrayList.add(new InstData("د. هالة حماد", "95 ب ش الميرغنى برج الشمس أمام ماكدونالدز المطار مصر الجديدة،", "doctor", "02222914419","استشاري الطب النفسي \" المركز الاستشاري البريطاني للاطفال والمراهقين",distance(30.087603346677867, 31.33889943184763,lat,lont)));
+        arrayList.add(new InstData("د. داليا مصطفى", "9 شارع المختار-الروضة-المنيل", "doctor", "01021760100"," أستاذ أمراض التخاطب بكلية الطب - جامعة القاهرة",distance(29.982979680365673, 31.31432811835838,lat,lont)));
+        arrayList.add(new InstData("د. طارق السحراوي", "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "0226205757", "مدرس الطب النفسى كلية الطب جامعة عين شمس – إستشارى وحدة الأطفال مستشفى د. عادل صادق",distance(30.010486153250756, 31.28853283184964,lat,lont)));
+        arrayList.add(new InstData(" د. رانيا قاسم", " 13 محمد عوض من مكرم عبيد-مدينة نصر", "doctor", "01140601044", "استشاري و مدرس الطب النفسي بكلية الطب جامعة عين شمس",distance(30.600371917673836, 31.49069809311127,lat,lont)));
+        arrayList.add(new InstData("د. أحمد رمزي", "الزقازيق : شارع الغشام", "doctor", "01009323164", "أخصائي الطب النفسي ",distance(30.600371917673836, 31.49069809311127,lat,lont)));
+        arrayList.add(new InstData("د. نهى حجاج", "ميت غمر-شارع الجيش-برج النيل", "doctor", "011238709", "رئيس قسم أمراض المخ و الأعصاب و الطب النفسي للاطفال و البالغين بمستشفي ميت غمر",distance(30.719990056254403, 31.25604193527057,lat,lont)));
+        arrayList.add(new InstData("د. نهال ياسر", "مستشفى العائلة (مدينة نصر)ش محمد المقريف أمام النادي الأهلي", "doctor", "01020115115", "أخصائي النفسى للاطفال",distance(30.057472481775324, 31.356798800048754,lat,lont)));
+        arrayList.add(new InstData("  د. هشام عبد الرحمن", "الرحاب : المركز الطبي الاول", "doctor", "01099280120", "استشاري الطب النفسي للاطفال",distance(30.059417062024554, 31.49183199678413,lat,lont)));
         InstAdapter customAdapter = new InstAdapter(this, arrayList);
         list.setAdapter(customAdapter);
     }
@@ -225,5 +261,93 @@ public class Doctors extends AppCompatActivity {
             mPinLayer.getElements().add(pushpin);
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                } else {
+                    Toast.makeText(mContext, "The app was not allowed to access your location", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+    private static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean getLocation() {
+        locationMangaer = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if ( !locationMangaer.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
+            return false;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        List<String> providers = locationMangaer.getProviders(true);
+        for (String provider : providers) {
+            LocationListener x=new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    mlocation=location;
+                }
+
+                @Override
+                public void onStatusChanged(String s, int i, Bundle bundle) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String s) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String s) {
+
+                }
+            };
+            locationMangaer.requestLocationUpdates(provider, 20000, 0, x);
+            Location l = locationMangaer.getLastKnownLocation(provider);
+
+            if (l == null) {
+                continue;
+            }
+            else {
+                mlocation =l;
+                return mlocation != null;
+            }
+
+        }
+        return mlocation != null;
+    }
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515* 1.609344;
+        return Math.round(dist * 100.0) / 100.0;    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts decimal degrees to radians             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::  This function converts radians to decimal degrees             :*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
 }
