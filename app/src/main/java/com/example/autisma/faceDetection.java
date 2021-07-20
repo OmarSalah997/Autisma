@@ -24,6 +24,8 @@ import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.vision.face.FaceLandmark;
 
+import org.tensorflow.lite.support.image.TensorImage;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -88,10 +90,10 @@ public class faceDetection {
                                         if(cropped.getHeight()>0 & cropped.getWidth()>0)
                                         {
 
-                                            resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
+                                            Bitmap grey=toGrayscale(cropped);
+                                            resized=Bitmap.createScaledBitmap(grey, 48, 48,true);
                                           //  saveToInternalStorage(resized, "Emo"+ finalI,mode);
-                                            Bitmap grey=toGrayscale(resized);
-                                            Croppedframes.add(grey);
+                                            Croppedframes.add(resized);
                                         }
                                         }
                                     }

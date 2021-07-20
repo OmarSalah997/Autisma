@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OtherResult"></activity>
+        <activity android:name=".OtherResult" />
         <activity
             android:name=".EmotionTest"
             android:theme="@style/mainTheme" />
@@ -56,10 +56,18 @@
         </activity>
         <activity
             android:name=".Gilliam_main"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".Gilliam_info"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".opening"
             android:noHistory="true">
@@ -81,10 +89,18 @@
         </activity>
         <activity
             android:name=".M_chat_main"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".M_chat_info"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".questions_Home"
             android:theme="@style/mainTheme" />
@@ -201,9 +217,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />

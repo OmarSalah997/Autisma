@@ -307,5 +307,13 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string-array name="settings_list">
         <item>Language</item>
     </string-array>
+    <string name="tomaps">The following service requires internet connection and location services, it\'s advised to give these permissions to the app.</string>
+    <string name="givLoc">Please give the app location permission.</string>
+    <string name="AlWahat">Al-Wahat Street, 6th of October</string>
+    <string name="DreamDissc">Dream School for Model Education (for people with special needs and learning difficulties)</string>
+    <string name="ahmedoraby">Ahmed Orabi Association - Line 2 North - Plot 5047</string>
+    <string name="happydisc">Happy World School (Alaa Foundation for Special Needs)</string>
+    <string name="carfour">Carrefour main road - next to Zahraa Maadi Youth Center</string>
+    <string name="yousrDisc">Al Yusr School for Special Cases (Early Intervention - Academic Delay - Cerebral Palsy - Autism - Learning Difficulties)</string>
 
 </resources>

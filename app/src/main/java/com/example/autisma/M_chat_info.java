@@ -24,6 +24,10 @@ public class M_chat_info extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        if(actionBar !=null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         Button strt=findViewById(R.id.start_mchat);
         strt.setOnClickListener(new View.OnClickListener() {
             @Override

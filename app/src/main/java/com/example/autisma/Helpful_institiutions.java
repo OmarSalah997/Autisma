@@ -47,15 +47,9 @@ import com.microsoft.maps.MapImage;
 import static com.example.autisma.LOGIN.IP;
 
 public class Helpful_institiutions extends AppCompatActivity {
-    Communication com;
-    //second parameter default value.
-    String url = IP + "institution"; // route
-    //Json body data
-    JSONObject institutions;
     private MapView mMapView;
     private final LocationManager locationMangaer = null;
     private MapElementLayer mPinLayer;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,48 +101,13 @@ public class Helpful_institiutions extends AppCompatActivity {
 
         final ListView list = findViewById(R.id.inst_list);
         final ArrayList<InstData> arrayList = new ArrayList<InstData>();
-
-        /*
-        com=new Communication(Helpful_institiutions.this);
-        JSONObject jsonBody = new JSONObject();
-
-        com.REQUEST_NO_AUTHORIZE(Request.Method.GET, url, jsonBody,new Communication.VolleyCallback() {
-            @Override
-            public void onSuccessResponse(JSONObject response) throws JSONException {
-
-institutions=response.getJSONObject("result");
-                Log.e("success",institutions.toString());
-                Log.e("success", String.valueOf(institutions.length()));
-
-                for (int i = 0; i <institutions.length(); i++) {
-                    JSONObject c = institutions.getJSONObject(String.valueOf(i));
-
-                    Log.e("success",c.toString());
-                    Log.e("success",c.getString("name"));
-                    arrayList.add(new InstData(c.getString("name"),c.getString("address"),"dreamidealschool",c.getString("phone"),c.getString("address"),c.getString("facebook"),c.getString("website")));
-                }
-                InstAdapter customAdapter = new InstAdapter(Helpful_institiutions.this, arrayList);
-
-                list.setAdapter(customAdapter);}
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-        });
-*/
-
-        String phonenumber = "01201119781";
-        String Description = "مدرسة اليسر للحالات الخاصة";
-        String Location = "31 Maadi Street ,Cairo";
-        arrayList.add(new InstData(getString(R.string.Dreamschool), "شارع الواحات 6 اكتوبر", "dreamidealschool", "01280111961",
-                "مدرسة دريم للتربية النموذجية ( لذوى الاحتياجات الخاصة وصعوبات التعلم )",
+        arrayList.add(new InstData(getString(R.string.Dreamschool), getString(R.string.AlWahat), "dreamidealschool", "01280111961",
+                getString(R.string.DreamDissc),
                 "https://www.facebook.com/DreamIdealEducationSchoolEgypt", "http://dreamidealschool.academy"));
-        arrayList.add(new InstData(getString(R.string.Happyworldschool), " جمعية أحمد عرابي – خط 2 شمال – قطعة 5047", "happyworld", "01223558636/01003913173",
-                "مدرسة هابي وورلد ( مؤسسة ألاء لذوي الاحتياجات الخاصة )", "https://www.facebook.com/pg/%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D9%87%D8%A7%D8%A8%D9%89-%D9%88%D8%B1%D9%84%D8%AF-%D9%84%D8%B0%D9%88%D9%89-%D8%A7%D9%84%D8%A7%D8%AD%D8%AA%D9%8A%D8%A7%D8%AC%D8%A7%D8%AA-%D8%A7%D9%84%D8%AE%D8%A7%D8%B5%D8%A9-188872947840947"));
-        arrayList.add(new InstData(getString(R.string.ElYousreschool), "طريق كارفور الرئيسى - بجوار مركز شباب زهراء المعادى", "elyosr", "27340026",
-                "مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )",
+        arrayList.add(new InstData(getString(R.string.Happyworldschool), getString(R.string.ahmedoraby), "happyworld", "01223558636/01003913173",
+                getString(R.string.happydisc), "https://www.facebook.com/pg/%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D9%87%D8%A7%D8%A8%D9%89-%D9%88%D8%B1%D9%84%D8%AF-%D9%84%D8%B0%D9%88%D9%89-%D8%A7%D9%84%D8%A7%D8%AD%D8%AA%D9%8A%D8%A7%D8%AC%D8%A7%D8%AA-%D8%A7%D9%84%D8%AE%D8%A7%D8%B5%D8%A9-188872947840947"));
+        arrayList.add(new InstData(getString(R.string.ElYousreschool), getString(R.string.carfour), "elyosr", "27340026",
+                getString(R.string.yousrDisc),
                 "https://www.facebook.com/alyosserschoolspneed/", "http://alyosserspneed.com/"));
         arrayList.add(new InstData(getString(R.string.Zaiedmedicalcenter), "طريق الاوتوستراد باتجاه مدينة نصر بجوار مجمع النسور وعامر جروب", "zayedcenter", "01002198575",
                 " مركز زايد الطبي للتأهيل بالقوات الجوية المصرية الصَرح الأحدث لرعاية وتأهيل ذوى القدرات الخاصّة",

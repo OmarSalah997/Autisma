@@ -54,6 +54,7 @@ public class VideoToFrames {
                 Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
                 if(bmp2!=null)
                     frames.add(bmp2);
+
                 //saveToInternalStorage(bmp2,String.valueOf(i),context);
             }
                 retriever.release();

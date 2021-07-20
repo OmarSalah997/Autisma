@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.autisma.ml.EmotionClassification;
 import com.example.autisma.ml.ModelAdam0;
 import com.squareup.picasso.Picasso;
 
@@ -180,7 +181,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                        sad1[0] =captureEmotion("sad1");
+                        //sad1[0] =captureEmotion("sad1");
                         MyAsyncTask VideoToFrames1=new MyAsyncTask();
                         VideoToFrames1.setCount(1);
                         VideoToFrames1.setvideopath(happy1[0]);
@@ -204,11 +205,11 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                         happy2[0] =captureEmotion("happy2");
-                        MyAsyncTask VideoToFrames2=new MyAsyncTask();
-                        VideoToFrames2.setCount(2);
-                        VideoToFrames2.setvideopath(sad1[0]);
-                        VideoToFrames2.execute();
+                      //   happy2[0] =captureEmotion("happy2");
+                       // MyAsyncTask VideoToFrames2=new MyAsyncTask();
+                        //VideoToFrames2.setCount(2);
+                        //VideoToFrames2.setvideopath(sad1[0]);
+                        //VideoToFrames2.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                     } catch (Exception e) {
@@ -225,11 +226,11 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                         angry1[0] =captureEmotion("angry1");
-                        MyAsyncTask VideoToFrames3=new MyAsyncTask();
-                        VideoToFrames3.setCount(3);
-                        VideoToFrames3.setvideopath(happy2[0]);
-                        VideoToFrames3.execute();
+                      //   angry1[0] =captureEmotion("angry1");
+                      //  MyAsyncTask VideoToFrames3=new MyAsyncTask();
+                      //  VideoToFrames3.setCount(3);
+                      //  VideoToFrames3.setvideopath(happy2[0]);
+                      //  VideoToFrames3.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
@@ -248,11 +249,11 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .resize(760, 720)
                             .into(img);
                     try {
-                         happy3[0] =captureEmotion("happy3");
-                        MyAsyncTask VideoToFrames4=new MyAsyncTask();
-                        VideoToFrames4.setCount(4);
-                        VideoToFrames4.setvideopath(angry1[0]);
-                        VideoToFrames4.execute();
+                        // happy3[0] =captureEmotion("happy3");
+                       // MyAsyncTask VideoToFrames4=new MyAsyncTask();
+                       // VideoToFrames4.setCount(4);
+                       // VideoToFrames4.setvideopath(angry1[0]);
+                       // VideoToFrames4.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -266,10 +267,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     ToEmotionResult.setVisibility(View.INVISIBLE);
                     img.setVisibility(View.INVISIBLE);
                     cameraPreview.setVisibility(View.INVISIBLE);
-                    MyAsyncTask VideoToFrames5=new MyAsyncTask();
-                    VideoToFrames5.setCount(5);
-                    VideoToFrames5.setvideopath(happy3[0]);
-                    VideoToFrames5.execute();
+                  //  MyAsyncTask VideoToFrames5=new MyAsyncTask();
+                   // VideoToFrames5.setCount(5);
+                   // VideoToFrames5.setvideopath(happy3[0]);
+                   // VideoToFrames5.execute();
                    // VideoToFrames5.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     //Intent myIntent = new Intent(getApplicationContext(), pressDotActivity.class);
                     //startActivity(myIntent);
@@ -515,7 +516,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         }
         @Override protected void onPostExecute(String result) {
             switch (count) {
-                case 1:
+               /* case 1:
                     happy1Frames = converter.croppedframes;
                     break;
                 case 2:
@@ -526,23 +527,31 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     break;
                 case 4:
                    angry1Frames = converter.croppedframes;
-                    break;
-                case 5:
-                    happy3Frames = converter.croppedframes;
+                    break;*/
+                case 1:
+                    happy1Frames = converter.croppedframes;
                     try {
-                        ModelAdam0 model = ModelAdam0.newInstance(getBaseContext());
-                        TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
-                        TensorImage  I = new TensorImage();
+                        EmotionClassification model = EmotionClassification.newInstance(getBaseContext());
+                        TensorImage I=new TensorImage(DataType.UINT8);
+                        ByteBuffer buff=ByteBuffer.allocate(9216);
+                        TensorBuffer inputFeature0;
+                        inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
+                        EmotionClassification.Outputs outputs;
+                        TensorBuffer outputFeature0;
+                        float[] happy1;
+                        int max;
                         for(int i=0;i<happy1Frames.size();i++)
                         {
-                            I.load(happy1Frames.get(i));
-                            inputFeature0.loadBuffer(I.getBuffer());
-                            ModelAdam0.Outputs outputs = model.process(inputFeature0);
-                            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-                            float[] happy1=outputFeature0.getFloatArray();
-                            float max=max(happy1);
-                        }
+                            I.load(happy1Frames.get(i));//=  TensorImage();
+                            buff.put(I.getBuffer());
+                            inputFeature0.loadBuffer(buff);
+                            outputs = model.process(inputFeature0);
+                            outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+                            happy1=outputFeature0.getFloatArray();
+                            // 0 angry   1 happy   2 sad   3 neutral
+                             max=max(happy1);
 
+                        }
                         model.close();
                     } catch (IOException e) {
                         // TODO Handle the exception
@@ -554,13 +563,15 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             }
         }
     }
-    public static float max(float[] t) {
-        float maximum = t[0];   // start with the first value
+    public static int max(float[] t) {
+        float maximum = t[0];// start with the first value
+        int maxindex=-1;
         for (int i=1; i<t.length; i++) {
             if (t[i] > maximum) {
-                maximum = t[i];   // new maximum
+                maximum = t[i];
+                maxindex=i;// new maximum
             }
         }
-        return maximum;
+        return maxindex;
     }
 }

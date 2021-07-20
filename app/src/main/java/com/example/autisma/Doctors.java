@@ -77,40 +77,6 @@ public class Doctors extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final ListView list = findViewById(R.id.inst_list);
         final ArrayList<InstData> arrayList = new ArrayList<InstData>();
-        /*
-        com=new Communication(Doctors.this);
-        JSONObject jsonBody = new JSONObject();
-
-
-        com.REQUEST_NO_AUTHORIZE(Request.Method.GET, url, jsonBody,new Communication.VolleyCallback() {
-            @Override
-            public void onSuccessResponse(JSONObject response) throws JSONException {
-
-                institutions=response.getJSONObject("result");
-                Log.e("success",institutions.toString());
-                Log.e("success", String.valueOf(institutions.length()));
-
-                for (int i = 0; i <institutions.length(); i++) {
-                    JSONObject c = institutions.getJSONObject(String.valueOf(i));
-
-                    Log.e("success",c.toString());
-                    Log.e("success",c.getString("name"));
-                    arrayList.add(new InstData(c.getString("name"),c.getString("address"),"doctor",c.getString("phone"),c.getString("specialization")));
-                }
-                InstAdapter customAdapter = new InstAdapter(Doctors.this, arrayList);
-
-                list.setAdapter(customAdapter);}
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });*/
-
-        String phonenumber = "01201119781";
-        String Description = "مدرسة اليسر للحالات الخاصة ( التدخل المبكرــ التأخر الدراسي ــ الشلل الدماغي ــ التوحد ــ صعوبات التعلم )";
-        String Location = "31 Maadi Street ,Cairo";
-        //   Location loc = new Location("dummyprovider");
-
         arrayList.add(new InstData(getString(R.string.Dr_Mona), "41 أحمد عبد النبي، الهايكستب، قسم النزهة", "doctor", "01099221443", "أستاذ الطب النفسي كلية الطب جامعة عين شمس – إستشاري وحدة الأطفال والمراهقين مستشفى د. عادل صادق"));
         arrayList.add(new InstData(getString(R.string.Dr_Manal), "39 ش الامام على - الدور 4-ميدان الاسماعيلية - مصر الجديدة", "doctor", "01008811351", "استشارى الطب النفسى"));
         arrayList.add(new InstData(getString(R.string.Dr_maha), "5 ش 216،, معادي السرايات الغربية، حي المعادي", "doctor", "0225210734", " إستشارى الطب النفسى للأطفال والمراهقين"));
