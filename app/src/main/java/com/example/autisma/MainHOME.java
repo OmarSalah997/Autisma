@@ -60,7 +60,7 @@ public class MainHOME extends AppCompatActivity {
         Button games = findViewById(R.id.button_Games);
         Button helpfulInst = findViewById(R.id.button_instetutions);
         Button doctors = findViewById(R.id.button_doctors);
-        Button helpvid=findViewById(R.id.button_helpvid);
+        Button helpvid=findViewById(R.id.button_chatbot);
         ToggleButton = new ActionBarDrawerToggle(this,Drawer_layout,R.string.open,R.string.close);
         Drawer_layout.addDrawerListener(ToggleButton);
         ToggleButton.syncState();

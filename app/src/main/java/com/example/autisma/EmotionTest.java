@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -32,18 +33,23 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.autisma.ml.EmotionClassification;
-import com.example.autisma.ml.ModelAdam0;
+//import com.example.autisma.ml.EmotionClassification;
+//import com.example.autisma.ml.ModelAdam0;
 import com.squareup.picasso.Picasso;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.TensorFlowLite;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +64,12 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.support.tensorbuffer.TensorBufferFloat;
 
 public class EmotionTest extends AppCompatActivity implements TextureView.SurfaceTextureListener
 {
+    Interpreter tflite;
     ProgressBar loading;
     private static final int PERMISSION_REQUEST_CODE = 200;
     TextureView cameraPreview;
@@ -100,7 +109,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         instructions.setText(getString(R.string.Emotest1));
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA, WRITE_EXTERNAL_STORAGE},
                     50); }
         img=findViewById(R.id.EmotionImg);
         img.setVisibility(View.INVISIBLE);
@@ -111,7 +120,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
         cameraPreview = findViewById(R.id.campreview);
         myCameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
-        openCamera();
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Matrix matrix = new Matrix();
@@ -151,7 +159,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             @Override
             public void onClick(View view) {
                 if(clickCount==0)
-                {
+                { openCamera();
                     clickCount++;
                     instructions.setText(getString(R.string.Emotest2));
                     return;
@@ -163,6 +171,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     cameraPreview.setVisibility(View.VISIBLE);
                     img.setVisibility(View.VISIBLE);
                     ToEmotionResult.setVisibility(View.INVISIBLE);
+
                     Picasso.get()
                             .load(R.drawable.happy3)
                             .resize(800, 760)
@@ -532,33 +541,37 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     break;*/
                 case 1:
                     happy1Frames = converter.croppedframes;
-                    try {
 
-                        EmotionClassification model = EmotionClassification.newInstance(getBaseContext());
-                        TensorImage I=new TensorImage(DataType.UINT8);
-                        ByteBuffer buff=ByteBuffer.allocate(9216);
-                        TensorBuffer inputFeature0;
-                        inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
-                        EmotionClassification.Outputs outputs;
-                        TensorBuffer outputFeature0;
-                        float[] happy1;
-                        int max;
-                        for(int i=0;i<happy1Frames.size();i++)
-                        {
-                            I.load(happy1Frames.get(i));//=  TensorImage();
-                            buff.put(I.getBuffer());
-                            inputFeature0.loadBuffer(buff);
-                            outputs = model.process(inputFeature0);
-                            outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-                            happy1=outputFeature0.getFloatArray();
-                            // 0 angry   1 happy   2 sad   3 neutral
-                             max=max(happy1);
-
-                        }
-                        model.close();
+                    //EmotionClassification model = EmotionClassification.newInstance(getBaseContext());
+                    TensorImage I=new TensorImage(DataType.UINT8);
+                    ByteBuffer buff=ByteBuffer.allocate(9216);
+                    TensorBuffer inputFeature0;
+                    inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
+                    TensorBuffer outputs=TensorBuffer.createFixedSize(new int[]{1, 2, 2, 1}, DataType.FLOAT32);;
+                    FloatBuffer outputFeature0;
+                    try{
+                        tflite=new Interpreter(loadModel());
                     } catch (IOException e) {
-                        // TODO Handle the exception
+                        e.printStackTrace();
                     }
+                    float[] happy1;
+                    int max;
+                    for(int i=0;i<happy1Frames.size();i++)
+                    {
+                        I.load(happy1Frames.get(i));//=  TensorImage();
+                        buff.put(I.getBuffer());
+                        inputFeature0.loadBuffer(buff);
+                        //outputs = model.process(inputFeature0);
+                        tflite.run(buff, outputs.getBuffer());
+                       // outputFeature0 = outputs.();
+                        //outputFeature0.get(happy1);
+                        //=outputFeature0.array();
+                        // 0 angry   1 happy   2 sad   3 neutral
+                        happy1=outputs.getFloatArray();
+                         max=max(happy1);
+
+                    }
+                    tflite.close();
                     loading.setVisibility(View.INVISIBLE);
                     ToEmotionResult.setVisibility(View.VISIBLE);
 
@@ -576,5 +589,14 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             }
         }
         return maxindex;
+    }
+    private MappedByteBuffer loadModel() throws IOException
+    {
+        AssetFileDescriptor descriptor=this.getAssets().openFd("emotion classification.tflite");
+        FileInputStream fileInputStream=new FileInputStream(descriptor.getFileDescriptor());
+        FileChannel fileChannel=fileInputStream.getChannel();
+        long startOffset = descriptor.getStartOffset();
+        long declaredLength= descriptor.getDeclaredLength();
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY,startOffset,declaredLength);
     }
 }
