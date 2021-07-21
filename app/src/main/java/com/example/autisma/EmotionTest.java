@@ -11,6 +11,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -36,17 +37,21 @@ import android.widget.TextView;
 //import com.example.autisma.ml.EmotionClassification;
 //import com.example.autisma.ml.ModelAdam0;
 import com.squareup.picasso.Picasso;
-
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.Tensor;
 import org.tensorflow.lite.TensorFlowLite;
+import org.tensorflow.lite.support.common.ops.NormalizeOp;
+import org.tensorflow.lite.support.image.ImageProcessor;
 import org.tensorflow.lite.support.image.TensorImage;
+import org.tensorflow.lite.support.image.ops.ResizeOp;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -547,7 +552,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     ByteBuffer buff=ByteBuffer.allocate(9216);
                     TensorBuffer inputFeature0;
                     inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
-                    TensorBuffer outputs=TensorBuffer.createFixedSize(new int[]{1, 2, 2, 1}, DataType.FLOAT32);;
+                    TensorBuffer outputs=TensorBuffer.createFixedSize(new int[]{1,4}, DataType.FLOAT32);;
                     FloatBuffer outputFeature0;
                     try{
                         tflite=new Interpreter(loadModel());
@@ -556,20 +561,32 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     }
                     float[] happy1;
                     int max;
+                    ByteBuffer dummy;
+                    float [][] imgasarr=new float[48][48];
+                    float [][] outasarr=new float[1][4];
                     for(int i=0;i<happy1Frames.size();i++)
                     {
-                        I.load(happy1Frames.get(i));//=  TensorImage();
-                        buff.put(I.getBuffer());
+                        for (int y = 0; y < happy1Frames.get(i).getHeight(); y++)
+                        {
+                            for (int x = 0; x < happy1Frames.get(i).getWidth(); x++)
+                            {
+                                imgasarr[x][y] = happy1Frames.get(i).getPixel(x, y);
+                            }
+                        }
+                        I=processImage(happy1Frames.get(i));//=  TensorImage();
+                        dummy=getByteBuffer(happy1Frames.get(i));
+                        buff.put(dummy);
                         inputFeature0.loadBuffer(buff);
                         //outputs = model.process(inputFeature0);
-                        tflite.run(buff, outputs.getBuffer());
+                        //outputs.getBuffer().order(ByteOrder.nativeOrder());
+
+                        tflite .run(dummy,outputs.getBuffer());
                        // outputFeature0 = outputs.();
                         //outputFeature0.get(happy1);
                         //=outputFeature0.array();
                         // 0 angry   1 happy   2 sad   3 neutral
                         happy1=outputs.getFloatArray();
                          max=max(happy1);
-
                     }
                     tflite.close();
                     loading.setVisibility(View.INVISIBLE);
@@ -598,5 +615,31 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         long startOffset = descriptor.getStartOffset();
         long declaredLength= descriptor.getDeclaredLength();
         return fileChannel.map(FileChannel.MapMode.READ_ONLY,startOffset,declaredLength);
+    }
+    private ByteBuffer getByteBuffer(Bitmap bitmap){
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        ByteBuffer mImgData = ByteBuffer
+                .allocateDirect(4 * width * height);
+        mImgData.order(ByteOrder.nativeOrder());
+        int[] pixels = new int[width*height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        for (int pixel : pixels) {
+            float value = (float) Color.red(pixel)/255.0f;
+            mImgData.putFloat(value);
+           // mImgData.putFloat((float) Color.red(pixel));
+        }
+        return mImgData;
+    }
+    TensorImage processImage(Bitmap sourceImage) {
+      /*  ImageProcessor imageProcessor =
+                new ImageProcessor.Builder()
+                        .add(new ResizeOp(48, 48, ResizeOp.ResizeMethod.BILINEAR))
+                        .build();*/
+        TensorImage tImage = new TensorImage(DataType.FLOAT32);
+        tImage.load(sourceImage);
+        //tImage = imageProcessor.process(tImage);
+        return tImage;
+        //...
     }
 }
