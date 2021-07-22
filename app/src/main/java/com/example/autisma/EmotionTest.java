@@ -559,7 +559,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    float[] happy1;
+                    float[][] happy1;
                     int max;
                     ByteBuffer dummy;
                     float [][] imgasarr=new float[48][48];
@@ -578,20 +578,19 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         buff.put(dummy);
                         inputFeature0.loadBuffer(buff);
                         //outputs = model.process(inputFeature0);
-                        //outputs.getBuffer().order(ByteOrder.nativeOrder());
 
-                        tflite .run(dummy,outputs.getBuffer());
-                       // outputFeature0 = outputs.();
+                        tflite .run(dummy,outasarr);
+
+                        // outputFeature0 = outputs.();
                         //outputFeature0.get(happy1);
                         //=outputFeature0.array();
                         // 0 angry   1 happy   2 sad   3 neutral
-                        happy1=outputs.getFloatArray();
-                         max=max(happy1);
+                        happy1=outasarr;
+                        // max=max(happy1);
                     }
                     tflite.close();
                     loading.setVisibility(View.INVISIBLE);
                     ToEmotionResult.setVisibility(View.VISIBLE);
-
                     break;
             }
         }
