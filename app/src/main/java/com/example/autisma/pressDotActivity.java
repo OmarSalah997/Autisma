@@ -23,7 +23,8 @@ dot=findViewById(R.id.dot);
         dot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           startActivity(new Intent(getApplicationContext(),child_tests.class));
+                Intent myIntent = new Intent(pressDotActivity.this,SpeakingActivity.class);
+               pressDotActivity.this.startActivity(myIntent);
             }
         });
 

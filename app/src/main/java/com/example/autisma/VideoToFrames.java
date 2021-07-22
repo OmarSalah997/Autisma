@@ -7,7 +7,9 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.util.Log;
 
+import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceLandmark;
 
 import java.io.File;
@@ -24,7 +26,8 @@ public class VideoToFrames {
     private int mode;
     public final ArrayList<Bitmap> frames= new ArrayList<>();
     public ArrayList<Bitmap> croppedframes=new ArrayList<>();
-    public List<FaceLandmark> landmarks;
+    public List<List<FaceLandmark> >landmarks;
+    public List<List<FaceContour> >contours=new ArrayList<>();
     public VideoToFrames(int mode) {
         this.mode=mode;
     }
@@ -40,11 +43,12 @@ public class VideoToFrames {
         }
         if(mode==1)//eye gaze
         {
-            for (int i = 0; i< 340; i++)
+            for (int i = 0; i< 35; i++)
             {
                 Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
                 if(bmp2!=null)
                     frames.add(bmp2);
+            //    bmp2.recycle();
                 //saveToInternalStorage(bmp2,String.valueOf(i),context);
             }
                 retriever.release();
@@ -55,12 +59,15 @@ public class VideoToFrames {
                 try {
                     faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
                     D.detect();
+
                     while (!D.DetectionComplete)
                     {
                         int dummy;
                     }
                     croppedframes=D.Croppedframes;
-                    landmarks=D.landmarks;
+                    landmarks=D.allLandmarks;
+                    contours=D.allContours;
+                    Log.e("in video to frames", String.valueOf(contours.size()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
