@@ -5,10 +5,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Path;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.util.Log;
 
 import com.google.mlkit.vision.face.FaceLandmark;
+import com.google.mlkit.vision.face.FaceContour;
 
 import java.io.File;
 import java.io.FileOutputStream;
