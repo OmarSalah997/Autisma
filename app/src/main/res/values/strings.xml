@@ -285,6 +285,7 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="Dr.Manal">Dr.Manal Omar</string>
     <string name="Dr.maha">Dr.Maha Emad Eldin</string>
     <string name="Dr.Souad">Dr.Souad Musa</string>
+    <string name="Speaking_intro">Please make sure to perform this test in a empty room for accurate results.During this test te child will see two pictures and he should say what is in the picture.</string>
     <string name="Emotest1">The following test is designed to determine a child\'s ability to understand emotions</string>
     <string name="Emotest2">"An image representing an emotion will appear for 3 seconds, once it appears the child must imitate the same emotion with his face so the camera can capture it, then press next to display the next image. the child face must be at a distance of at least 60cm from the device "</string>
     <string name="Dot1">The following test is designed to measure the child reflexes and ability to focus.</string>

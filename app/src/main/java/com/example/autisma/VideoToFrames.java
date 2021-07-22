@@ -4,9 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Path;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 
@@ -26,7 +24,8 @@ public class VideoToFrames {
     private int mode;
     public final ArrayList<Bitmap> frames= new ArrayList<>();
     public ArrayList<Bitmap> croppedframes=new ArrayList<>();
-    public List<FaceLandmark> landmarks;
+    public List<List<FaceLandmark> >landmarks;
+    public List<List<FaceContour> >contours=new ArrayList<>();
     public VideoToFrames(int mode) {
         this.mode=mode;
     }
@@ -54,7 +53,6 @@ public class VideoToFrames {
                 Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
                 if(bmp2!=null)
                     frames.add(bmp2);
-
                 //saveToInternalStorage(bmp2,String.valueOf(i),context);
             }
                 retriever.release();
@@ -70,7 +68,9 @@ public class VideoToFrames {
                         int dummy;
                     }
                     croppedframes=D.Croppedframes;
-                    landmarks=D.landmarks;
+                    landmarks=D.allLandmarks;
+                    contours=D.allContours;
+                    Log.e("in video to frames", String.valueOf(contours.size()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

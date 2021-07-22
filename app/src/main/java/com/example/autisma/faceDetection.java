@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
+import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
@@ -48,7 +50,8 @@ public class faceDetection {
         int x=0;
         ArrayList<Bitmap> frames;
         ArrayList<Bitmap> Croppedframes= new ArrayList<>();
-    List<FaceLandmark> landmarks;
+    List<List<FaceLandmark>> allLandmarks=new ArrayList<List<FaceLandmark>>();
+    List<List<FaceContour>> allContours=new ArrayList<List<FaceContour>>();
     public faceDetection(Context context,ArrayList<Bitmap> frames,int mode) throws IOException {
         this.context=context;
         this.frames =frames;
@@ -58,6 +61,7 @@ public class faceDetection {
         FaceDetectorOptions LandMarksOn = new FaceDetectorOptions.Builder()
                 .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+                .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
                 .build();
         FaceDetector detector = FaceDetection.getClient(LandMarksOn);
         for(int i=0; i<frames.size();i++){
@@ -101,7 +105,12 @@ public class faceDetection {
                                         if(cropped!=null) {
                                       //      saveToInternalStorage(cropped, "Face" + finalI, mode);
                                             Croppedframes.add(cropped);
-                                          landmarks=face.getAllLandmarks();
+                                         List<FaceLandmark> landmarks=face.getAllLandmarks();
+                                         List<FaceContour> contours=face.getAllContours();
+                                         Log.e("in face detection", String.valueOf(face.getAllContours().size()));
+                                         allLandmarks.add(landmarks);
+                                         allContours.add(contours);
+
                                         }
                                     }
 

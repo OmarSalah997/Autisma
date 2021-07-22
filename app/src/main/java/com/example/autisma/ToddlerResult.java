@@ -14,16 +14,19 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.autisma.Eye_Gaze.Eyegaze;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
+import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
@@ -40,6 +43,9 @@ import java.util.concurrent.Executors;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.opencv.android.OpenCVLoader;
+
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
 import static com.example.autisma.RecorderService.Videopath;
@@ -54,10 +60,14 @@ public class ToddlerResult extends AppCompatActivity {
     private ArrayList<Bitmap> frames= new ArrayList<>();
     VideoToFrames converter=new VideoToFrames(1); //mode =1 : eyegaze   mode = 2 : emotion
     int Result;
+    static {
+        OpenCVLoader.initDebug();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toddler_result);
+        System.loadLibrary("opencv_java3");
         loading=findViewById(R.id.indeterminateBar);
         ToMCHAT=findViewById(R.id.proceed_to_MCHAT);
         details=findViewById(R.id.Gscore_details);
@@ -115,13 +125,31 @@ public class ToddlerResult extends AppCompatActivity {
             return "Executed";
         }
         @Override protected void onPostExecute(String result) {
+            Log.e("before eye gaze","on post execute");
             loading.setVisibility(View.INVISIBLE);
             scoretxt.setVisibility(View.VISIBLE);
             details.setVisibility(View.VISIBLE);
             Scorebar.setVisibility(View.VISIBLE);
             done.setVisibility(View.VISIBLE);
             frames=converter.croppedframes;
-            List<FaceLandmark> landmarks=converter.landmarks;
+            Log.e("before eye gaze 2","on post execute");
+
+            List<List<FaceContour> >contours=new ArrayList<List<FaceContour>>();
+            contours=converter.contours;
+         int gazeResult=0;
+         int gaze_left=0;
+         int gaze_right=0;
+            for(int i=0;i<frames.size();i++) {
+                Eyegaze e = new Eyegaze();
+                e.contours = contours.get(i);
+                e.frame =frames.get(i);
+                if(e.eyegaze()=='L')
+                gaze_left+=1;
+                if(e.eyegaze()=='R')
+                    gaze_right +=1;
+            }
+Log.e("gaze left", String.valueOf(gaze_left));
+            Log.e("gaze right", String.valueOf(gaze_right));
             if(Result<=6)
             {
                 float f=((float) Result/(float)24)*100;
@@ -140,6 +168,8 @@ public class ToddlerResult extends AppCompatActivity {
             }
             if(Result>=19)
             {
+                Log.e("after eye gaze","on post execute");
+
                 float f=((float) Result/(float)24)*100;
                 Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
                 Scorebar.setUnfinishedStrokeColor(Color.GRAY);
