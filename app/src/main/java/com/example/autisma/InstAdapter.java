@@ -75,6 +75,8 @@ class InstAdapter implements ListAdapter {
             });
             TextView tittle = convertView.findViewById(R.id.single_row);
             ImageView imag = convertView.findViewById(R.id.icon);
+            TextView dist=convertView.findViewById(R.id.distance);
+            dist.setText(String.valueOf(instData.distance)+" "+ context.getString(R.string.kmaway));
             tittle.setText(instData.InstName);
             String imgname=instData.Image;
             Resources resources =context.getResources();

@@ -3,21 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-    <ImageButton
+    <TextView
+        android:id="@+id/Dot_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Dot1"
+        android:textSize="20sp"
+        android:paddingEnd="20sp"
+        android:paddingStart="20sp"
+        android:paddingTop="20sp" />
+        <RelativeLayout
+            android:id="@+id/Window"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            tools:ignore="NestedWeights">
+        <ImageButton
         android:id="@+id/dot"
         android:layout_width="59dp"
         android:layout_height="99dp"
-  android:layout_centerInParent="true"
+        android:layout_centerInParent="true"
         android:src="@android:drawable/ic_notification_overlay"
-        tools:layout_editor_absoluteX="215dp"
-        tools:layout_editor_absoluteY="301dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:visibility="gone"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/toEmotion"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="اضغط على المربع التى يظهر امامك"
-        android:textSize="30sp"
-/>
+        android:background="@drawable/button_shape"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="12sp"
+        android:text="@string/next"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:layout_gravity="bottom"/>
+</LinearLayout>
 </RelativeLayout>

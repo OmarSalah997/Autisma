@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -24,6 +26,8 @@ import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 import com.google.mlkit.vision.face.FaceLandmark;
 
+import org.tensorflow.lite.support.image.TensorImage;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,7 +45,6 @@ public class faceDetection {
     public  boolean DetectionComplete =false;
         InputImage Inimage;
         Context context;
-        Uri imgPath;
         Bitmap image;
         int mode;
         int x=0;
@@ -51,7 +54,6 @@ public class faceDetection {
     List<List<FaceContour>> allContours=new ArrayList<List<FaceContour>>();
     public faceDetection(Context context,ArrayList<Bitmap> frames,int mode) throws IOException {
         this.context=context;
-        imgPath=Uri.parse(context.getExternalFilesDir(null)+"/autizma/");
         this.frames =frames;
         this.mode=mode;// mode =1:  cropping  mode =2 : cropping and resizing
     }
@@ -67,9 +69,6 @@ public class faceDetection {
             final int finalI = i;
             if(image!=null)
             {
-             if(mode==1)
-                Inimage =InputImage.fromBitmap(image,0);
-             else
                 Inimage =InputImage.fromBitmap(image,0);
                 Task<List<Face>> result = detector.process(Inimage).addOnSuccessListener(
                     new OnSuccessListener<List<Face>>() {
@@ -94,7 +93,9 @@ public class faceDetection {
                                         Bitmap resized;
                                         if(cropped.getHeight()>0 & cropped.getWidth()>0)
                                         {
-                                            resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
+
+                                            Bitmap grey=toGrayscale(cropped);
+                                            resized=Bitmap.createScaledBitmap(grey, 48, 48,true);
                                           //  saveToInternalStorage(resized, "Emo"+ finalI,mode);
                                             Croppedframes.add(resized);
                                         }
@@ -116,14 +117,11 @@ public class faceDetection {
                             }}}
                             if(finalI==frames.size()-1)
                                 DetectionComplete=true;
-
                         }
                     }).addOnCompleteListener(new OnCompleteListener<List<Face>>() {
                 @Override
                 public void onComplete(@NonNull Task<List<Face>> task) {
-                    {
-
-                    }
+                    { }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -131,15 +129,37 @@ public class faceDetection {
                         int fail;
                     }
                 });
-                if (mode==2){
+              /*  if (mode==2){
                 while (!result.isComplete());
-                {
-                    int f;
-                }
+                    { List<Face> faces=result.getResult();
+                        for (Face face :faces ) {
+                            Rect bounds = face.getBoundingBox();
+                            if(bounds.left>0 & bounds.top>0 & bounds.right<image.getWidth())
+                            {
+                                Bitmap cropped;
+                                int hcorrect;
+                                if (bounds.top+bounds.height()>image.getHeight())
+                                    hcorrect=480-bounds.top;
+                                else
+                                    hcorrect=bounds.height();
+                                cropped=Bitmap.createBitmap(image,bounds.left ,bounds.top,bounds.width(),hcorrect);
+                                if(mode==2)
+                                {
+                                    if(cropped!=null){
+                                        Bitmap resized;
+                                        if(cropped.getHeight()>0 & cropped.getWidth()>0)
+                                        {
+                                            resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
+                                            Croppedframes.add(resized);
+                                        }
+                                    }
+                                }
+                            }}}
                 x++;
                 if(x==frames.size()-1)
                     DetectionComplete=true;
-            }}
+            }*/
+            }
 
         }
     }
@@ -169,6 +189,22 @@ public class faceDetection {
             }
         }
         return directory.getAbsolutePath();
+    }
+    public Bitmap toGrayscale(Bitmap bmpOriginal)
+    {
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
     }
 
 }

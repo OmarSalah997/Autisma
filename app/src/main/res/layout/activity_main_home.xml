@@ -141,20 +141,20 @@
 
 
         <Button
-            android:id="@+id/button_helpvid"
+            android:id="@+id/button_chatbot"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rect_button"
-            android:text="@string/help_video"
+            android:text="@string/Echatbot"
             android:textColor="@color/colorWhite"
             android:paddingTop="30dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:paddingBottom="30dp"
-            android:drawableTop="@drawable/ic_baseline_play_circle_outline_24"/></LinearLayout>
+            android:drawableTop="@drawable/ic_baseline_message_24"/></LinearLayout>
 </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

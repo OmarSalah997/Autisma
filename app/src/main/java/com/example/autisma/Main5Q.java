@@ -70,8 +70,8 @@ public class Main5Q extends AppCompatActivity {
                             }
                             else if(childage==300)
                             {
-                                //emotion
-                                Intent toScore= new Intent(Main5Q.this, EmotionTest.class);
+                                //dot
+                                Intent toScore= new Intent(Main5Q.this, pressDotActivity.class);
                                 toScore.putExtra("5Qscore", total_score);
                                 Main5Q.this.startActivity(toScore);
                                 finish();
@@ -93,7 +93,7 @@ public class Main5Q extends AppCompatActivity {
         if(questionNumber>1)
         {
             final AlertDialog.Builder warning = new AlertDialog.Builder(this);
-            warning.setIcon(R.drawable.ic_baseline_g_translate_24);
+            warning.setIcon(R.drawable.wrong_sign);
             warning.setTitle(R.string.warning);
             warning.setMessage(R.string.resLost);
             warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()

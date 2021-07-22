@@ -2,32 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.autisma">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <compatible-screens>
-        <screen
-            android:screenDensity="hdpi"
-            android:screenSize="normal" />
-    </compatible-screens>
-
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="false"
         android:hardwareAccelerated="true"
@@ -39,11 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SpeakingActivity"></activity>
+        <activity android:name=".OtherResult"
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.MainHOME" />
+        </activity>
         <activity
             android:name=".EmotionTest"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
             android:theme="@style/mainTheme" />
         <activity
             android:name=".Main5Q"
@@ -84,10 +61,18 @@
         </activity>
         <activity
             android:name=".Gilliam_main"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".Gilliam_info"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".opening"
             android:noHistory="true">
@@ -109,10 +94,18 @@
         </activity>
         <activity
             android:name=".M_chat_main"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".M_chat_info"
-            android:theme="@style/mainTheme" />
+            android:theme="@style/mainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.autisma.child_tests" />
+        </activity>
         <activity
             android:name=".questions_Home"
             android:theme="@style/mainTheme" />
@@ -219,5 +212,31 @@
             android:enabled="true"
             android:exported="true" />
     </application>
+
+    <compatible-screens>
+        <screen
+            android:screenDensity="hdpi"
+            android:screenSize="normal" />
+    </compatible-screens>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.example.autisma;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class M_chat_main extends AppCompatActivity {
@@ -188,5 +190,29 @@ public class M_chat_main extends AppCompatActivity {
         if(language.equals(""))
             language= Resources.getSystem().getConfiguration().locale.getLanguage();
         setLocale(language);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder warning = new AlertDialog.Builder(this);
+        warning.setIcon(R.drawable.wrong_sign);
+        warning.setTitle(R.string.warning);
+        warning.setMessage(R.string.resLost);
+        warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(getBaseContext(), child_tests.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        warning.setNegativeButton(getString(R.string.cancel),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        warning.show();
     }
 }

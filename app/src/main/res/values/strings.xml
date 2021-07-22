@@ -257,24 +257,6 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="ToddlerLow">This result indicates a low risk of autism, nothing to worry about, but you can check with a doctor if you are still concerned.</string>
     <string name="ToddlerMedium">This result indicates a medium risk of autism, you need to re-run the test after 2 weeks, or check with a doctor if you are concerned.</string>
     <string name="ToddlerHigh">This result indicates a high risk of autism, we strongly encourage you to proceed to the next test.</string>
-    <string-array name="Country_array">
-        <item>Egypt</item>
-    </string-array>
-    <string-array name="ethnicity_array">
-        <item>Arab</item>
-        <item>African</item>
-        <item>White European</item>
-        <item>Asian</item>
-        <item>African American</item>
-        <item>Turkish</item>
-        <item>Kurdish</item>
-        <item>Persian</item>
-        <item>Hispanic</item>
-        <item>Native indian</item>
-    </string-array>
-    <string-array name="settings_list">
-        <item>Language</item>
-    </string-array>
     <string name="PleaseWait">Please wait...</string>
     <string name="Res_AV">The result will be available soon</string>
     <string name="warning">Warning</string>
@@ -305,6 +287,37 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="Dr.Souad">Dr.Souad Musa</string>
     <string name="Speaking_intro">Please make sure to perform this test in a empty room for accurate results.During this test te child will see two pictures and he should say what is in the picture.</string>
     <string name="Emotest1">The following test is designed to determine a child\'s ability to understand emotions</string>
-    <string name="Emotest2">An image representing an emotion will appear for 3 seconds, once it appears the child must imitate the same emotion with his face so the camera can capture it, then press next to display the next image.</string>
+    <string name="Emotest2">"An image representing an emotion will appear for 3 seconds, once it appears the child must imitate the same emotion with his face so the camera can capture it, then press next to display the next image. the child face must be at a distance of at least 60cm from the device "</string>
+    <string name="Dot1">The following test is designed to measure the child reflexes and ability to focus.</string>
+    <string name="Dot2">A red dot will appear on the screen, the child is asked to press the dot as fast as possible. the dot will appear 5 times on the screen.</string>
+    <string-array name="Country_array">
+        <item>Egypt</item>
+    </string-array>
+    <string-array name="ethnicity_array">
+        <item>Arab</item>
+        <item>African</item>
+        <item>White European</item>
+        <item>Asian</item>
+        <item>African American</item>
+        <item>Turkish</item>
+        <item>Kurdish</item>
+        <item>Persian</item>
+        <item>Hispanic</item>
+        <item>Native indian</item>
+    </string-array>
+    <string-array name="settings_list">
+        <item>Language</item>
+    </string-array>
+    <string name="tomaps">The following service requires internet connection and location services, it\'s advised to give these permissions to the app.</string>
+    <string name="givLoc">Please give the app location permission.</string>
+    <string name="AlWahat">Al-Wahat Street, 6th of October</string>
+    <string name="DreamDissc">Dream School for Model Education (for people with special needs and learning difficulties)</string>
+    <string name="ahmedoraby">Ahmed Orabi Association - Line 2 North - Plot 5047</string>
+    <string name="happydisc">Happy World School (Alaa Foundation for Special Needs)</string>
+    <string name="carfour">Carrefour main road - next to Zahraa Maadi Youth Center</string>
+    <string name="yousrDisc">Al Yusr School for Special Cases (Early Intervention - Academic Delay - Cerebral Palsy - Autism - Learning Difficulties)</string>
+    <string name="YourLocation">Your location</string>
+    <string name="kmaway">Km away</string>
+    <string name="Echatbot">Emergency chatbot</string>
 
 </resources>

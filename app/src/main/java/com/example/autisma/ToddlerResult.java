@@ -127,7 +127,6 @@ public class ToddlerResult extends AppCompatActivity {
         @Override protected void onPostExecute(String result) {
             Log.e("before eye gaze","on post execute");
             loading.setVisibility(View.INVISIBLE);
-            //wait.setVisibility(View.INVISIBLE);
             scoretxt.setVisibility(View.VISIBLE);
             details.setVisibility(View.VISIBLE);
             Scorebar.setVisibility(View.VISIBLE);
