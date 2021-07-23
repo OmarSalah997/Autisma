@@ -188,8 +188,8 @@ public class MainHOME extends AppCompatActivity {
         helpvid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),EmotionTest.class));
-
+                //startActivity(new Intent(getApplicationContext(),EmotionTest.class));
+                startActivity(new Intent(getApplicationContext(),Chatbot.class));
             }
         });
 

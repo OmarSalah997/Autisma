@@ -10,5 +10,5 @@
     <color name="whitegrey">#f2f5df</color>
     <color name="startblue">#2F4F4F</color>
     <color name="endblue">#32CD32</color>
-
+    <color name="black">#FF000000</color>
 </resources>
