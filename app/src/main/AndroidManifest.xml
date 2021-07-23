@@ -38,6 +38,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".SpeakingActivity"
+            android:theme="@style/mainTheme"></activity>
+        <activity android:name=".OtherResult"
         <activity android:name=".Tantrums"></activity>
         <activity android:name=".SexualDesire" />
         <activity android:name=".SelfHarm" />

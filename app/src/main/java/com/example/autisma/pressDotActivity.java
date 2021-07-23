@@ -67,9 +67,9 @@ public class pressDotActivity extends AppCompatActivity {
                     count++;
                     Satrt = Calendar.getInstance().getTime();
                 }
-                if(dotCount>=5)
+                if(dotCount>=4)
                 {
-                    Intent toScore= new Intent(pressDotActivity.this, EmotionTest.class);
+                    Intent toScore= new Intent(pressDotActivity.this, SpeakingActivity.class);
                     toScore.putExtra("5Qscore", score+result);
                     pressDotActivity.this.startActivity(toScore);
                     finish();

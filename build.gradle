@@ -5,7 +5,9 @@ buildscript {
         jcenter()
 
         maven { url "https://chaquo.com/maven"}
-
+        maven {
+            url 'https://microsoftmaps.jfrog.io/artifactory/Maven/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
