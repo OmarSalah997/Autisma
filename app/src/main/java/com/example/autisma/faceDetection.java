@@ -63,6 +63,12 @@ public class faceDetection {
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
                 .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
                 .build();
+        if(mode==2)//emotion, no need for contours
+        {
+            LandMarksOn = new FaceDetectorOptions.Builder()
+                    .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+                    .build();
+        }
         FaceDetector detector = FaceDetection.getClient(LandMarksOn);
         for(int i=0; i<frames.size();i++){
             image=frames.get(i);

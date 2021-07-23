@@ -5,40 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SpeakingActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
-
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:gravity="center_horizontal"
         android:text="@string/Speaking_intro"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="157dp" />
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_weight="2"/>
 
     <Button
         android:id="@+id/start_speaking"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/rect_button"
         android:paddingStart="8dp"
-        android:paddingTop="20dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
         android:text="@string/start"
         android:textColor="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="542dp" />
+        android:layout_weight="0.2"/>
     </LinearLayout>
-    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

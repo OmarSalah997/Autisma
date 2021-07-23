@@ -1,7 +1,10 @@
 package com.example.autisma;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -43,6 +46,8 @@ import com.example.autisma.Sound_classification.MFCC;
 import com.example.autisma.Sound_classification.WavFile;
 import com.example.autisma.Sound_classification.WavFileException;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class SpeakingActivity extends AppCompatActivity {
     public Vector<float[]> vec = new Vector<float[]>(72);
     public int numberOfSpeaker=3;
@@ -55,7 +60,7 @@ public class SpeakingActivity extends AppCompatActivity {
     final static public int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     final static public int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     int filesNumber=0;
-
+    int score;
     final static public int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
     final static public int BytesPerElement = 2; // 2 bytes in 16bit format
     String sdCardPath = String.valueOf(Environment.getExternalStorageDirectory());
@@ -66,6 +71,18 @@ public class SpeakingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speaking);
+        Intent intent = getIntent();
+        score = intent.getIntExtra("5Qscore",0);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        if ( ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    50); }
         /*
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Do the file write
@@ -126,7 +143,7 @@ setContentView(R.layout.activity_two);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                startActivity(new Intent(getApplicationContext(),child_tests.class));
+                                startActivity(new Intent(getApplicationContext(),EmotionTest.class));
                             };
 
 
@@ -560,6 +577,30 @@ setContentView(R.layout.activity_two);
                 Log.e("transfer files", "ERROR: " + e.toString());
             }
         }
+    }
+    @Override
+    public void onBackPressed() {
+
+        final AlertDialog.Builder warning = new AlertDialog.Builder(this);
+        warning.setIcon(R.drawable.wrong_sign);
+        warning.setTitle(R.string.warning);
+        warning.setMessage(R.string.resLost);
+        warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(getBaseContext(), child_tests.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        warning.setNegativeButton(getString(R.string.cancel),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        warning.show();
     }
 
 }
