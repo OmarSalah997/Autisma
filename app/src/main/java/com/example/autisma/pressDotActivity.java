@@ -69,8 +69,8 @@ public class pressDotActivity extends AppCompatActivity {
                 }
                 if(dotCount>=5)
                 {
-                    Intent toScore= new Intent(pressDotActivity.this, EmotionTest.class);
-                    toScore.putExtra("5Qscore", score+result);
+                    Intent toScore= new Intent(pressDotActivity.this, SpeakingActivity.class);
+                //    toScore.putExtra("5Qscore", score+result);
                     pressDotActivity.this.startActivity(toScore);
                     finish();
                 }

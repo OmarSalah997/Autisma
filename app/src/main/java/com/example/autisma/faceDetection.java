@@ -49,6 +49,7 @@ public class faceDetection {
         int mode;
         int x=0;
         ArrayList<Bitmap> frames;
+        ArrayList<InputImage> images_frame;
         ArrayList<Bitmap> Croppedframes= new ArrayList<>();
     List<List<FaceLandmark>> allLandmarks=new ArrayList<List<FaceLandmark>>();
     List<List<FaceContour>> allContours=new ArrayList<List<FaceContour>>();
@@ -110,6 +111,7 @@ public class faceDetection {
                                          Log.e("in face detection", String.valueOf(face.getAllContours().size()));
                                          allLandmarks.add(landmarks);
                                          allContours.add(contours);
+                                     //    images_frame.add(Inimage);
 
                                         }
                                     }

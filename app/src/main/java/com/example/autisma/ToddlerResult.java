@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.autisma.Eye_Gaze.Eyegaze;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -131,7 +132,7 @@ public class ToddlerResult extends AppCompatActivity {
             details.setVisibility(View.VISIBLE);
             Scorebar.setVisibility(View.VISIBLE);
             done.setVisibility(View.VISIBLE);
-            frames=converter.croppedframes;
+            frames=converter.frames;
             Log.e("before eye gaze 2","on post execute");
 
             List<List<FaceContour> >contours=new ArrayList<List<FaceContour>>();
@@ -139,7 +140,7 @@ public class ToddlerResult extends AppCompatActivity {
          int gazeResult=0;
          int gaze_left=0;
          int gaze_right=0;
-            for(int i=0;i<frames.size();i++) {
+            for(int i=0;i<contours.size();i++) {
                 Eyegaze e = new Eyegaze();
                 e.contours = contours.get(i);
                 e.frame =frames.get(i);
@@ -150,6 +151,8 @@ public class ToddlerResult extends AppCompatActivity {
             }
 Log.e("gaze left", String.valueOf(gaze_left));
             Log.e("gaze right", String.valueOf(gaze_right));
+      
+
             if(Result<=6)
             {
                 float f=((float) Result/(float)24)*100;

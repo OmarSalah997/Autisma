@@ -51,9 +51,9 @@ public class VideoToFrames {
         }
         if(mode==1)//eye gaze
         {
-            for (int i = 0; i< 340; i++)
+            for (int i = 0; i< 50; i++)
             {
-                Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
+                Bitmap bmp2 =retriever.getFrameAtTime(i*200000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
                 if(bmp2!=null)
                     frames.add(bmp2);
                 //saveToInternalStorage(bmp2,String.valueOf(i),context);
