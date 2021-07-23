@@ -37,6 +37,12 @@ public class Games extends AppCompatActivity {
             }
 
         });
+        GuessNumGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Games.this,GuessingNumberGame.class));
+            }
+        });
 
     }
     private void setLocale(String s) {
