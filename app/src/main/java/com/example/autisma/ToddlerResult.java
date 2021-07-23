@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.autisma.Eye_Gaze.Eyegaze;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -151,19 +150,19 @@ public class ToddlerResult extends AppCompatActivity {
             }
 Log.e("gaze left", String.valueOf(gaze_left));
             Log.e("gaze right", String.valueOf(gaze_right));
-      
-
+            if(gaze_left>gaze_right)
+                Result+=6;//looked right less than 60%, failed the test :(
             if(Result<=6)
             {
-                float f=((float) Result/(float)24)*100;
+                float f=((float) Result/(float)30)*100;
                 Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
                 Scorebar.setUnfinishedStrokeColor(Color.GRAY);
                 Scorebar.setFinishedStrokeColor(Color.GREEN);
                 details.setText(R.string.ToddlerLow);
             }
-            if(Result>13 & Result<=18)
+            if(Result>11 & Result<=18)
             {
-                float f=((float) Result/(float)24)*100;
+                float f=((float) Result/(float)30)*100;
                 Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
                 Scorebar.setUnfinishedStrokeColor(Color.GRAY);
                 Scorebar.setFinishedStrokeColor(Color.YELLOW);
@@ -173,7 +172,7 @@ Log.e("gaze left", String.valueOf(gaze_left));
             {
                 Log.e("after eye gaze","on post execute");
 
-                float f=((float) Result/(float)24)*100;
+                float f=((float) Result/(float)30)*100;
                 Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
                 Scorebar.setUnfinishedStrokeColor(Color.GRAY);
                 Scorebar.setFinishedStrokeColor(Color.RED);

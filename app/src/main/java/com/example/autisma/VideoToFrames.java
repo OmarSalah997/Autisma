@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.util.Log;
 
+import com.google.mlkit.vision.face.FaceContour;
 import com.google.mlkit.vision.face.FaceLandmark;
 import com.google.mlkit.vision.face.FaceContour;
 
@@ -51,7 +52,7 @@ public class VideoToFrames {
         }
         if(mode==1)//eye gaze
         {
-            for (int i = 0; i< 50; i++)
+            for (int i = 0; i< 170; i++)
             {
                 Bitmap bmp2 =retriever.getFrameAtTime(i*200000,FFmpegMediaMetadataRetriever.OPTION_NEXT_SYNC);
                 if(bmp2!=null)
@@ -80,9 +81,9 @@ public class VideoToFrames {
         }
         if(mode==2)//emotion test
         {
-            for (int i = 0; i<37; i++)
+            for (int i = 0; i<15; i++)
             {
-                Bitmap bmp2 =retriever.getFrameAtTime(i*100000,FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
+                Bitmap bmp2 =retriever.getFrameAtTime(i*200000,FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
                 if(bmp2!=null)
                 {
                     Matrix matrix = new Matrix();

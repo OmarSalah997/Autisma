@@ -114,8 +114,9 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         instructions=findViewById(R.id.instructions);
         instructions.setText(getString(R.string.Emotest1));
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED | ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                 PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA, WRITE_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     50); }
         img=findViewById(R.id.EmotionImg);
         img.setVisibility(View.INVISIBLE);
@@ -168,10 +169,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                         sad1[0] =captureEmotion("sad1");
-                        MyAsyncTask VideoToFrames1=new MyAsyncTask();
+                       /* MyAsyncTask VideoToFrames1=new MyAsyncTask();
                         VideoToFrames1.setCount(1);
                         VideoToFrames1.setvideopath(happy1[0]);
-                        VideoToFrames1.execute();
+                        VideoToFrames1.execute();*/
 
 
                     } catch (Exception e) {
@@ -191,10 +192,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          happy2[0] =captureEmotion("happy2");
-                        MyAsyncTask VideoToFrames2=new MyAsyncTask();
+                       /* MyAsyncTask VideoToFrames2=new MyAsyncTask();
                         VideoToFrames2.setCount(2);
                         VideoToFrames2.setvideopath(sad1[0]);
-                        VideoToFrames2.execute();
+                        VideoToFrames2.execute();*/
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -211,10 +212,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          angry1[0] =captureEmotion("angry1");
-                        MyAsyncTask VideoToFrames3=new MyAsyncTask();
+                       /* MyAsyncTask VideoToFrames3=new MyAsyncTask();
                         VideoToFrames3.setCount(3);
                         VideoToFrames3.setvideopath(happy2[0]);
-                       VideoToFrames3.execute();
+                       VideoToFrames3.execute();*/
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
@@ -234,10 +235,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          happy3[0] =captureEmotion("happy3");
-                        MyAsyncTask VideoToFrames4=new MyAsyncTask();
+                       /* MyAsyncTask VideoToFrames4=new MyAsyncTask();
                         VideoToFrames4.setCount(4);
                         VideoToFrames4.setvideopath(angry1[0]);
-                        VideoToFrames4.execute();
+                        VideoToFrames4.execute();*/
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -251,15 +252,20 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     ToEmotionResult.setVisibility(View.INVISIBLE);
                     img.setVisibility(View.INVISIBLE);
                     cameraPreview.setVisibility(View.INVISIBLE);
-                   MyAsyncTask VideoToFrames5=new MyAsyncTask();
+                   /*MyAsyncTask VideoToFrames5=new MyAsyncTask();
                     VideoToFrames5.setCount(5);
                     VideoToFrames5.setvideopath(happy3[0]);
-                    VideoToFrames5.execute();
-                    VideoToFrames5.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    VideoToFrames5.execute();*/
+                    //VideoToFrames5.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     //Intent myIntent = new Intent(getApplicationContext(), pressDotActivity.class);
                     //startActivity(myIntent);
                     //we should run the model
                     //finish();
+                    loading.setVisibility(View.INVISIBLE);
+                    Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
+                    toScore.putExtra("5Qscore", score);
+                    EmotionTest.this.startActivity(toScore);
+                    finish();
                 }
             }
         });
@@ -453,7 +459,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
         final AlertDialog.Builder warning = new AlertDialog.Builder(this);
         warning.setIcon(R.drawable.wrong_sign);
         warning.setTitle(R.string.warning);
@@ -516,7 +522,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     happy3Frames = converter.croppedframes;
 
                     //EmotionClassification model = EmotionClassification.newInstance(getBaseContext());
-                    TensorImage I=new TensorImage(DataType.UINT8);
+                 /*   TensorImage I=new TensorImage(DataType.UINT8);
                     ByteBuffer buff=ByteBuffer.allocate(9216);
                     TensorBuffer inputFeature0;
                     inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
@@ -556,9 +562,9 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         happy1=outasarr;
                         // max=max(happy1);
                     }
-                    tflite.close();
+                    tflite.close();*/
                     loading.setVisibility(View.INVISIBLE);
-                    Intent toScore= new Intent(EmotionTest.this, pressDotActivity.class);
+                    Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
                     toScore.putExtra("5Qscore", score);
                     EmotionTest.this.startActivity(toScore);
                     finish();
@@ -613,4 +619,5 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         return tImage;
         //...
     }
+
 }
