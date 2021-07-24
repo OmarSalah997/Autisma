@@ -162,8 +162,6 @@ if(left_eye!=null)
     thresh_eye=cropped_Eye.clone();
     Imgproc.threshold(cropped_Eye, thresh_eye, 100, 255, Imgproc.THRESH_BINARY);
 
-        Imgcodecs.imwrite(String.valueOf(Environment.getExternalStorageDirectory()) + "/eyee"+c+".jpg",cropped_Eye);
-    Imgcodecs.imwrite(String.valueOf(Environment.getExternalStorageDirectory()) + "/eye"+c+".jpg",thresh_eye);
    // Log.e("thres_eye",String.valueOf(thresh_eye.width())+" "+String.valueOf(thresh_eye.height()));
     Mat left_side = thresh_eye.submat(0, thresh_eye.height()-1, 0, (int)(thresh_eye.width() / 2)).clone();
     Mat right_side = thresh_eye.submat(0, thresh_eye.height()-1, (int)(thresh_eye.width() / 2 )+ 1, thresh_eye.width()-1).clone();

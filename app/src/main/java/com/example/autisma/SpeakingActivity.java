@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -32,6 +34,7 @@ import android.content.res.AssetManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,20 +45,29 @@ import com.example.autisma.Sound_classification.WavFile;
 import com.example.autisma.Sound_classification.WavFileException;
 
 public class SpeakingActivity extends AppCompatActivity {
-    public Vector<float[]> vec = new Vector<float[]>(72);
+    public Vector<int[]> vec = new Vector<int[]>(72);
+
     public int numberOfSpeaker=3;
     ArrayList<Integer> classifications=new ArrayList<Integer>();
     public int classification;
+    int filesNumber=0;
+    int speakScore=0;
+    int result=0;
     private Thread recordingThread;
+    public int w;
     private AudioRecord mRecorder;
     private boolean isRecording = false;
+    public static int SAMPLE_RATE = 16000;
+    private static final int samplingRates[] = {16000, 11025, 11000, 8000, 6000};
+    private short[] mBuffer;
+
+    /*
     final static public int RECORDER_SAMPLERATE = 44100;
     final static public int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     final static public int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-    int filesNumber=0;
 
     final static public int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
-    final static public int BytesPerElement = 2; // 2 bytes in 16bit format
+    final static public int BytesPerElement = 2; // 2 bytes in 16bit format*/
     String storagePath;
     File dir ;
 
@@ -66,8 +78,10 @@ public class SpeakingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speaking);
         storagePath= String.valueOf(getApplicationContext().getFilesDir());
-         dir= new File(storagePath, "/autisma_files");
 
+         dir= new File(storagePath, "/autisma_files");
+        Intent intent = getIntent();
+        result = intent.getIntExtra("5Qscore",0);
         if (!(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ){
 
             ActivityCompat.requestPermissions(this,
@@ -78,27 +92,28 @@ public class SpeakingActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.RECORD_AUDIO}, 0);
         }
-        try {
-            transfer_files();
-            calculateMFCCs();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (WavFileException e) {
-            e.printStackTrace();
+        if (!(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ){
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
+        transfer_files();
         final Button start = findViewById(R.id.start_speaking);
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
 setContentView(R.layout.activity_two);
-                startRecording(0);
                 final Button stop = findViewById(R.id.next_two);
+                startRecording(0);
+
                 stop.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         // Code here executes on main thread after user presses button
                         mRecorder.stop();
                         isRecording = false;
+                        mRecorder.release();
                         Log.e("STOP", "STOP");
+
                         File f1 = new File(dir + "/z0.pcm"); // The location of your PCM file
                         File f2 = new File(dir + "/recorded0.wav"); // The location where you want your WAV file
                         try {
@@ -114,6 +129,7 @@ setContentView(R.layout.activity_two);
                             public void onClick(View v) {
                                 mRecorder.stop();
                                 isRecording = false;
+                                mRecorder.release();
                                 Log.e("STOP", "STOP");
                                 File f1 = new File(dir + "/z1.pcm"); // The location of your PCM file
                                 File f2 = new File(dir + "/recorded1.wav"); // The location where you want your WAV file
@@ -123,9 +139,28 @@ setContentView(R.layout.activity_two);
                                 } catch (IOException | WavFileException e) {
                                     e.printStackTrace();
                                 }
-                              //  compute_distances(1);
-                             //   compute_distances(2);
-                                startActivity(new Intent(getApplicationContext(),child_tests.class));
+                                try {
+
+                                    calculateMFCCs();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (WavFileException e) {
+                                    e.printStackTrace();
+                                }
+                                compute_distances(0);
+                                classify();
+                                if (w == 1 || w == 3){
+                                    speakScore ++;
+                                    Log.e("classified correct", "class correct");
+                            }
+                                compute_distances(1);
+                                classify();
+                                if(w==2 || w==0){
+                                Log.e("classified correct","class correct");
+                                speakScore ++;}
+                                Intent toEmotion= new Intent(SpeakingActivity.this,EmotionTest.class);
+                                toEmotion.putExtra("5QScore",speakScore+result);
+                                startActivity(toEmotion);
                             };
 
 
@@ -142,48 +177,67 @@ setContentView(R.layout.activity_two);
     }
 
     private void startRecording(int u) {
-
+/*
         mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
                 RECORDER_SAMPLERATE, RECORDER_CHANNELS,
                 RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement);
 
         mRecorder.startRecording();
-        isRecording = true;
+        isRecording = true;*/
+
+        for (int rate : samplingRates) {
+            int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_CONFIGURATION_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
+            if (bufferSize > 0) {
+                SAMPLE_RATE=rate;
+                break;
+            }
+        }
+        int bufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT);
+        mBuffer = new short[bufferSize];
+        mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+       isRecording = true;
+        mRecorder.startRecording();
 
         recordingThread = new Thread(new Runnable() {
             public void run() {
-                writeAudioDataToFile(u);
+        try {
+            writeAudioDataToFile(u);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
             }
         }, "AudioRecorder Thread");
         recordingThread.start();
     }
 
-    private void writeAudioDataToFile(int u) {
+    private void writeAudioDataToFile(int u) throws FileNotFoundException {
         // Write the output audio in byte
         if (!dir.exists())
             dir.mkdirs();
-        FileOutputStream os = null;
-        try {
-            os = new FileOutputStream(dir + "/z"+String.valueOf(u)+".pcm");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        DataOutputStream os = null;
+        File f=new File(dir+"/z"+String.valueOf(u)+".pcm");
+        os= new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
 
         while (isRecording) {
             // gets the voice output from microphone to byte format
-            short sData[] = new short[BufferElements2Rec];
-            mRecorder.read(sData, 0, BufferElements2Rec);
-            try {
-                // // writes the data to file from buffer
-                // // stores the voice buffer
 
-                byte bData[] = short2byte(sData);
-
-                os.write(bData, 0, BufferElements2Rec * BytesPerElement);
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            try{
+            double sum = 0;
+            int readSize = mRecorder.read(mBuffer, 0, mBuffer.length);
+            for (int i = 0; i < readSize; i++) {
+                os.writeShort(mBuffer[i]);
+                sum += mBuffer[i] * mBuffer[i];
             }
+            if (readSize > 0) {
+                final double amplitude = sum / readSize;
+            }
+
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
         }
         try {
             os.close();
@@ -207,6 +261,8 @@ setContentView(R.layout.activity_two);
 
     private void rawToWave(final File rawFile, final File waveFile) throws IOException {
         Log.e("raw to wave", "raw to wave");
+
+
         byte[] rawData = new byte[(int) rawFile.length()];
         DataInputStream input = null;
         try {
@@ -231,12 +287,12 @@ setContentView(R.layout.activity_two);
             writeShort(output, (short) 1); // audio format (1 = PCM)
             writeShort(output, (short) 1); // number of channels
             writeInt(output, 44100); // sample rate
-            writeInt(output, RECORDER_SAMPLERATE * 2); // byte rate
+            writeInt(output, SAMPLE_RATE * 2); // byte rate
             writeShort(output, (short) 2); // block align
             writeShort(output, (short) 16); // bits per sample
             writeString(output, "data"); // subchunk 2 id
             writeInt(output, rawData.length); // subchunk 2 size
-            // Audio data (conversion big endian -> little endian)
+       //     Audio data (conversion big endian -> little endian)
             short[] shorts = new short[rawData.length / 2];
             ByteBuffer.wrap(rawData).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shorts);
             ByteBuffer bytes = ByteBuffer.allocate(shorts.length * 2);
@@ -299,115 +355,130 @@ setContentView(R.layout.activity_two);
 
     protected void calculateMFCCs() throws IOException, WavFileException {
 
-        AssetManager assetManager = this.getApplicationContext().getResources().getAssets();
+                Log.e("clculate mfccs","hbkjm");
+        AssetManager assetManager = getApplicationContext().getResources().getAssets();
 
         String[] files = null;
+try {
+
+    files = assetManager.list("files"); //ringtone is folder name
+    filesNumber = files.length;
+
+    for (int i = 0; i < (files.length); i += 1) {
 
 
-        files = assetManager.list("files"); //ringtone is folder name
-        filesNumber=files.length ;
+        File file;
 
-        for (int i = 0; i < (files.length) ; i += 1) {
-
-
-            File file;
-
-                file = new File(String.valueOf(getApplicationContext().getFilesDir()) + "/autisma_files/", files[i]);
-           calculatesingleMFCC(file);
-
+        file = new File(String.valueOf(getApplicationContext().getFilesDir()) + "/autisma_files/", files[i]);
+        try {
+          readMfcctoVec(file);
+           //int[] mean_mfcc=calculatesingleMFCC(file);
+           // writeMFCC(file.getName(),mean_mfcc);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+}catch(IOException e){
+            e.printStackTrace();
+    }
+
 
     }
-    public void calculatesingleMFCC(File file) throws IOException, WavFileException {
+    public int[] calculatesingleMFCC(File file) throws IOException, WavFileException {
+
+        Log.e("calculating single mfcc", "uvjh");
         int mNumFrames;
         int mSampleRate;
         int mChannels;
-        float[] meanMFCCValues;
+        int[] meanMFCCValues = null;
 
-try{
-        WavFile wavFile;
-        wavFile = WavFile.openWavFile(file);
-        mNumFrames = (int) wavFile.numFrames;
-        mSampleRate = (int) wavFile.sampleRate;
-        mChannels = wavFile.numChannels;
-        double[][] buffer = new double[mChannels][];
-        for (int l = 0; l < mChannels; l++) {
-            double[] var = new double[mNumFrames];
-            buffer[l] = var;
-        }
-
-        int frameOffset = 0;
-
-        int loopCounter = mNumFrames * mChannels / 4096 + 1;
-        for (int p = 0; p < loopCounter; p++) {
-            frameOffset = wavFile.readFrames(buffer, mNumFrames, frameOffset);
-        }
-
-        //trimming the magnitude values to 5 decimal digits
-        DecimalFormat df = new DecimalFormat("#.#####");
-        df.setRoundingMode(RoundingMode.CEILING);
-        double[] meanBuffer = new double[mNumFrames];
-        for (int q = 0; q < mNumFrames; q++) {
-            double frameVal = 0.0;
-            for (int p = 0; p < mChannels; p++) {
-                frameVal = frameVal + buffer[p][q];
+        try {
+            WavFile wavFile;
+            wavFile = WavFile.openWavFile(file);
+            mNumFrames = (int) wavFile.numFrames;
+            mSampleRate = (int) wavFile.sampleRate;
+            mChannels = wavFile.numChannels;
+            double[][] buffer = new double[mChannels][];
+            for (int l = 0; l < mChannels; l++) {
+                double[] var = new double[mNumFrames];
+                buffer[l] = var;
             }
-            meanBuffer[q] = Double.parseDouble(df.format(frameVal / mChannels));
-        }
+
+            int frameOffset = 0;
+
+            int loopCounter = mNumFrames * mChannels / 4096 + 1;
+            for (int p = 0; p < loopCounter; p++) {
+                frameOffset = wavFile.readFrames(buffer, mNumFrames, frameOffset);
+            }
+
+            //trimming the magnitude values to 5 decimal digits
+            DecimalFormat df = new DecimalFormat("#.#####");
+            df.setRoundingMode(RoundingMode.CEILING);
+            double[] meanBuffer = new double[mNumFrames];
+            for (int q = 0; q < mNumFrames; q++) {
+                double frameVal = 0.0;
+                for (int p = 0; p < mChannels; p++) {
+                    frameVal = frameVal + buffer[p][q];
+                }
+                meanBuffer[q] = Double.parseDouble(df.format(frameVal / mChannels));
+            }
 
 
-        //MFCC java library.
-        MFCC mfccConvert = new MFCC();
-        mfccConvert.setSampleRate(mSampleRate);
-        int nMFCC = 40;
-        mfccConvert.setN_mfcc(nMFCC);
-        float[] mfccInput = mfccConvert.process(meanBuffer);
-        int nFFT = mfccInput.length / nMFCC;
-        double[][] mfccValues = new double[nMFCC][];
-        for (int j = 0; j < nMFCC; j++) {
-            double[] var = new double[nFFT];
-            mfccValues[j] = var;
-        }
-
-        //loop to convert the mfcc values into multi-dimensional array
-        for (int k = 0; k < nFFT; k++) {
-            int indexCounter = k * nMFCC;
-            int rowIndexValue = k % nFFT;
+            //MFCC java library.
+            MFCC mfccConvert = new MFCC();
+            mfccConvert.setSampleRate(mSampleRate);
+            int nMFCC = 40;
+            mfccConvert.setN_mfcc(nMFCC);
+            float[] mfccInput = mfccConvert.process(meanBuffer);
+            int nFFT = mfccInput.length / nMFCC;
+            double[][] mfccValues = new double[nMFCC][];
             for (int j = 0; j < nMFCC; j++) {
-                mfccValues[j][rowIndexValue] = mfccInput[indexCounter];
-                indexCounter++;
+                double[] var = new double[nFFT];
+                mfccValues[j] = var;
             }
+
+            //loop to convert the mfcc values into multi-dimensional array
+            for (int k = 0; k < nFFT; k++) {
+                int indexCounter = k * nMFCC;
+                int rowIndexValue = k % nFFT;
+                for (int j = 0; j < nMFCC; j++) {
+                    mfccValues[j][rowIndexValue] = mfccInput[indexCounter];
+                    indexCounter++;
+                }
+            }
+
+
+            //code to take the mean of mfcc values across the rows such that
+            //[nMFCC x nFFT] matrix would be converted into
+            //[nMFCC x 1] dimension - which would act as an input
+
+            meanMFCCValues = new int[nMFCC];
+            for (int p = 0; p < nMFCC; p++) {
+                double fftValAcrossRow = 0.0;
+                for (int q = 0; q < nFFT; q++)
+                    fftValAcrossRow = fftValAcrossRow + mfccValues[p][q];
+                double fftMeanValAcrossRow = fftValAcrossRow / nFFT;
+                meanMFCCValues[p] = (int) fftMeanValAcrossRow;
+
+            }
+            file.delete();
+            vec.add(meanMFCCValues);
+         
+
+        
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WavFileException e) {
+            e.printStackTrace();
         }
-
-
-        //code to take the mean of mfcc values across the rows such that
-        //[nMFCC x nFFT] matrix would be converted into
-        //[nMFCC x 1] dimension - which would act as an input
-
-        meanMFCCValues = new float[nMFCC];
-        for (int p = 0; p < nMFCC; p++) {
-            double fftValAcrossRow = 0.0;
-            for (int q = 0; q < nFFT; q++)
-                fftValAcrossRow = fftValAcrossRow + mfccValues[p][q];
-            double fftMeanValAcrossRow = fftValAcrossRow / nFFT;
-            meanMFCCValues[p] =(float)  fftMeanValAcrossRow;
-
-        }
-file.delete();
-        vec.add(meanMFCCValues);
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    } catch (WavFileException e) {
-        e.printStackTrace();
-    }
+        return meanMFCCValues;
 }
 
-    public void writeMFCC(int[] arr, int j) throws IOException {
-        FileOutputStream out = new FileOutputStream(dir + "/file"+j+".txt");
-        byte buf[] = new byte[4 * arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            int val = arr[i];
+    public void writeMFCC(String fileName, int[] j) throws IOException {
+        FileOutputStream out = new FileOutputStream(String.valueOf(Environment.getExternalStorageDirectory()) + "/"+fileName+".txt");
+        byte buf[] = new byte[4 * j.length];
+        for (int i = 0; i < j.length; ++i) {
+            int val = (int) j[i];
           /*  buf[4 * i] = (byte) (val >> 24);
             buf[4 * i + 1] = (byte) (val >> 16);
             buf[4 * i + 2] = (byte) (val >> 8);
@@ -421,50 +492,66 @@ file.delete();
         // out.write(buf);
         out.close();
     }
-/*
-    public void readMfcctoVec(int j) throws IOException {
-        FileInputStream in = new FileInputStream(dir + "/file"+j+".txt");
-        byte[] bytes = new byte[40*4];
-        in.read(bytes);
-        //   while(in.read(bytes)!= -1){
-       /*     int dst=ByteBuffer.wrap(bytes).getInt();
-            Log.e("ay haga", String.valueOf(dst));
 
-        IntBuffer intBuf =
-                ByteBuffer.wrap(bytes)
-                        .order(ByteOrder.LITTLE_ENDIAN)
-                        .asIntBuffer();
-        int[] array = new int[intBuf.remaining()];
-        intBuf.get(array);
-        Log.e("ay haga", String.valueOf(array));
-    }*/
+    public void readMfcctoVec(File f) throws IOException {
+        int[] meanmfcc=new int[(int) (f.length()/4)];
+        int size = (int) f.length();
+        byte[] bytes = new byte[size];
+        try {
+            FileInputStream fin = new FileInputStream(f);
+            BufferedInputStream bin = new BufferedInputStream(fin);
+            DataInputStream din = new DataInputStream(bin);
+
+            int count = (int) (f.length() / 4);
+            int[] values = new int[count];
+            for (int i = 0; i < count; i++) {
+                meanmfcc[i] = din.readInt();
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        vec.add(meanmfcc);
+        f.delete();
+    }
 
 
 
 
 
     public void compute_distances(int f){
-        int numberOfSpeaker= filesNumber/4;
-        int soundsclassifiers=4;
-        // Vector<Integer>classifications =new Vector<Integer>(numberOfSpeaker);
-        for(int i=0;i<vec.size();i+=soundsclassifiers){
-            Vector<Double>currentSpeakerDistances =new Vector<Double>(soundsclassifiers);
-            for(int n=i;n<soundsclassifiers+i;n++){
-                final DTW lDTW = new DTW();
-                double dist = lDTW.compute(vec.get(n),vec.get(vec.size()-1-f)).getDistance();
-                Log.e("distances", String.valueOf(dist));
-                currentSpeakerDistances.add(dist);
-            }
-            classifications.add(currentSpeakerDistances.indexOf(Collections.min(currentSpeakerDistances)));
-            //   Log.e("min distances", String.valueOf(Collections.min(currentSpeakerDistances)));
-        }
-        Log.e("class size",String.valueOf((classifications.get(2))));
-        for(int i=0;i<classifications.size();i++)
-            Log.e("distances", "distance is " + classifications.get(i));
+
+                //TODO your background code
+                Log.e("in compute distances","yfyj");
+                int numberOfSpeaker = filesNumber / 4;
+                int soundsclassifiers = 4;
+                // Vector<Integer>classifications =new Vector<Integer>(numberOfSpeaker);
+                for (int i = 2; i < vec.size(); i += soundsclassifiers) {
+                    Vector<Double> currentSpeakerDistances = new Vector<Double>(soundsclassifiers);
+                    for (int n = i; n < soundsclassifiers + i; n++) {
+                        final DTW lDTW = new DTW();
+                        Log.e("vec", String.valueOf(vec.size()));
+                        double dist = lDTW.compute(vec.get(n), vec.get(f)).getDistance();
+                        Log.e("distances", String.valueOf(dist));
+                        currentSpeakerDistances.add(dist);
+                    }
+                    classifications.add(currentSpeakerDistances.indexOf(Collections.min(currentSpeakerDistances)));
+                    //   Log.e("min distances", String.valueOf(Collections.min(currentSpeakerDistances)));
+                }
+                /*
+                Log.e("class size", String.valueOf((classifications.get(2))));
+                for (int i = 0; i < classifications.size(); i++)
+                    Log.e("distances", "distance is " + classifications.get(i));*/
+
     }
     public void classify(){
 
         // Sort the array
+
         Collections.sort(classifications);
 
         // find the max frequency using linear
@@ -494,14 +581,19 @@ file.delete();
             res = classifications.get(classifications.size()-1);
         }
         classification=res;
+        classifications.clear();
+      w=classification;
+
     }
     public void transfer_files() {
-        AssetManager assetManager = this.getApplicationContext().getResources().getAssets();
+        Log.e("transfer","in");
+
+        AssetManager assetManager = getApplicationContext().getResources().getAssets();
 
         String[] files = null;
 
         try {
-            files = assetManager.list("files"); //ringtone is folder name
+            files = assetManager.list("files");
         } catch (Exception e) {
             Log.e("transfer files asset ", "ERROR: " + e.toString());
         }

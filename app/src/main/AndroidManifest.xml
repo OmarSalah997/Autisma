@@ -21,7 +21,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
         </activity>
-        <activity android:name=".SpeakingActivity"></activity>
+
         <activity
             android:name=".EmotionTest"
             android:theme="@style/mainTheme" />
