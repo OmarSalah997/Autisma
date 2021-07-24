@@ -13,15 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SpeakingActivity"
-            android:theme="@style/mainTheme"></activity>
+
         <activity android:name=".OtherResult"
             android:theme="@style/mainTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
         </activity>
-        <activity android:name=".SpeakingActivity"></activity>
+        <activity android:name=".SpeakingActivity"
+            android:theme="@style/mainTheme"></activity>
         <activity
             android:name=".EmotionTest"
             android:theme="@style/mainTheme" />

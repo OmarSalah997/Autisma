@@ -15,9 +15,11 @@ import java.util.ArrayList;
 class InstAdapter implements ListAdapter {
     ArrayList<InstData> arrayList;
     Context context;
-    public InstAdapter(Context context, ArrayList<InstData> arrayList) {
+    int src;
+    public InstAdapter(Context context, ArrayList<InstData> arrayList,int src) {
         this.arrayList=arrayList;
         this.context=context;
+        this.src=src;
     }
     @Override
     public boolean areAllItemsEnabled() {
@@ -70,6 +72,7 @@ class InstAdapter implements ListAdapter {
                     intent.putExtra("inst_number",instData.mobileNumber);
                     intent.putExtra("inst_fbPage",instData.fbPage);
                     intent.putExtra("inst_webpage",instData.webPage);
+                    intent.putExtra("src",src);
                     context.startActivity(intent);
                 }
             });

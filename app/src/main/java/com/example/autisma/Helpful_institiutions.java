@@ -48,7 +48,7 @@ public class Helpful_institiutions extends AppCompatActivity {
     private static final int REQUEST = 112;
     private Context mContext = Helpful_institiutions.this;
     private MapElementLayer mPinLayer;
-    double lat=0,lont=0;
+    double lat=30.026033034137587,lont=31.211723647190592;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,7 +176,7 @@ public class Helpful_institiutions extends AppCompatActivity {
         arrayList.add(new InstData(getString(R.string.MaadiCenter), "مبنى 9 ,شارع 278 -المعادى الجديدة", "lrc", "01222332809",
                 "مركز المعادى للخدمات التعليمية يقدم خدمات تشخيصية واستشارية مناسبة للأطفال من جميع الأعمار الذين يعانون من مجموعة واسعة من صعوبات التعلم واضطرابات النمو و / أو مشاكل السلوك",
                 "https://www.facebook.com/LRCegypt/", "http://lrcegypt.org/",distance(29.972374697256146, 31.274278831850623,lat,lont)));
-        InstAdapter customAdapter = new InstAdapter(this, arrayList);
+        InstAdapter customAdapter = new InstAdapter(this, arrayList,0);
         list.setAdapter(customAdapter);
     }
 
@@ -417,16 +417,12 @@ public class Helpful_institiutions extends AppCompatActivity {
         return Math.round(dist * 100.0) / 100.0;
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts decimal degrees to radians             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
     private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts radians to decimal degrees             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }

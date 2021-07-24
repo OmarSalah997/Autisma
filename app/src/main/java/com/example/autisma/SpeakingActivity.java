@@ -1,5 +1,6 @@
 package com.example.autisma;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -67,6 +68,11 @@ public class SpeakingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_speaking);
         storagePath= String.valueOf(getApplicationContext().getFilesDir());
          dir= new File(storagePath, "/autisma_files");
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
 
         if (!(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ){
 
