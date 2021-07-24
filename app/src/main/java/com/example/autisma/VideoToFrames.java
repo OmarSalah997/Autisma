@@ -79,8 +79,9 @@ public class VideoToFrames {
                     Matrix matrix = new Matrix();
                     matrix.postRotate(270);
                     Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
-                    Bitmap b4 = Bitmap.createScaledBitmap(b3, 720, 480,false);
-                    frames.add(b4);
+                    //Bitmap b4 = Bitmap.createScaledBitmap(b3, 720, 480,false);
+                    Bitmap resized=Bitmap.createScaledBitmap(b3, 48, 48,true);
+                    frames.add(resized);
 
                 }
             }
@@ -89,14 +90,10 @@ public class VideoToFrames {
             String fileName=getFileName(videopath,context);
             File video = new File(imagesFolder, fileName );
             video.delete();
-            try {
-                faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
-                D.detect();
-                while (!D.DetectionComplete);
-                croppedframes=D.Croppedframes;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
+            // D.detect();
+            // while (!D.DetectionComplete);
+            croppedframes=frames;
         }
         return true;
     }

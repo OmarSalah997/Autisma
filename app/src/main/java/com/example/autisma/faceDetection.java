@@ -62,12 +62,7 @@ public class faceDetection {
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
                 .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
                 .build();
-        if(mode==2)//emotion, no need for contours
-        {
-            LandMarksOn = new FaceDetectorOptions.Builder()
-                    .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
-                    .build();
-        }
+
         FaceDetector detector = FaceDetection.getClient(LandMarksOn);
         for(int i=0; i<frames.size();i++){
             image=frames.get(i);
@@ -99,8 +94,8 @@ public class faceDetection {
                                         if(cropped.getHeight()>0 & cropped.getWidth()>0)
                                         {
                                             Bitmap grey=toGrayscale(cropped);
-                                            resized=Bitmap.createScaledBitmap(grey, 48, 48,true);
-                                            Croppedframes.add(cropped);
+                                            resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
+                                            Croppedframes.add(resized);
                                         }
                                         }
                                     }

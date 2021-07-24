@@ -165,7 +165,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                         sad1[0] =captureEmotion("sad1");
-
+                        MyAsyncTask VideoToFrames1=new MyAsyncTask();
+                        VideoToFrames1.setCount(1);
+                        VideoToFrames1.setvideopath(happy1[0]);
+                        VideoToFrames1.execute();
 
 
                     } catch (Exception e) {
@@ -185,7 +188,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          happy2[0] =captureEmotion("happy2");
-
+                        MyAsyncTask VideoToFrames2=new MyAsyncTask();
+                        VideoToFrames2.setCount(2);
+                        VideoToFrames2.setvideopath(sad1[0]);
+                        VideoToFrames2.execute();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -202,7 +208,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          angry1[0] =captureEmotion("angry1");
-
+                        MyAsyncTask VideoToFrames3=new MyAsyncTask();
+                        VideoToFrames3.setCount(3);
+                        VideoToFrames3.setvideopath(happy2[0]);
+                        VideoToFrames3.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
@@ -222,7 +231,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          happy3[0] =captureEmotion("happy3");
-
+                        MyAsyncTask VideoToFrames4=new MyAsyncTask();
+                        VideoToFrames4.setCount(4);
+                        VideoToFrames4.setvideopath(angry1[0]);
+                        VideoToFrames4.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -236,26 +248,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     ToEmotionResult.setVisibility(View.INVISIBLE);
                     img.setVisibility(View.INVISIBLE);
                     cameraPreview.setVisibility(View.INVISIBLE);
-                    MyAsyncTask VideoToFrames1=new MyAsyncTask();
-                    VideoToFrames1.setCount(1);
-                    VideoToFrames1.setvideopath(happy1[0]);
-                   // VideoToFrames1.execute();
-                    VideoToFrames1.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-                    MyAsyncTask VideoToFrames2=new MyAsyncTask();
-                    VideoToFrames2.setCount(2);
-                    VideoToFrames2.setvideopath(sad1[0]);
-                    //VideoToFrames2.execute();
-                    VideoToFrames2.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-                    MyAsyncTask VideoToFrames3=new MyAsyncTask();
-                    VideoToFrames3.setCount(3);
-                    VideoToFrames3.setvideopath(happy2[0]);
-                    //VideoToFrames3.execute();
-                    VideoToFrames3.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-                    MyAsyncTask VideoToFrames4=new MyAsyncTask();
-                    VideoToFrames4.setCount(4);
-                    VideoToFrames4.setvideopath(angry1[0]);
-                    //VideoToFrames4.execute();
-                    VideoToFrames4.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
                     MyAsyncTask VideoToFrames5=new MyAsyncTask();
                     VideoToFrames5.setCount(5);
                     VideoToFrames5.setvideopath(happy3[0]);
@@ -497,65 +489,69 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         }
         @Override protected void onPostExecute(String result) {
             Model model = null;
+            try {
+                model = Model.newInstance(getBaseContext());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             TensorImage image;
             Model.Outputs outputs;
             List<Category> probability;
             Category H,A,S,N;
             int partial_score=0;
+            float max;
+            String label;
             switch (count) {
                 case 1:
                     happy1Frames = converter.croppedframes;
-                    try {
-                        model = Model.newInstance(getBaseContext());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                     for(int i=0;i<happy1Frames.size();i++)
                     {
                         image = TensorImage.fromBitmap(happy1Frames.get(i));
                         outputs = model.process(image);
                         probability= outputs.getProbabilityAsCategoryList();
-                        Collections.sort(probability,new Comparator<Category>() {
+                         max = probability.get(0).getScore();
+                         label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
 
-                            public int compare(Category o1, Category o2) {
-                                return Float.compare(o1.getScore(), o2.getScore());
-                            }
-                        });
-                        if(!probability.get(0).getLabel().equals("happy"))
+                        if(!label.equals("happy"))
                         {
                             partial_score++;
                         }
+                        max=0;
+                        label="0";
                     }
                     model.close();
                     if(partial_score>happy1Frames.size()/3)
                     score++;
                     Log.e("1 done", ":(((((((((((");
-
                     break;
                 case 2:
                     sad1Frames=converter.croppedframes;
-                    try {
-                        model = Model.newInstance(getBaseContext());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                     for(int i=0;i<sad1Frames.size();i++)
                     {
                         image = TensorImage.fromBitmap(sad1Frames.get(i));
                         outputs = model.process(image);
                         probability= outputs.getProbabilityAsCategoryList();
-                        Collections.sort(probability,new Comparator<Category>() {
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
 
-                            public int compare(Category o1, Category o2) {
-                                return Float.compare(o1.getScore(), o2.getScore());
-                            }
-                        });
-                        if(!probability.get(0).getLabel().equals("sad"))
+                        if(!label.equals("sad"))
                         {
                             partial_score++;
                         }
+                        max=0;
+                        label="0";
                     }
                     model.close();
                     if(partial_score>sad1Frames.size()/3)
@@ -565,27 +561,27 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     break;
                 case 3:
                     happy2Frames = converter.croppedframes;
-                    try {
-                        model = Model.newInstance(getBaseContext());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                     for(int i=0;i<happy2Frames.size();i++)
                     {
                         image = TensorImage.fromBitmap(happy2Frames.get(i));
                         outputs = model.process(image);
                         probability= outputs.getProbabilityAsCategoryList();
-                        Collections.sort(probability,new Comparator<Category>() {
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
 
-                            public int compare(Category o1, Category o2) {
-                                return Float.compare(o1.getScore(), o2.getScore());
-                            }
-                        });
-                        if(!probability.get(0).getLabel().equals("happy"))
+                        if(!label.equals("happy"))
                         {
                             partial_score++;
                         }
+                        max=0;
+                        label="0";
                     }
                     model.close();
                     if(partial_score>happy2Frames.size()/3)
@@ -594,27 +590,27 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     break;
                 case 4:
                    angry1Frames = converter.croppedframes;
-                    try {
-                        model = Model.newInstance(getBaseContext());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                     for(int i=0;i<angry1Frames.size();i++)
                     {
                         image = TensorImage.fromBitmap(angry1Frames.get(i));
                         outputs = model.process(image);
                         probability= outputs.getProbabilityAsCategoryList();
-                        Collections.sort(probability,new Comparator<Category>() {
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
 
-                            public int compare(Category o1, Category o2) {
-                                return Float.compare(o1.getScore(), o2.getScore());
-                            }
-                        });
-                        if(!probability.get(0).getLabel().equals("happy"))
+                        if(!label.equals("angry"))
                         {
                             partial_score++;
                         }
+                        max=0;
+                        label="0";
                     }
                     model.close();
                     if(partial_score>angry1Frames.size()/3)
@@ -623,27 +619,29 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     break;
                 case 5:
                     happy3Frames = converter.croppedframes;
-                    try {
-                        model = Model.newInstance(getBaseContext());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
 
                     for(int i=0;i<happy3Frames.size();i++)
                     {
                         image = TensorImage.fromBitmap(happy3Frames.get(i));
                         outputs = model.process(image);
                         probability= outputs.getProbabilityAsCategoryList();
-                        Collections.sort(probability,new Comparator<Category>() {
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
 
-                            public int compare(Category o1, Category o2) {
-                                return Float.compare(o1.getScore(), o2.getScore());
-                            }
-                        });
-                        if(!probability.get(0).getLabel().equals("happy"))
+                        if(!label.equals("happy"))
                         {
                             partial_score++;
                         }
+                        max=0;
+                        label="0";
+                        Log.e("5 done", " ");
                     }
                     model.close();
                     if(partial_score>happy3Frames.size()/3)
