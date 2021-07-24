@@ -427,7 +427,7 @@ try {
                 for (int p = 0; p < mChannels; p++) {
                     frameVal = frameVal + buffer[p][q];
                 }
-                meanBuffer[q] = Double.parseDouble(df.format(frameVal / mChannels));
+                meanBuffer[q] = frameVal / mChannels;
             }
 
 
