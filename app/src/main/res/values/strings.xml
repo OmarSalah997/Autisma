@@ -319,5 +319,6 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="YourLocation">Your location</string>
     <string name="kmaway">Km away</string>
     <string name="Echatbot">Emergency chatbot</string>
+    <string name="OpenGPS">Please turn on your GPS and refresh</string>
 
 </resources>

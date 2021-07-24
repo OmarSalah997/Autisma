@@ -1,9 +1,0 @@
-Dear ${PERSON_NAME},
-
-Welcome to your new Autizma account.
-We are glad that you join our app. We wish you a great experience with us.
-to verify your account enter the confirmation code.
-confirmation code: ${CODE}
-Have a great time with us!
-
-Autizma team.

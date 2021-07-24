@@ -1,8 +1,0 @@
-Hi ${PERSON_NAME},
-
-We received a request to reset your Autizma account password.
-Enter the following password reset code:
-${CODE}
-Alternatively, you can directly change your password.
-
-Autizma team.

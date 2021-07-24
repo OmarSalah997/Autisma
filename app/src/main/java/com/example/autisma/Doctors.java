@@ -91,6 +91,11 @@ public class Doctors extends AppCompatActivity {
                 mPinLayer.getElements().add(pushpin);
 
             }
+            else
+            {
+                Toast.makeText(Doctors.this,getString(R.string.OpenGPS) , Toast.LENGTH_LONG).show();
+
+            }
         }
         Helpful_institiutions.pin p1= new Helpful_institiutions.pin(30.12183384226699, 31.368656918354688, getString(R.string.Dr_Mona));
         Helpful_institiutions.pin p2= new Helpful_institiutions.pin(30.09660215940048, 31.332898316503414, getString(R.string.Dr_Manal));

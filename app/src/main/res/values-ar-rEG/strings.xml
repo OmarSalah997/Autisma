@@ -312,4 +312,5 @@
     <string name="YourLocation">موقعك</string>
     <string name="kmaway">كم</string>
     <string name="Echatbot">شات بوت للطوارئ</string>
+    <string name="OpenGPS">برجاء تشغيل خدمة تحديد الموقع وأعد التحميل</string>
 </resources>

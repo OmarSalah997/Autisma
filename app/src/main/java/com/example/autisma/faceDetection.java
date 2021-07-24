@@ -65,7 +65,7 @@ public class faceDetection {
         if(mode==2)//emotion, no need for contours
         {
             LandMarksOn = new FaceDetectorOptions.Builder()
-                    .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+                    .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
                     .build();
         }
         FaceDetector detector = FaceDetection.getClient(LandMarksOn);
@@ -100,7 +100,7 @@ public class faceDetection {
                                         {
                                             Bitmap grey=toGrayscale(cropped);
                                             resized=Bitmap.createScaledBitmap(grey, 48, 48,true);
-                                            Croppedframes.add(resized);
+                                            Croppedframes.add(cropped);
                                         }
                                         }
                                     }

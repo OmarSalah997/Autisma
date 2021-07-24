@@ -84,6 +84,11 @@ public class Helpful_institiutions extends AppCompatActivity {
                     mPinLayer.getElements().add(pushpin);
 
                 }
+                else
+                {
+                    Toast.makeText(Helpful_institiutions.this,getString(R.string.OpenGPS) , Toast.LENGTH_LONG).show();
+
+                }
         }
         pin p1 = new pin(29.97576699206561, 31.05278581428084, getString(R.string.Dreamschool));
         pin p2 = new pin(30.1823345071871, 31.509303309850587, getString(R.string.Happyworldschool));
