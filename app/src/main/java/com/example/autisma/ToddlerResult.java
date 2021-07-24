@@ -15,10 +15,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.autisma.Eye_Gaze.Eyegaze;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -63,6 +65,7 @@ public class ToddlerResult extends AppCompatActivity {
     static {
         OpenCVLoader.initDebug();
     }
+    MyAsyncTask videoToFrame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +85,10 @@ public class ToddlerResult extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +108,7 @@ public class ToddlerResult extends AppCompatActivity {
             }
         });
 
-        MyAsyncTask videoToFrame= new MyAsyncTask();
+        videoToFrame= new MyAsyncTask();
         videoToFrame.execute();// video is split into 340 frame in background
 
 
@@ -111,11 +116,17 @@ public class ToddlerResult extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-
-        Intent intent = new Intent(getBaseContext(), MainHOME.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+        if(videoToFrame.getStatus()==AsyncTask.Status.FINISHED)
+        {
+            Intent intent = new Intent(getBaseContext(), MainHOME.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.PleaseWait), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -182,5 +193,14 @@ Log.e("gaze left", String.valueOf(gaze_left));
 
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == android.R.id.home) {
+            onBackPressed();  return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -52,7 +52,7 @@ public class Doctors extends AppCompatActivity {
     Location mlocation;
     private static final int REQUEST = 112;
     private Context mContext = Doctors.this;
-    double lat=0,lont=0;
+    double lat=30.026033034137587,lont=31.211723647190592;
     private MapElementLayer mPinLayer;
     /**
      * Called when the activity is first created.
@@ -125,7 +125,7 @@ public class Doctors extends AppCompatActivity {
         arrayList.add(new InstData("د. نهى حجاج", "ميت غمر-شارع الجيش-برج النيل", "doctor", "011238709", "رئيس قسم أمراض المخ و الأعصاب و الطب النفسي للاطفال و البالغين بمستشفي ميت غمر",distance(30.719990056254403, 31.25604193527057,lat,lont)));
         arrayList.add(new InstData("د. نهال ياسر", "مستشفى العائلة (مدينة نصر)ش محمد المقريف أمام النادي الأهلي", "doctor", "01020115115", "أخصائي النفسى للاطفال",distance(30.057472481775324, 31.356798800048754,lat,lont)));
         arrayList.add(new InstData("  د. هشام عبد الرحمن", "الرحاب : المركز الطبي الاول", "doctor", "01099280120", "استشاري الطب النفسي للاطفال",distance(30.059417062024554, 31.49183199678413,lat,lont)));
-        InstAdapter customAdapter = new InstAdapter(this, arrayList);
+        InstAdapter customAdapter = new InstAdapter(this, arrayList,1);
         list.setAdapter(customAdapter);
     }
     private void setLocale(String s) {
@@ -337,16 +337,10 @@ public class Doctors extends AppCompatActivity {
         dist = dist * 60 * 1.1515* 1.609344;
         return Math.round(dist * 100.0) / 100.0;    }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts decimal degrees to radians             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::  This function converts radians to decimal degrees             :*/
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
