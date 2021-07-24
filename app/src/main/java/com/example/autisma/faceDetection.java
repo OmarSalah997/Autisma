@@ -47,9 +47,7 @@ public class faceDetection {
         Context context;
         Bitmap image;
         int mode;
-        int x=0;
         ArrayList<Bitmap> frames;
-        ArrayList<InputImage> images_frame;
         ArrayList<Bitmap> Croppedframes= new ArrayList<>();
     List<List<FaceLandmark>> allLandmarks=new ArrayList<List<FaceLandmark>>();
     List<List<FaceContour>> allContours=new ArrayList<List<FaceContour>>();
@@ -100,24 +98,20 @@ public class faceDetection {
                                         Bitmap resized;
                                         if(cropped.getHeight()>0 & cropped.getWidth()>0)
                                         {
-
                                             Bitmap grey=toGrayscale(cropped);
                                             resized=Bitmap.createScaledBitmap(grey, 48, 48,true);
-                                          //  saveToInternalStorage(resized, "Emo"+ finalI,mode);
                                             Croppedframes.add(resized);
                                         }
                                         }
                                     }
                                     else {
                                         if(cropped!=null) {
-                                      //      saveToInternalStorage(cropped, "Face" + finalI, mode);
                                             Croppedframes.add(cropped);
                                          List<FaceLandmark> landmarks=face.getAllLandmarks();
                                          List<FaceContour> contours=face.getAllContours();
                                          Log.e("in face detection", String.valueOf(face.getAllContours().size()));
                                          allLandmarks.add(landmarks);
                                          allContours.add(contours);
-                                     //    images_frame.add(Inimage);
 
                                         }
                                     }
@@ -137,66 +131,10 @@ public class faceDetection {
                         int fail;
                     }
                 });
-              /*  if (mode==2){
-                while (!result.isComplete());
-                    { List<Face> faces=result.getResult();
-                        for (Face face :faces ) {
-                            Rect bounds = face.getBoundingBox();
-                            if(bounds.left>0 & bounds.top>0 & bounds.right<image.getWidth())
-                            {
-                                Bitmap cropped;
-                                int hcorrect;
-                                if (bounds.top+bounds.height()>image.getHeight())
-                                    hcorrect=480-bounds.top;
-                                else
-                                    hcorrect=bounds.height();
-                                cropped=Bitmap.createBitmap(image,bounds.left ,bounds.top,bounds.width(),hcorrect);
-                                if(mode==2)
-                                {
-                                    if(cropped!=null){
-                                        Bitmap resized;
-                                        if(cropped.getHeight()>0 & cropped.getWidth()>0)
-                                        {
-                                            resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
-                                            Croppedframes.add(resized);
-                                        }
-                                    }
-                                }
-                            }}}
-                x++;
-                if(x==frames.size()-1)
-                    DetectionComplete=true;
-            }*/
+
             }
 
         }
-    }
-    private String saveToInternalStorage(Bitmap bitmapImage,String name,int mode){
-        File directory;
-        if(mode==2)
-        { directory= new File(context.getExternalFilesDir(null),"emotion");
-            if (!directory.exists())
-                directory.mkdirs();
-        }
-        else directory = new File(context.getExternalFilesDir(null),"autizma");
-        File mypath=new File(directory,name + ".jpg");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, fos);
-            fos.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert fos != null;
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return directory.getAbsolutePath();
     }
     public Bitmap toGrayscale(Bitmap bmpOriginal)
     {

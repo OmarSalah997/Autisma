@@ -1,7 +1,11 @@
 package com.example.autisma;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -36,6 +40,7 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -77,6 +82,11 @@ public class SpeakingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speaking);
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
         storagePath= String.valueOf(getApplicationContext().getFilesDir());
 
          dir= new File(storagePath, "/autisma_files");
@@ -161,7 +171,7 @@ setContentView(R.layout.activity_two);
                                 Log.e("classified correct","class correct");
                                 speakScore ++;}
                                 Intent toEmotion= new Intent(SpeakingActivity.this,EmotionTest.class);
-                                toEmotion.putExtra("5QScore",speakScore+result);
+                                toEmotion.putExtra("5Qscore",speakScore+result);
                                 startActivity(toEmotion);
                             };
 
@@ -641,5 +651,33 @@ try {
             }
         }
     }
+    @Override
+    public void onBackPressed() {
 
+        final AlertDialog.Builder warning = new AlertDialog.Builder(this);
+        warning.setIcon(R.drawable.wrong_sign);
+        warning.setTitle(R.string.warning);
+        warning.setMessage(R.string.resLost);
+        warning.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(getBaseContext(), child_tests.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        warning.setNegativeButton(getString(R.string.cancel),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        warning.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed(); return  true;
+    }
 }
