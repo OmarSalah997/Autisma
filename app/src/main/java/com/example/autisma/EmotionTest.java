@@ -90,9 +90,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
     private CameraDevice myCameraDevice;
     private CameraCaptureSession myCameraCaptureSession;
     private CaptureRequest.Builder myCaptureRequestBuilder;
-    private CaptureRequest.Builder myCaptureRequestBuilder2;
-    private Handler mBackgroundHandler;
-    private HandlerThread mBackgroundThread;
     private ArrayList<Bitmap> happy1Frames=new ArrayList<>();
     private ArrayList<Bitmap> happy2Frames=new ArrayList<>();
     private ArrayList<Bitmap> happy3Frames=new ArrayList<>();
@@ -420,23 +417,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             e.printStackTrace();
         }
     }
-    /*
-    private void startBackgroundThread() {
-        mBackgroundThread = new HandlerThread("CameraBackground");
-        mBackgroundThread.start();
-        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
-    }
 
-    private void stopBackgroundThread() {
-        mBackgroundThread.quitSafely();
-        try {
-            mBackgroundThread.join();
-            mBackgroundThread = null;
-            mBackgroundHandler = null;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
     public void stopRecordingVideo() throws Exception {
         try {
             myCameraCaptureSession.stopRepeating();
@@ -488,7 +469,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         int count;
         VideoToFrames converter=new VideoToFrames(2);
         public MyAsyncTask() {
-
         }
         public void setvideopath(Uri videopath)
         {
@@ -618,7 +598,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         tImage.load(sourceImage);
         //tImage = imageProcessor.process(tImage);
         return tImage;
-        //...
     }
 
     @Override
