@@ -61,7 +61,7 @@ public class SpeakingActivity extends AppCompatActivity {
     private static final int samplingRates[] = {16000, 11025, 11000, 8000, 6000};
     private short[] mBuffer;
 
-    /*
+
     final static public int RECORDER_SAMPLERATE = 44100;
     final static public int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     final static public int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
@@ -149,12 +149,14 @@ setContentView(R.layout.activity_two);
                                 }
                                 compute_distances(0);
                                 classify();
+                                Log.e("w", String.valueOf(w));
                                 if (w == 1 || w == 3){
                                     speakScore ++;
                                     Log.e("classified correct", "class correct");
                             }
                                 compute_distances(1);
                                 classify();
+                                Log.e("w", String.valueOf(w));
                                 if(w==2 || w==0){
                                 Log.e("classified correct","class correct");
                                 speakScore ++;}
@@ -177,14 +179,25 @@ setContentView(R.layout.activity_two);
     }
 
     private void startRecording(int u) {
-/*
+
         mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
                 RECORDER_SAMPLERATE, RECORDER_CHANNELS,
                 RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement);
 
         mRecorder.startRecording();
-        isRecording = true;*/
+        isRecording = true;
 
+        recordingThread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    writeAudioDataToFile(u);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "AudioRecorder Thread");
+        recordingThread.start();
+/*
         for (int rate : samplingRates) {
             int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_CONFIGURATION_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
             if (bufferSize > 0) {
@@ -198,53 +211,47 @@ setContentView(R.layout.activity_two);
         mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, bufferSize);
        isRecording = true;
-        mRecorder.startRecording();
+        mRecorder.startRecording();*/
 
-        recordingThread = new Thread(new Runnable() {
-            public void run() {
-        try {
-            writeAudioDataToFile(u);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-            }
-        }, "AudioRecorder Thread");
-        recordingThread.start();
+
     }
 
     private void writeAudioDataToFile(int u) throws FileNotFoundException {
-        // Write the output audio in byte
         if (!dir.exists())
             dir.mkdirs();
-        DataOutputStream os = null;
-        File f=new File(dir+"/z"+String.valueOf(u)+".pcm");
-        os= new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-
-        while (isRecording) {
-            // gets the voice output from microphone to byte format
-
-            try{
-            double sum = 0;
-            int readSize = mRecorder.read(mBuffer, 0, mBuffer.length);
-            for (int i = 0; i < readSize; i++) {
-                os.writeShort(mBuffer[i]);
-                sum += mBuffer[i] * mBuffer[i];
-            }
-            if (readSize > 0) {
-                final double amplitude = sum / readSize;
-            }
-
-        } catch(IOException e){
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(dir + "/z"+String.valueOf(u)+".pcm");
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+        while (isRecording) {
+            // gets the voice output from microphone to byte format
+            short sData[] = new short[BufferElements2Rec];
+            mRecorder.read(sData, 0, BufferElements2Rec);
+            try {
+                // // writes the data to file from buffer
+                // // stores the voice buffer
+
+                byte bData[] = short2byte(sData);
+
+                os.write(bData, 0, BufferElements2Rec * BytesPerElement);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         try {
             os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+
+        }
+
+
+
 
     //convert short to byte
     private byte[] short2byte(short[] sData) {
@@ -287,7 +294,7 @@ setContentView(R.layout.activity_two);
             writeShort(output, (short) 1); // audio format (1 = PCM)
             writeShort(output, (short) 1); // number of channels
             writeInt(output, 44100); // sample rate
-            writeInt(output, SAMPLE_RATE * 2); // byte rate
+            writeInt(output, RECORDER_SAMPLERATE * 2); // byte rate
             writeShort(output, (short) 2); // block align
             writeShort(output, (short) 16); // bits per sample
             writeString(output, "data"); // subchunk 2 id
@@ -372,8 +379,8 @@ try {
         file = new File(String.valueOf(getApplicationContext().getFilesDir()) + "/autisma_files/", files[i]);
         try {
           readMfcctoVec(file);
-           //int[] mean_mfcc=calculatesingleMFCC(file);
-           // writeMFCC(file.getName(),mean_mfcc);
+          // int[] mean_mfcc=calculatesingleMFCC(file);
+          //  writeMFCC(file.getName(),mean_mfcc);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -475,7 +482,7 @@ try {
 }
 
     public void writeMFCC(String fileName, int[] j) throws IOException {
-        FileOutputStream out = new FileOutputStream(String.valueOf(Environment.getExternalStorageDirectory()) + "/"+fileName+".txt");
+        FileOutputStream out = new FileOutputStream(String.valueOf(Environment.getExternalStorageDirectory()) + "/"+fileName+".raw");
         byte buf[] = new byte[4 * j.length];
         for (int i = 0; i < j.length; ++i) {
             int val = (int) j[i];
@@ -530,17 +537,21 @@ try {
                 int numberOfSpeaker = filesNumber / 4;
                 int soundsclassifiers = 4;
                 // Vector<Integer>classifications =new Vector<Integer>(numberOfSpeaker);
+        Vector<Double> currentSpeakerDistances = new Vector<Double>(soundsclassifiers);
                 for (int i = 2; i < vec.size(); i += soundsclassifiers) {
-                    Vector<Double> currentSpeakerDistances = new Vector<Double>(soundsclassifiers);
+                   // Vector<Double> currentSpeakerDistances = new Vector<Double>(soundsclassifiers);
                     for (int n = i; n < soundsclassifiers + i; n++) {
                         final DTW lDTW = new DTW();
-                        Log.e("vec", String.valueOf(vec.size()));
+                   //     Log.e("vec", String.valueOf(vec.size()));
                         double dist = lDTW.compute(vec.get(n), vec.get(f)).getDistance();
                         Log.e("distances", String.valueOf(dist));
                         currentSpeakerDistances.add(dist);
                     }
+
                     classifications.add(currentSpeakerDistances.indexOf(Collections.min(currentSpeakerDistances)));
-                    //   Log.e("min distances", String.valueOf(Collections.min(currentSpeakerDistances)));
+
+                       Log.e("min distances", String.valueOf(Collections.min(currentSpeakerDistances)));
+                    currentSpeakerDistances.clear();
                 }
                 /*
                 Log.e("class size", String.valueOf((classifications.get(2))));
