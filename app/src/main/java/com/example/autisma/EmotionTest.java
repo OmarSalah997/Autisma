@@ -526,7 +526,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         label="0";
                     }
                     model.close();
-                    if(partial_score>happy1Frames.size()/3)
+                    if(partial_score>happy1Frames.size()/2)
                     score++;
                     Log.e("1 done", ":(((((((((((");
                     break;
@@ -554,7 +554,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         label="0";
                     }
                     model.close();
-                    if(partial_score>sad1Frames.size()/3)
+                    if(partial_score>sad1Frames.size()/2)
                         score++;
                     Log.e("2 done", ":(((((((((((");
 
@@ -584,7 +584,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         label="0";
                     }
                     model.close();
-                    if(partial_score>happy2Frames.size()/3)
+                    if(partial_score>happy2Frames.size()/2)
                         score++;
                     Log.e("3 done", ":(((((((((((");
                     break;
@@ -613,7 +613,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         label="0";
                     }
                     model.close();
-                    if(partial_score>angry1Frames.size()/3)
+                    if(partial_score>angry1Frames.size()/2)
                         score++;
                     Log.e("4 done", ":(((((((((((");
                     break;
@@ -644,14 +644,26 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                         Log.e("5 done", " ");
                     }
                     model.close();
-                    if(partial_score>happy3Frames.size()/3)
+                    if(partial_score>happy3Frames.size()/2)
                         score++;
                     Log.e("all done", ":(((((((((((");
-                    loading.setVisibility(View.INVISIBLE);
-                    Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
-                    toScore.putExtra("nonToddlerScore", score);
-                    EmotionTest.this.startActivity(toScore);
-                    finish();
+                    (new Handler()).postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    try {
+                                        loading.setVisibility(View.INVISIBLE);
+                                        Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
+                                        toScore.putExtra("nonToddlerScore", score);
+                                        EmotionTest.this.startActivity(toScore);
+                                        finish();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            ,
+                            100000);
+
                     //ToEmotionResult.setVisibility(View.VISIBLE);
                     break;
             }

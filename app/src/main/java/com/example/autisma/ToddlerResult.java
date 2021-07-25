@@ -165,7 +165,7 @@ Log.e("gaze left", String.valueOf(gaze_left));
                 Result+=6;//looked right less than 60%, failed the test :(
             if(Result<=6)
             {
-                float f=((float) Result/(float)30)*100;
+                float f=0;
                 Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
                 Scorebar.setUnfinishedStrokeColor(Color.GRAY);
                 Scorebar.setFinishedStrokeColor(Color.GREEN);
