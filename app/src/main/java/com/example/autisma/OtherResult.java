@@ -47,15 +47,15 @@ int score;
         });
         if(score<=6)
         {
-            float f=((float) score/(float)24)*100;
+            float f=((float) score/(float)30)*100;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.GREEN);
             details.setText(R.string.ToddlerLow);
         }
-        if(score>13 & score<=18)
+        if(score>6 & score<=18)
         {
-            float f=((float) score/(float)24)*100;
+            float f=((float) score/(float)30)*100;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.YELLOW);
@@ -63,7 +63,7 @@ int score;
         }
         if(score>=19)
         {
-            float f=((float) score/(float)24)*100;
+            float f=((float) score/(float)30)*100;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.RED);

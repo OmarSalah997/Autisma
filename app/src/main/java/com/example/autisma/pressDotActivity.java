@@ -87,7 +87,7 @@ public class pressDotActivity extends AppCompatActivity {
                 long diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMs);
                 if(diffInSec>2)
                     result++;
-                if(dotCount>5)
+                if(dotCount>=5)
                 {
                     dot.setVisibility(View.INVISIBLE);
                     nxt.setVisibility(View.VISIBLE);
@@ -111,43 +111,7 @@ public class pressDotActivity extends AppCompatActivity {
         dot.invalidate();
 
     }
-    private void startTimer()
-    {
-        (new Handler()).postDelayed(
-                new Runnable() {
-                    public void run() {
-                        try {
-                            if(!pressed)
-                            {
-                                if(firstdot)
-                                {  firstdot=false;
-                                    return;
-                                }
-                                result++;
 
-                            }
-                            else{
-                                firstdot=false;
-                                pressed=false;
-                            }
-                            dotCount++;
-                            changeDot();
-                            if(dotCount<5)
-                                startTimer();
-                            else
-                            {
-                                dot.setVisibility(View.INVISIBLE);
-                                nxt.setVisibility(View.VISIBLE);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                ,
-                3000);
-
-    }
 
     @Override
     public void onBackPressed() {
