@@ -287,7 +287,7 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="Dr.Souad">Dr.Souad Musa</string>
     <string name="Speaking_intro">Please make sure to perform this test in a empty room for accurate results.During this test te child will see two pictures and he should say what is in the picture.</string>
     <string name="Emotest1">The following test is designed to determine a child\'s ability to understand emotions</string>
-    <string name="Emotest2">"An image representing an emotion will appear for 3 seconds, once it appears the child must imitate the same emotion with his face so the camera can capture it, then press next to display the next image. the child face must be at a distance of at least 60cm from the device "</string>
+    <string name="Emotest2">An image representing an emotion will appear for 3 seconds, once it appears the child must imitate the same emotion with his face so the camera can capture it, then press next to display the next image. the child\'s face must fill the frame of the camera.</string>
     <string name="Dot1">The following test is designed to measure the child reflexes and ability to focus.</string>
     <string name="Dot2">A red dot will appear on the screen, the child is asked to press the dot as fast as possible. the dot will appear 5 times on the screen.</string>
     <string-array name="Country_array">
@@ -319,5 +319,6 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="YourLocation">Your location</string>
     <string name="kmaway">Km away</string>
     <string name="Echatbot">Emergency chatbot</string>
+    <string name="OpenGPS">Please turn on your GPS and refresh</string>
 
 </resources>

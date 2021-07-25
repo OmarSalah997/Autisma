@@ -30,6 +30,8 @@ int score;
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
         getSupportActionBar().setHomeButtonEnabled(true);
         ToGilliam=findViewById(R.id.proceed_to_MCHAT);
+        ToGilliam.setText(R.string.gilliam);
+        ToGilliam.setVisibility(View.INVISIBLE);
         details=findViewById(R.id.Gscore_details);
         Scorebar=findViewById(R.id.Gscore_progress);
         scoretxt=findViewById(R.id.toddscore);

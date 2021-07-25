@@ -26,6 +26,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -34,17 +36,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-//import com.example.autisma.ml.EmotionClassification;
-//import com.example.autisma.ml.ModelAdam0;
+import com.example.autisma.ml.Model;
 import com.squareup.picasso.Picasso;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.Tensor;
-import org.tensorflow.lite.TensorFlowLite;
-import org.tensorflow.lite.support.common.ops.NormalizeOp;
-import org.tensorflow.lite.support.image.ImageProcessor;
+
 import org.tensorflow.lite.support.image.TensorImage;
-import org.tensorflow.lite.support.image.ops.ResizeOp;
+import org.tensorflow.lite.support.label.Category;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.File;
@@ -56,6 +54,8 @@ import java.nio.FloatBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -69,12 +69,10 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.support.tensorbuffer.TensorBufferFloat;
 
 public class EmotionTest extends AppCompatActivity implements TextureView.SurfaceTextureListener
 {
-    Interpreter tflite;
+
     ProgressBar loading;
     private static final int PERMISSION_REQUEST_CODE = 200;
     TextureView cameraPreview;
@@ -89,9 +87,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
     private CameraDevice myCameraDevice;
     private CameraCaptureSession myCameraCaptureSession;
     private CaptureRequest.Builder myCaptureRequestBuilder;
-    private CaptureRequest.Builder myCaptureRequestBuilder2;
-    private Handler mBackgroundHandler;
-    private HandlerThread mBackgroundThread;
     private ArrayList<Bitmap> happy1Frames=new ArrayList<>();
     private ArrayList<Bitmap> happy2Frames=new ArrayList<>();
     private ArrayList<Bitmap> happy3Frames=new ArrayList<>();
@@ -142,6 +137,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                 }
                 if(clickCount==1)
                 {
+
                     clickCount++;
                     instructions.setVisibility(View.GONE);
                     cameraPreview.setVisibility(View.VISIBLE);
@@ -169,10 +165,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                         sad1[0] =captureEmotion("sad1");
-                       /* MyAsyncTask VideoToFrames1=new MyAsyncTask();
+                        MyAsyncTask VideoToFrames1=new MyAsyncTask();
                         VideoToFrames1.setCount(1);
                         VideoToFrames1.setvideopath(happy1[0]);
-                        VideoToFrames1.execute();*/
+                        VideoToFrames1.execute();
 
 
                     } catch (Exception e) {
@@ -192,10 +188,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          happy2[0] =captureEmotion("happy2");
-                       /* MyAsyncTask VideoToFrames2=new MyAsyncTask();
+                        MyAsyncTask VideoToFrames2=new MyAsyncTask();
                         VideoToFrames2.setCount(2);
                         VideoToFrames2.setvideopath(sad1[0]);
-                        VideoToFrames2.execute();*/
+                        VideoToFrames2.execute();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -212,10 +208,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          angry1[0] =captureEmotion("angry1");
-                       /* MyAsyncTask VideoToFrames3=new MyAsyncTask();
+                        MyAsyncTask VideoToFrames3=new MyAsyncTask();
                         VideoToFrames3.setCount(3);
                         VideoToFrames3.setvideopath(happy2[0]);
-                       VideoToFrames3.execute();*/
+                        VideoToFrames3.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
@@ -235,10 +231,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                             .into(img);
                     try {
                          happy3[0] =captureEmotion("happy3");
-                       /* MyAsyncTask VideoToFrames4=new MyAsyncTask();
+                        MyAsyncTask VideoToFrames4=new MyAsyncTask();
                         VideoToFrames4.setCount(4);
                         VideoToFrames4.setvideopath(angry1[0]);
-                        VideoToFrames4.execute();*/
+                        VideoToFrames4.execute();
                         //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -252,20 +248,21 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     ToEmotionResult.setVisibility(View.INVISIBLE);
                     img.setVisibility(View.INVISIBLE);
                     cameraPreview.setVisibility(View.INVISIBLE);
-                   /*MyAsyncTask VideoToFrames5=new MyAsyncTask();
+                    MyAsyncTask VideoToFrames5=new MyAsyncTask();
                     VideoToFrames5.setCount(5);
                     VideoToFrames5.setvideopath(happy3[0]);
-                    VideoToFrames5.execute();*/
+                    //VideoToFrames5.execute();
+                    VideoToFrames5.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
                     //VideoToFrames5.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     //Intent myIntent = new Intent(getApplicationContext(), pressDotActivity.class);
                     //startActivity(myIntent);
                     //we should run the model
                     //finish();
-                    loading.setVisibility(View.INVISIBLE);
-                    Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
-                    toScore.putExtra("5Qscore", score);
-                    EmotionTest.this.startActivity(toScore);
-                    finish();
+                    //loading.setVisibility(View.INVISIBLE);
+                    //Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
+                    //toScore.putExtra("5Qscore", score);
+                    //EmotionTest.this.startActivity(toScore);
+                    //finish();
                 }
             }
         });
@@ -356,6 +353,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         mMediaRecorder = new MediaRecorder();
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+
         File imagesFolder = new File(getExternalFilesDir(null),"autizma");/*(getApplicationContext().getFilesDir(),);*/
         if (!imagesFolder.exists())
             imagesFolder.mkdirs();
@@ -419,33 +417,19 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             e.printStackTrace();
         }
     }
-    /*
-    private void startBackgroundThread() {
-        mBackgroundThread = new HandlerThread("CameraBackground");
-        mBackgroundThread.start();
-        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
-    }
 
-    private void stopBackgroundThread() {
-        mBackgroundThread.quitSafely();
-        try {
-            mBackgroundThread.join();
-            mBackgroundThread = null;
-            mBackgroundHandler = null;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
     public void stopRecordingVideo() throws Exception {
         try {
             myCameraCaptureSession.stopRepeating();
             myCameraCaptureSession.abortCaptures();
+            myCameraCaptureSession.close();
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
         // Stop recording
         mMediaRecorder.stop();
         mMediaRecorder.reset();
+
     }
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{RECORD_AUDIO, CAMERA, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
@@ -487,7 +471,6 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         int count;
         VideoToFrames converter=new VideoToFrames(2);
         public MyAsyncTask() {
-
         }
         public void setvideopath(Uri videopath)
         {
@@ -505,64 +488,165 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             return "Executed";
         }
         @Override protected void onPostExecute(String result) {
+            Model model = null;
+            try {
+                model = Model.newInstance(getBaseContext());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            TensorImage image;
+            Model.Outputs outputs;
+            List<Category> probability;
+            Category H,A,S,N;
+            int partial_score=0;
+            float max;
+            String label;
             switch (count) {
                 case 1:
                     happy1Frames = converter.croppedframes;
+                    for(int i=0;i<happy1Frames.size();i++)
+                    {
+                        image = TensorImage.fromBitmap(happy1Frames.get(i));
+                        outputs = model.process(image);
+                        probability= outputs.getProbabilityAsCategoryList();
+                         max = probability.get(0).getScore();
+                         label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
+
+                        if(!label.equals("happy"))
+                        {
+                            partial_score++;
+                        }
+                        max=0;
+                        label="0";
+                    }
+                    model.close();
+                    if(partial_score>happy1Frames.size()/3)
+                    score++;
+                    Log.e("1 done", ":(((((((((((");
                     break;
                 case 2:
                     sad1Frames=converter.croppedframes;
+                    for(int i=0;i<sad1Frames.size();i++)
+                    {
+                        image = TensorImage.fromBitmap(sad1Frames.get(i));
+                        outputs = model.process(image);
+                        probability= outputs.getProbabilityAsCategoryList();
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
+
+                        if(!label.equals("sad"))
+                        {
+                            partial_score++;
+                        }
+                        max=0;
+                        label="0";
+                    }
+                    model.close();
+                    if(partial_score>sad1Frames.size()/3)
+                        score++;
+                    Log.e("2 done", ":(((((((((((");
+
                     break;
                 case 3:
                     happy2Frames = converter.croppedframes;
+
+                    for(int i=0;i<happy2Frames.size();i++)
+                    {
+                        image = TensorImage.fromBitmap(happy2Frames.get(i));
+                        outputs = model.process(image);
+                        probability= outputs.getProbabilityAsCategoryList();
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
+
+                        if(!label.equals("happy"))
+                        {
+                            partial_score++;
+                        }
+                        max=0;
+                        label="0";
+                    }
+                    model.close();
+                    if(partial_score>happy2Frames.size()/3)
+                        score++;
+                    Log.e("3 done", ":(((((((((((");
                     break;
                 case 4:
                    angry1Frames = converter.croppedframes;
+
+                    for(int i=0;i<angry1Frames.size();i++)
+                    {
+                        image = TensorImage.fromBitmap(angry1Frames.get(i));
+                        outputs = model.process(image);
+                        probability= outputs.getProbabilityAsCategoryList();
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
+
+                        if(!label.equals("angry"))
+                        {
+                            partial_score++;
+                        }
+                        max=0;
+                        label="0";
+                    }
+                    model.close();
+                    if(partial_score>angry1Frames.size()/3)
+                        score++;
+                    Log.e("4 done", ":(((((((((((");
                     break;
                 case 5:
                     happy3Frames = converter.croppedframes;
 
-                    //EmotionClassification model = EmotionClassification.newInstance(getBaseContext());
-                 /*   TensorImage I=new TensorImage(DataType.UINT8);
-                    ByteBuffer buff=ByteBuffer.allocate(9216);
-                    TensorBuffer inputFeature0;
-                    inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 48, 48, 1}, DataType.FLOAT32);
-                    TensorBuffer outputs=TensorBuffer.createFixedSize(new int[]{1,4}, DataType.FLOAT32);;
-                    FloatBuffer outputFeature0;
-                    try{
-                        tflite=new Interpreter(loadModel());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    float[][] happy1;
-                    int max;
-                    ByteBuffer dummy;
-                    float [][] imgasarr=new float[48][48];
-                    float [][] outasarr=new float[1][4];
-                    for(int i=0;i<happy1Frames.size();i++)
+
+                    for(int i=0;i<happy3Frames.size();i++)
                     {
-                        for (int y = 0; y < happy1Frames.get(i).getHeight(); y++)
+                        image = TensorImage.fromBitmap(happy3Frames.get(i));
+                        outputs = model.process(image);
+                        probability= outputs.getProbabilityAsCategoryList();
+                        max = probability.get(0).getScore();
+                        label=probability.get(0).getLabel();
+                        if (probability.get(1).getScore() > max)
+                            label=probability.get(1).getLabel();
+                        if (probability.get(2).getScore() > max)
+                            label=probability.get(2).getLabel();
+                        if (probability.get(3).getScore() > max)
+                            label=probability.get(3).getLabel();
+
+                        if(!label.equals("happy"))
                         {
-                            for (int x = 0; x < happy1Frames.get(i).getWidth(); x++)
-                            {
-                                imgasarr[x][y] = happy1Frames.get(i).getPixel(x, y);
-                            }
+                            partial_score++;
                         }
-                        I=processImage(happy1Frames.get(i));//=  TensorImage();
-                        dummy=getByteBuffer(happy1Frames.get(i));
-                        buff.put(dummy);
-                        inputFeature0.loadBuffer(buff);
-                        //outputs = model.process(inputFeature0);
-
-                        tflite .run(dummy,outasarr);
-
-                        // outputFeature0 = outputs.();
-                        //outputFeature0.get(happy1);
-                        //=outputFeature0.array();
-                        // 0 angry   1 happy   2 sad   3 neutral
-                        happy1=outasarr;
-                        // max=max(happy1);
+                        max=0;
+                        label="0";
+                        Log.e("5 done", " ");
                     }
-                    tflite.close();*/
+                    model.close();
+                    if(partial_score>happy3Frames.size()/3)
+                        score++;
+                    Log.e("all done", ":(((((((((((");
                     loading.setVisibility(View.INVISIBLE);
                     Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
                     toScore.putExtra("5Qscore", score);
@@ -573,16 +657,18 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
             }
         }
     }
-    public static int max(float[] t) {
-        float maximum = t[0];// start with the first value
-        int maxindex=-1;
-        for (int i=1; i<t.length; i++) {
-            if (t[i] > maximum) {
-                maximum = t[i];
-                maxindex=i;// new maximum
-            }
-        }
-        return maxindex;
+    public static String max(Category a, Category b, Category c, Category d) {
+
+        float max = a.getScore();
+        String label=a.getLabel();
+        if (b.getScore() > max)
+            label=b.getLabel();
+        if (c.getScore() > max)
+        label=c.getLabel();
+        if (d.getScore() > max)
+        label=d.getLabel();
+
+        return label;
     }
     private MappedByteBuffer loadModel() throws IOException
     {
@@ -617,7 +703,10 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
         tImage.load(sourceImage);
         //tImage = imageProcessor.process(tImage);
         return tImage;
-        //...
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed(); return  true;
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.autisma;
 
 import android.annotation.SuppressLint;
-import com.example.autisma.Eye_Gaze.Eyegaze;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,21 +15,40 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.autisma.Eye_Gaze.Eyegaze;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceContour;
+import com.google.mlkit.vision.face.FaceDetection;
+import com.google.mlkit.vision.face.FaceDetector;
+import com.google.mlkit.vision.face.FaceDetectorOptions;
+import com.google.mlkit.vision.face.FaceLandmark;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.opencv.android.OpenCVLoader;
 
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 import static com.example.autisma.RecorderService.Videopath;
 
@@ -47,6 +65,7 @@ public class ToddlerResult extends AppCompatActivity {
     static {
         OpenCVLoader.initDebug();
     }
+    MyAsyncTask videoToFrame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +85,10 @@ public class ToddlerResult extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar !=null)
             actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +108,7 @@ public class ToddlerResult extends AppCompatActivity {
             }
         });
 
-        MyAsyncTask videoToFrame= new MyAsyncTask();
+        videoToFrame= new MyAsyncTask();
         videoToFrame.execute();// video is split into 340 frame in background
 
 
@@ -95,11 +116,17 @@ public class ToddlerResult extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-
-        Intent intent = new Intent(getBaseContext(), MainHOME.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+        if(videoToFrame.getStatus()==AsyncTask.Status.FINISHED)
+        {
+            Intent intent = new Intent(getBaseContext(), MainHOME.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), getString(R.string.PleaseWait), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -115,7 +142,7 @@ public class ToddlerResult extends AppCompatActivity {
             details.setVisibility(View.VISIBLE);
             Scorebar.setVisibility(View.VISIBLE);
             done.setVisibility(View.VISIBLE);
-            frames=converter.croppedframes;
+            frames=converter.frames;
             Log.e("before eye gaze 2","on post execute");
 
             List<List<FaceContour> >contours=new ArrayList<List<FaceContour>>();
@@ -123,7 +150,7 @@ public class ToddlerResult extends AppCompatActivity {
          int gazeResult=0;
          int gaze_left=0;
          int gaze_right=0;
-            for(int i=0;i<frames.size();i++) {
+            for(int i=0;i<contours.size();i++) {
                 Eyegaze e = new Eyegaze();
                 e.contours = contours.get(i);
                 e.frame =frames.get(i);
@@ -134,7 +161,7 @@ public class ToddlerResult extends AppCompatActivity {
             }
 Log.e("gaze left", String.valueOf(gaze_left));
             Log.e("gaze right", String.valueOf(gaze_right));
-            if(gaze_right<0.6*frames.size())
+            if(gaze_left>gaze_right)
                 Result+=6;//looked right less than 60%, failed the test :(
             if(Result<=6)
             {
@@ -166,5 +193,14 @@ Log.e("gaze left", String.valueOf(gaze_left));
 
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
+        if (id == android.R.id.home) {
+            onBackPressed();  return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

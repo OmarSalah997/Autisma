@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Profile extends AppCompatActivity {
 
-
+int src;
     /**
      * Called when the activity is first created.
      */
@@ -36,6 +36,7 @@ public class Profile extends AppCompatActivity {
         String address = getIntent().getStringExtra("inst_address");
         final String fbPage = getIntent().getStringExtra("inst_fbPage");
         final String webPage = getIntent().getStringExtra("inst_webpage");
+        src=getIntent().getIntExtra("src",0);
         TextView name = findViewById(R.id.profile_name);
         name.setText(profile_name);
         ImageView img = findViewById(R.id.profile_img);
@@ -86,7 +87,12 @@ public class Profile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent(Profile.this,Helpful_institiutions.class);
+        Intent intent;
+        if(src==0)
+         intent=new Intent(Profile.this,Helpful_institiutions.class);
+        else
+            intent=new Intent(Profile.this,Doctors.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

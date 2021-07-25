@@ -27,42 +27,45 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_weight="0.5"/>
 
     <Button
         android:id="@+id/toddlers"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rect_button"
+        android:background="@drawable/button_shape"
         android:paddingStart="8dp"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:text="@string/toddler"
         android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_takephoto_test" />
+        app:layout_constraintTop_toBottomOf="@+id/button_takephoto_test"
+        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/morethan2yrs"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/rect_button"
+        android:background="@drawable/button_shape"
         android:paddingStart="8dp"
-        android:paddingTop="30dp"
+        android:paddingTop="10dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="25dp"
+        android:paddingBottom="10dp"
         android:text="@string/moreThan2"
         android:textColor="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_video_test" />
+        app:layout_constraintTop_toBottomOf="@+id/button_video_test"
+        android:layout_weight="1"/>
 </LinearLayout>
         </RelativeLayout>
     </ScrollView>

@@ -100,11 +100,11 @@ public class WavFile {
         if (riffChunkID != RIFF_CHUNK_ID)
             throw new WavFileException("Invalid Wav Header data, incorrect riff chunk ID");
         if (riffTypeID != RIFF_TYPE_ID) throw new WavFileException("Invalid Wav Header data, incorrect riff type ID");
-
+/*
         // Check that the file size matches the number of bytes listed in header
         if (file.length() != chunkSize + 8) {
             throw new WavFileException("Header chunk size (" + chunkSize + ") does not match file size (" + file.length() + ")");
-        }
+        }*/
 
         wavFile.fileSize = chunkSize;
 
