@@ -1,8 +1,11 @@
 package com.example.autisma;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -16,6 +19,15 @@ public class Screaming extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screaming);
         TextView textView = (TextView)findViewById(R.id.ScreamingTV);
+
+        if(getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar !=null)
+            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_shape));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         InputStream inputStream = this.getResources().openRawResource(R.raw.screaminganswer);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuffer stringBuffer = new StringBuffer();
@@ -30,5 +42,10 @@ public class Screaming extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed();
+        return true;
     }
 }

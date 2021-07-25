@@ -22,16 +22,16 @@ INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\
 		INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml
 uses-sdk
-ADDED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-73
-INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-73
-INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-73
-INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-73
-INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-73
+ADDED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
+INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
+INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
+INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
+INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
 	android:targetSdkVersion
-		ADDED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:41-70
+		ADDED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:16-45
 		INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:15-40
 		INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml
+		ADDED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
 		INJECTED from C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml
