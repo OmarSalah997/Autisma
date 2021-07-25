@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -40,7 +39,6 @@ import android.content.res.AssetManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,13 +46,11 @@ import android.widget.Button;
 
 import com.example.autisma.Sound_classification.DTW;
 import com.example.autisma.Sound_classification.MFCC;
-import com.example.autisma.Sound_classification.WavFile;
-import com.example.autisma.Sound_classification.WavFileException;
+import com.example.autisma.librosa.WavFile;
+import com.example.autisma.librosa.WavFileException;
 
 public class SpeakingActivity extends AppCompatActivity {
     public Vector<int[]> vec = new Vector<int[]>(72);
-
-    public int numberOfSpeaker=3;
     ArrayList<Integer> classifications=new ArrayList<Integer>();
     public int classification;
     int filesNumber=0;
@@ -65,16 +61,12 @@ public class SpeakingActivity extends AppCompatActivity {
     private AudioRecord mRecorder;
     private boolean isRecording = false;
     public static int SAMPLE_RATE = 16000;
-    private static final int samplingRates[] = {16000, 11025, 11000, 8000, 6000};
     private short[] mBuffer;
-
-
-    final static public int RECORDER_SAMPLERATE = 44100;
+    final static public int RECORDER_SAMPLERATE = 16000;
     final static public int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     final static public int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
+    final static public int BufferElements2Rec = 1024;
 
-    final static public int BufferElements2Rec = 1024; // want to play 2048 (2K) since 2 bytes we use only 1024
-    final static public int BytesPerElement = 2; // 2 bytes in 16bit format*/
     String storagePath;
     File dir ;
 
@@ -128,11 +120,10 @@ public class SpeakingActivity extends AppCompatActivity {
 
                             @Override
                             public void run() {
-                                //   stop.setVisibility(View.VISIBLE);
                                 mRecorder.stop();
                                 isRecording = false;
                                 mRecorder.release();
-                                Log.e("STOP", "STOP");
+
 
                                 File f1 = new File(dir + "/z0.pcm"); // The location of your PCM file
                                 File f2 = new File(dir + "/recorded0.wav"); // The location where you want your WAV file
@@ -156,14 +147,12 @@ public class SpeakingActivity extends AppCompatActivity {
 
                                             @Override
                                             public void run() {
-                                                finish.setVisibility(View.VISIBLE);
                                                 mRecorder.stop();
                                                 isRecording = false;
                                                 mRecorder.release();
-                                                Log.e("STOP", "STOP");
 
-                                                File f1 = new File(dir + "/z1.pcm"); // The location of your PCM file
-                                                File f2 = new File(dir + "/recorded1.wav"); // The location where you want your WAV file
+                                                File f1 = new File(dir + "/z1.pcm");
+                                                File f2 = new File(dir + "/recorded1.wav");
                                                 try {
                                                     rawToWave(f1, f2);
                                                     calculatesingleMFCC(f2);
@@ -176,13 +165,11 @@ public class SpeakingActivity extends AppCompatActivity {
                                                 Log.e("w", String.valueOf(w));
                                                 if (w == 1 || w == 3) {
                                                     speakScore++;
-                                                    Log.e("classified correct", "class correct");
                                                 }
                                                 compute_distances(1);
                                                 classify();
                                                 Log.e("w", String.valueOf(w));
                                                 if (w == 2 || w == 0) {
-                                                    Log.e("classified correct", "class correct");
                                                     speakScore++;
                                                 }
                                                 Intent toEmotion = new Intent(SpeakingActivity.this, EmotionTest.class);
@@ -206,7 +193,7 @@ public class SpeakingActivity extends AppCompatActivity {
 
         mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
                 RECORDER_SAMPLERATE, RECORDER_CHANNELS,
-                RECORDER_AUDIO_ENCODING, BufferElements2Rec * BytesPerElement);
+                RECORDER_AUDIO_ENCODING, 2048);
 
         mRecorder.startRecording();
         isRecording = true;
@@ -236,16 +223,13 @@ public class SpeakingActivity extends AppCompatActivity {
         }
 
         while (isRecording) {
-            // gets the voice output from microphone to byte format
+
             short sData[] = new short[BufferElements2Rec];
             mRecorder.read(sData, 0, BufferElements2Rec);
             try {
-                // // writes the data to file from buffer
-                // // stores the voice buffer
-
                 byte bData[] = short2byte(sData);
 
-                os.write(bData, 0, BufferElements2Rec * BytesPerElement);
+                os.write(bData, 0, BufferElements2Rec * 2);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -262,7 +246,7 @@ public class SpeakingActivity extends AppCompatActivity {
 
 
 
-    //convert short to byte
+
     private byte[] short2byte(short[] sData) {
         int shortArrsize = sData.length;
         byte[] bytes = new byte[shortArrsize * 2];
@@ -275,7 +259,7 @@ public class SpeakingActivity extends AppCompatActivity {
 
     }
 
-    private void rawToWave(final File rawFile, final File waveFile) throws IOException {
+    public void rawToWave(final File rawFile, final File waveFile) throws IOException {
         Log.e("raw to wave", "raw to wave");
 
 
@@ -293,8 +277,6 @@ public class SpeakingActivity extends AppCompatActivity {
         DataOutputStream output = null;
         try {
             output = new DataOutputStream(new FileOutputStream(waveFile));
-            // WAVE header
-            // see http://ccrma.stanford.edu/courses/422/projects/WaveFormat/
             writeString(output, "RIFF"); // chunk id
             writeInt(output, 36 + rawData.length); // chunk size
             writeString(output, "WAVE"); // format
@@ -308,7 +290,6 @@ public class SpeakingActivity extends AppCompatActivity {
             writeShort(output, (short) 16); // bits per sample
             writeString(output, "data"); // subchunk 2 id
             writeInt(output, rawData.length); // subchunk 2 size
-       //     Audio data (conversion big endian -> little endian)
             short[] shorts = new short[rawData.length / 2];
             ByteBuffer.wrap(rawData).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shorts);
             ByteBuffer bytes = ByteBuffer.allocate(shorts.length * 2);
@@ -316,7 +297,7 @@ public class SpeakingActivity extends AppCompatActivity {
                 bytes.putShort(s);
             }
 
-            output.write(fullyReadFileToBytes(rawFile));
+            output.write(rawtoBytearray(rawFile));
         } finally {
             rawFile.delete();
             if (output != null) {
@@ -325,45 +306,46 @@ public class SpeakingActivity extends AppCompatActivity {
         }
     }
 
-    byte[] fullyReadFileToBytes(File f) throws IOException {
+    public byte[] rawtoBytearray(File f) throws IOException {
         int size = (int) f.length();
         byte bytes[] = new byte[size];
         byte tmpBuff[] = new byte[size];
-        FileInputStream fis = new FileInputStream(f);
+        FileInputStream fs = new FileInputStream(f);
         try {
 
-            int read = fis.read(bytes, 0, size);
+            int read = fs.read(bytes, 0, size);
+            /*
             if (read < size) {
                 int remain = size - read;
                 while (remain > 0) {
-                    read = fis.read(tmpBuff, 0, remain);
+                    read = fs.read(tmpBuff, 0, remain);
                     System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
                     remain -= read;
                 }
-            }
+            }*/
         } catch (IOException e) {
             throw e;
         } finally {
-            fis.close();
+            fs.close();
 
         }
 
         return bytes;
     }
 
-    private void writeInt(final DataOutputStream output, final int value) throws IOException {
+    public void writeInt(DataOutputStream output, int value) throws IOException {
         output.write(value >> 0);
         output.write(value >> 8);
         output.write(value >> 16);
         output.write(value >> 24);
     }
 
-    private void writeShort(final DataOutputStream output, final short value) throws IOException {
+    public void writeShort(DataOutputStream output,  short value) throws IOException {
         output.write(value >> 0);
         output.write(value >> 8);
     }
 
-    private void writeString(final DataOutputStream output, final String value) throws IOException {
+    public void writeString( DataOutputStream output, String value) throws IOException {
         for (int i = 0; i < value.length(); i++) {
             output.write(value.charAt(i));
         }
@@ -371,7 +353,6 @@ public class SpeakingActivity extends AppCompatActivity {
 
     protected void calculateMFCCs() throws IOException, WavFileException {
 
-                Log.e("clculate mfccs","hbkjm");
         AssetManager assetManager = getApplicationContext().getResources().getAssets();
 
         String[] files = null;
@@ -381,10 +362,7 @@ try {
     filesNumber = files.length;
 
     for (int i = 0; i < (files.length); i += 1) {
-
-
         File file;
-
         file = new File(String.valueOf(getApplicationContext().getFilesDir()) + "/autisma_files/", files[i]);
         try {
           readMfcctoVec(file);
@@ -402,7 +380,6 @@ try {
     }
     public int[] calculatesingleMFCC(File file) throws IOException, WavFileException {
 
-        Log.e("calculating single mfcc", "uvjh");
         int mNumFrames;
         int mSampleRate;
         int mChannels;
@@ -440,10 +417,9 @@ try {
             }
 
 
-            //MFCC java library.
             MFCC mfccConvert = new MFCC();
             mfccConvert.setSampleRate(mSampleRate);
-            int nMFCC = 13;
+            int nMFCC = 20;
             mfccConvert.setN_mfcc(nMFCC);
             float[] mfccInput = mfccConvert.process(meanBuffer);
             int nFFT = mfccInput.length / nMFCC;
@@ -490,24 +466,6 @@ try {
         return meanMFCCValues;
 }
 
-    public void writeMFCC(String fileName, int[] j) throws IOException {
-        FileOutputStream out = new FileOutputStream(String.valueOf(Environment.getExternalStorageDirectory()) + "/"+fileName+".raw");
-        byte buf[] = new byte[4 * j.length];
-        for (int i = 0; i < j.length; ++i) {
-            int val = (int) j[i];
-          /*  buf[4 * i] = (byte) (val >> 24);
-            buf[4 * i + 1] = (byte) (val >> 16);
-            buf[4 * i + 2] = (byte) (val >> 8);
-            buf[4 * i + 3] = (byte) (val);*/
-            out.write(val>> 0);
-            out.write(val >> 8);
-            out.write(val >> 16);
-            out.write(val >> 24);
-        }
-
-        // out.write(buf);
-        out.close();
-    }
 
     public void readMfcctoVec(File f) throws IOException {
         int[] meanmfcc=new int[(int) (f.length()/4)];
@@ -545,27 +503,18 @@ try {
                 Log.e("in compute distances","yfyj");
                 int numberOfSpeaker = filesNumber / 4;
                 int soundsclassifiers = 4;
-                // Vector<Integer>classifications =new Vector<Integer>(numberOfSpeaker);
         Vector<Double> currentSpeakerDistances = new Vector<Double>(soundsclassifiers);
                 for (int i = 2; i < vec.size(); i += soundsclassifiers) {
-                   // Vector<Double> currentSpeakerDistances = new Vector<Double>(soundsclassifiers);
                     for (int n = i; n < soundsclassifiers + i; n++) {
                         final DTW lDTW = new DTW();
-                   //     Log.e("vec", String.valueOf(vec.size()));
                         double dist = lDTW.compute(vec.get(n), vec.get(f)).getDistance();
-                        Log.e("distances", String.valueOf(dist));
                         currentSpeakerDistances.add(dist);
                     }
 
                     classifications.add(currentSpeakerDistances.indexOf(Collections.min(currentSpeakerDistances)));
 
-                       Log.e("min distances", String.valueOf(Collections.min(currentSpeakerDistances)));
                     currentSpeakerDistances.clear();
                 }
-                /*
-                Log.e("class size", String.valueOf((classifications.get(2))));
-                for (int i = 0; i < classifications.size(); i++)
-                    Log.e("distances", "distance is " + classifications.get(i));*/
 
     }
     public void classify(){
@@ -574,8 +523,7 @@ try {
 
         Collections.sort(classifications);
 
-        // find the max frequency using linear
-        // traversal
+        // find the max frequency
         int max_count = 1, res = classifications.get(0);
         int curr_count = 1;
 
@@ -679,4 +627,18 @@ try {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         onBackPressed(); return  true;
     }
+    /*
+    public void writeMFCC(String fileName, int[] j) throws IOException {
+        FileOutputStream out = new FileOutputStream(String.valueOf(Environment.getExternalStorageDirectory()) + "/"+fileName+".raw");
+        byte buf[] = new byte[4 * j.length];
+        for (int i = 0; i < j.length; ++i) {
+            int val = (int) j[i];
+            out.write(val>> 0);
+            out.write(val >> 8);
+            out.write(val >> 16);
+            out.write(val >> 24);
+        }
+
+        out.close();
+    }*/
 }
