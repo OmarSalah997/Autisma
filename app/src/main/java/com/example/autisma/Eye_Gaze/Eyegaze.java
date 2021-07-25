@@ -47,11 +47,7 @@ public class Eyegaze {
             else if (contours.get(i).getFaceContourType() == 6)
                 left_eye = contours.get(i);
         }
-/*
-if(right_eye !=null)
-        right_eye_diff = get_gaze_ratio(right_eye);
-if(left_eye!=null)
-        left_eye_diff = get_gaze_ratio(left_eye);*/
+
         char n1=get_gaze_ratio(left_eye,'L');
         char n2=get_gaze_ratio(right_eye,'R');
         if (n2 == 'R'){
@@ -61,40 +57,7 @@ if(left_eye!=null)
 
 
         else return 'E';
-                /*
-            } else if (contours.get(i).getFaceContourType() == 6) {
-                //left eye
-                left_eye_diff = get_gaze_ratio(contours.get(i));
-            }
-        }*/
-/*
-        if (left_eye_diff > right_eye_diff) {
 
-        //    Log.e("looking right", "");
-            return 'R';
-        } else if(left_eye_diff <right_eye_diff) {
-         //   Log.e("looking left", "");
-            return 'L';
-        }
-        else
-            return 'E';*/
-        /*
-        if(left_eye_diff >right_eye_diff){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "looking right", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }else{
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "looking left", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-*/
 
     }
 
@@ -102,7 +65,6 @@ if(left_eye!=null)
       Mat frameMatrix = new Mat();
        Mat bmpGrayscale = new Mat();
 
-    /*    Bitmap bmp32 = frame.copy(Bitmap.Config.ALPHA_8, true);*/
         bitmapToMat(frame, frameMatrix);
         Imgproc.cvtColor(frameMatrix, bmpGrayscale, Imgproc.COLOR_BGR2GRAY);
         return bmpGrayscale;
@@ -110,7 +72,6 @@ if(left_eye!=null)
 
     private char get_gaze_ratio(FaceContour eye,char c) {
         // Gaze detection
-        //getting the area from the frame of the left eye only
 
         Mat imgToProcess = frameGrayscale;
         List<MatOfPoint> eye_region = new ArrayList<MatOfPoint>();
@@ -135,11 +96,8 @@ if(left_eye!=null)
                         new Point(eye.getPoints().get(15).x, eye.getPoints().get(15).y)
                 )
         );
-        Mat mask = new Mat(imgToProcess.rows(), imgToProcess.cols(), CvType.CV_8U, Scalar.all(0));
-        Imgproc.polylines(mask, eye_region, true, Scalar.all(255), 2);
-        Imgproc.fillPoly(mask, eye_region, Scalar.all(255));
-        Mat eyeMatrix = new Mat();
-        Core.bitwise_and(imgToProcess, imgToProcess, eyeMatrix, mask = mask);
+
+
         List<Integer> xs = new ArrayList<Integer>();
         List<Integer> ys = new ArrayList<Integer>();
 
@@ -162,16 +120,12 @@ if(left_eye!=null)
     thresh_eye=cropped_Eye.clone();
     Imgproc.threshold(cropped_Eye, thresh_eye, 100, 255, Imgproc.THRESH_BINARY);
 
-   // Log.e("thres_eye",String.valueOf(thresh_eye.width())+" "+String.valueOf(thresh_eye.height()));
     Mat left_side = thresh_eye.submat(0, thresh_eye.height()-1, 0, (int)(thresh_eye.width() / 2)).clone();
     Mat right_side = thresh_eye.submat(0, thresh_eye.height()-1, (int)(thresh_eye.width() / 2 )+ 1, thresh_eye.width()-1).clone();
 
     int right =right_side.height()*right_side.width()- Core.countNonZero(right_side);
     int left = left_side.width()*left_side.height()-Core.countNonZero(left_side);
-    /*Toast.makeText(getApplicationContext(), //Context
-            "left is"+left +"right is"+right, // Message to display
-            Toast.LENGTH_SHORT // Duration of the message, another possible value is Toast.LENGTH_LONG
-    ).show();*/
+
     if (right > left) {
 Log.e("right>left", String.valueOf(c));
         return 'R';

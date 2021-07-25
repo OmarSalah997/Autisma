@@ -1,8 +1,8 @@
-package com.example.autisma.Sound_classification;
+package com.example.autisma.librosa;
 
 public class FFT {
-    double[] real;
-    double[] imag;
+    public double[] real;
+    public double[] imag;
 
     /**
      * Performs Fast Fourier Transformation in place.

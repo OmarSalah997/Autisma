@@ -1,22 +1,16 @@
 package com.example.autisma.Sound_classification;
-/*
-import com.example.myapplication.AudioEvent;
-import com.example.myapplication.AudioProcessor;
-import com.example.myapplication.FFT;
-import com.example.myapplication.HammingWindow;*/
 
+import com.example.autisma.librosa.FFT;
 
+public class MFCC {
 
-    public class MFCC {
-
-        private static int       n_mfcc       		= 13;
-        private final static double    fMin                 = 0.0;
-        private final static int       n_fft                = 2048;
-        private final static int       hop_length           = 512;
-        private final static int	   n_mels               = 128;
-
-        private static double    sampleRate           = 44100.0;
-        private final static double    fMax                 = sampleRate/2.0;
+        public int n_mfcc = 20;
+        public  double  fMin = 0.0;
+        public  int  n_fft = 2048;
+        public  int  hop_length = 512;
+        public  int	 n_mels  = 128;
+        public double sampleRate   = 44100.0;
+        public double  fMax = sampleRate/2.0;
 
         FFT fft = new FFT();
 
@@ -35,7 +29,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //MFCC into 1d
-        private float[] finalshape(double[][] mfccSpecTro){
+        public float[] finalshape(double[][] mfccSpecTro){
             float[] finalMfcc = new float[mfccSpecTro[0].length * mfccSpecTro.length];
             int k = 0;
             for (int i = 0; i < mfccSpecTro[0].length; i++){
@@ -48,7 +42,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //DCT to mfcc, librosa
-        private double[][] dctMfcc(double[] y){
+        public double[][] dctMfcc(double[] y){
             final double[][] specTroGram = powerToDb(melSpectrogram(y));
             final double[][] dctBasis = dctFilter(n_mfcc, n_mels);
             double[][] mfccSpecTro = new double[n_mfcc][specTroGram[0].length];
@@ -65,7 +59,7 @@ import com.example.myapplication.HammingWindow;*/
 
         //mel spectrogram, librosa
 
-        private double[][] melSpectrogram(double[] y){
+        public double[][] melSpectrogram(double[] y){
             double[][] melBasis = melFilter();
             double[][] spectro = stftMagSpec(y);
             double[][] melS = new double[melBasis.length][spectro[0].length];
@@ -81,7 +75,7 @@ import com.example.myapplication.HammingWindow;*/
 
 
         //stft, librosa
-        private double[][] stftMagSpec(double[] y){
+        public double[][] stftMagSpec(double[] y){
             //Short-time Fourier transform (STFT)
             final double[] fftwin = getWindow();
             //pad y with reflect mode so it's centered. This reflect padding implementation is
@@ -111,7 +105,7 @@ import com.example.myapplication.HammingWindow;*/
             return fftmagSpec;
         }
 
-        private double[] magSpectrogram(double[] frame){
+        public double[] magSpectrogram(double[] frame){
             double[] magSpec = new double[frame.length];
             fft.process(frame);
             for (int m = 0; m < frame.length; m++) {
@@ -134,7 +128,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //frame, librosa
-        private double[][] yFrame(double[] ypad){
+        public double[][] yFrame(double[] ypad){
             final int n_frames = 1 + (ypad.length - n_fft) / hop_length;
             double[][] winFrames = new double[n_fft][n_frames];
             for (int i = 0; i < n_fft; i++){
@@ -148,7 +142,7 @@ import com.example.myapplication.HammingWindow;*/
 
 
         //power to db, librosa
-        private double[][] powerToDb(double[][] melS){
+        public double[][] powerToDb(double[][] melS){
             //Convert a power spectrogram (amplitude squared) to decibel (dB) units
             //  This computes the scaling ``10 * log10(S / ref)`` in a numerically
             //  stable way.
@@ -181,7 +175,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //dct, librosa
-        private double[][] dctFilter(int n_filters, int n_input){
+        public double[][] dctFilter(int n_filters, int n_input){
             //Discrete cosine transform (DCT type-III) basis.
             double[][] basis = new double[n_filters][n_input];
             double[] samples = new double[n_input];
@@ -201,7 +195,7 @@ import com.example.myapplication.HammingWindow;*/
 
 
         //mel, librosa
-        private double[][] melFilter(){
+        public double[][] melFilter(){
             //Create a Filterbank matrix to combine FFT bins into Mel-frequency bins.
             // Center freqs of each FFT bin
             final double[] fftFreqs = fftFreq();
@@ -250,7 +244,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //fft frequencies, librosa
-        private double[] fftFreq() {
+        public double[] fftFreq() {
             //Alternative implementation of np.fft.fftfreqs
             double[] freqs = new double[1+n_fft/2];
             for (int i = 0; i < 1+n_fft/2; i++){
@@ -260,7 +254,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //mel frequencies, librosa
-        private double[] melFreq(int numMels) {
+        public double[] melFreq(int numMels) {
             //'Center freqs' of mel bands - uniformly spaced between limits
             double[] LowFFreq = new double[1];
             double[] HighFFreq = new double[1];
@@ -277,7 +271,7 @@ import com.example.myapplication.HammingWindow;*/
 
 
         //mel to hz, htk, librosa
-        private double[] melToFreqS(double[] mels) {
+        public double[] melToFreqS(double[] mels) {
             double[] freqs = new double[mels.length];
             for (int i = 0; i < mels.length; i++) {
                 freqs[i] = 700.0 * (Math.pow(10, mels[i]/2595.0) - 1.0);
@@ -287,7 +281,7 @@ import com.example.myapplication.HammingWindow;*/
 
 
         // hz to mel, htk, librosa
-        protected double[] freqToMelS(double[] freqs) {
+        public double[] freqToMelS(double[] freqs) {
             double[] mels = new double[freqs.length];
             for (int i = 0; i < freqs.length; i++){
                 mels[i] = 2595.0 * log10(1.0 + freqs[i]/700.0);
@@ -296,7 +290,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         //mel to hz, Slaney, librosa
-        private double[] melToFreq(double[] mels) {
+        public double[] melToFreq(double[] mels) {
             // Fill in the linear scale
             final double f_min = 0.0;
             final double f_sp = 200.0 / 3;
@@ -319,7 +313,7 @@ import com.example.myapplication.HammingWindow;*/
 
 
         // hz to mel, Slaney, librosa
-        protected double[] freqToMel(double[] freqs) {
+        public double[] freqToMel(double[] freqs) {
             final double f_min = 0.0;
             final double f_sp = 200.0 / 3;
             double[] mels = new double[freqs.length];
@@ -341,7 +335,7 @@ import com.example.myapplication.HammingWindow;*/
         }
 
         // log10
-        private double log10(double value) {
+        public double log10(double value) {
             return Math.log(value) / Math.log(10);
         }
     }

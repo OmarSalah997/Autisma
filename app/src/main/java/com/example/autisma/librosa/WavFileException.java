@@ -1,4 +1,4 @@
-package com.example.autisma.Sound_classification;
+package com.example.autisma.librosa;
 public class WavFileException extends Exception {
 
     public WavFileException(final String message) {
