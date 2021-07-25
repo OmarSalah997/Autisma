@@ -29,6 +29,8 @@ import java.nio.ByteOrder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 
@@ -112,81 +114,93 @@ public class SpeakingActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-setContentView(R.layout.activity_two);
+                setContentView(R.layout.activity_two);
                 final Button stop = findViewById(R.id.next_two);
                 startRecording(0);
+                stop.setVisibility(View.INVISIBLE);
 
-                stop.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        // Code here executes on main thread after user presses button
-                        mRecorder.stop();
-                        isRecording = false;
-                        mRecorder.release();
-                        Log.e("STOP", "STOP");
+                Timer buttonTimer = new Timer();
+                buttonTimer.schedule(new TimerTask() {
 
-                        File f1 = new File(dir + "/z0.pcm"); // The location of your PCM file
-                        File f2 = new File(dir + "/recorded0.wav"); // The location where you want your WAV file
-                        try {
-                            rawToWave(f1, f2);
-                            calculatesingleMFCC(f2);
-                        } catch (IOException | WavFileException e) {
-                            e.printStackTrace();
-                        }
-                        setContentView(R.layout.activity_cat);
-                        startRecording(1);
-                        final  Button finish=findViewById(R.id.next_cat);
-                        finish.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View v) {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                //   stop.setVisibility(View.VISIBLE);
                                 mRecorder.stop();
                                 isRecording = false;
                                 mRecorder.release();
                                 Log.e("STOP", "STOP");
-                                File f1 = new File(dir + "/z1.pcm"); // The location of your PCM file
-                                File f2 = new File(dir + "/recorded1.wav"); // The location where you want your WAV file
+
+                                File f1 = new File(dir + "/z0.pcm"); // The location of your PCM file
+                                File f2 = new File(dir + "/recorded0.wav"); // The location where you want your WAV file
                                 try {
                                     rawToWave(f1, f2);
                                     calculatesingleMFCC(f2);
                                 } catch (IOException | WavFileException e) {
                                     e.printStackTrace();
                                 }
-                                try {
+                                setContentView(R.layout.activity_cat);
+                                startRecording(1);
+                                final Button finish = findViewById(R.id.next_cat);
+                                finish.setVisibility(View.INVISIBLE);
 
-                                    calculateMFCCs();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (WavFileException e) {
-                                    e.printStackTrace();
-                                }
-                                compute_distances(0);
-                                classify();
-                                Log.e("w", String.valueOf(w));
-                                if (w == 1 || w == 3){
-                                    speakScore ++;
-                                    Log.e("classified correct", "class correct");
+                                Timer buttonTimer2 = new Timer();
+                                buttonTimer2.schedule(new TimerTask() {
+
+                                    @Override
+                                    public void run() {
+                                        runOnUiThread(new Runnable() {
+
+                                            @Override
+                                            public void run() {
+                                                finish.setVisibility(View.VISIBLE);
+                                                mRecorder.stop();
+                                                isRecording = false;
+                                                mRecorder.release();
+                                                Log.e("STOP", "STOP");
+
+                                                File f1 = new File(dir + "/z1.pcm"); // The location of your PCM file
+                                                File f2 = new File(dir + "/recorded1.wav"); // The location where you want your WAV file
+                                                try {
+                                                    rawToWave(f1, f2);
+                                                    calculatesingleMFCC(f2);
+                                                    calculateMFCCs();
+                                                } catch (IOException | WavFileException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                compute_distances(0);
+                                                classify();
+                                                Log.e("w", String.valueOf(w));
+                                                if (w == 1 || w == 3) {
+                                                    speakScore++;
+                                                    Log.e("classified correct", "class correct");
+                                                }
+                                                compute_distances(1);
+                                                classify();
+                                                Log.e("w", String.valueOf(w));
+                                                if (w == 2 || w == 0) {
+                                                    Log.e("classified correct", "class correct");
+                                                    speakScore++;
+                                                }
+                                                Intent toEmotion = new Intent(SpeakingActivity.this, EmotionTest.class);
+                                                toEmotion.putExtra("5Qscore", speakScore + result);
+                                                startActivity(toEmotion);
+
+                                            }
+                                        });
+                                    }
+                                }, 5000);
                             }
-                                compute_distances(1);
-                                classify();
-                                Log.e("w", String.valueOf(w));
-                                if(w==2 || w==0){
-                                Log.e("classified correct","class correct");
-                                speakScore ++;}
-                                Intent toEmotion= new Intent(SpeakingActivity.this,EmotionTest.class);
-                                toEmotion.putExtra("5Qscore",speakScore+result);
-                                startActivity(toEmotion);
-                            };
-
-
                         });
-
-
                     }
-                });
-
-            }
+                }, 5000);
+            };
         });
-
-
     }
+
 
     private void startRecording(int u) {
 
@@ -207,21 +221,6 @@ setContentView(R.layout.activity_two);
             }
         }, "AudioRecorder Thread");
         recordingThread.start();
-/*
-        for (int rate : samplingRates) {
-            int bufferSize = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_CONFIGURATION_DEFAULT, AudioFormat.ENCODING_PCM_16BIT);
-            if (bufferSize > 0) {
-                SAMPLE_RATE=rate;
-                break;
-            }
-        }
-        int bufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT);
-        mBuffer = new short[bufferSize];
-        mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, bufferSize);
-       isRecording = true;
-        mRecorder.startRecording();*/
 
 
     }
@@ -444,7 +443,7 @@ try {
             //MFCC java library.
             MFCC mfccConvert = new MFCC();
             mfccConvert.setSampleRate(mSampleRate);
-            int nMFCC = 40;
+            int nMFCC = 13;
             mfccConvert.setN_mfcc(nMFCC);
             float[] mfccInput = mfccConvert.process(meanBuffer);
             int nFFT = mfccInput.length / nMFCC;

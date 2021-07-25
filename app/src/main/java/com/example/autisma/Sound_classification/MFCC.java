@@ -9,7 +9,7 @@ import com.example.myapplication.HammingWindow;*/
 
     public class MFCC {
 
-        private static int       n_mfcc       		= 40;
+        private static int       n_mfcc       		= 13;
         private final static double    fMin                 = 0.0;
         private final static int       n_fft                = 2048;
         private final static int       hop_length           = 512;
