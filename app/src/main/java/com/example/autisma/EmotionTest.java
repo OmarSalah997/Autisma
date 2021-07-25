@@ -649,7 +649,7 @@ public class EmotionTest extends AppCompatActivity implements TextureView.Surfac
                     Log.e("all done", ":(((((((((((");
                     loading.setVisibility(View.INVISIBLE);
                     Intent toScore= new Intent(EmotionTest.this,OtherResult.class);
-                    toScore.putExtra("5Qscore", score);
+                    toScore.putExtra("nonToddlerScore", score);
                     EmotionTest.this.startActivity(toScore);
                     finish();
                     //ToEmotionResult.setVisibility(View.VISIBLE);
