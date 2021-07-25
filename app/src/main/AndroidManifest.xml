@@ -40,7 +40,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".SpeakingActivity"
             android:theme="@style/mainTheme"></activity>
-        <activity android:name=".OtherResult"
+
         <activity android:name=".Tantrums"></activity>
         <activity android:name=".SexualDesire" />
         <activity android:name=".SelfHarm" />
@@ -60,7 +60,7 @@
         <activity android:name=".GuessingNumberGame" />
         <activity
             android:name=".OtherResult"
-            android:theme="@style/mainTheme">
+            android:theme="@style/mainTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.autisma.MainHOME" />
