@@ -5,10 +5,10 @@
 5    android:versionName="3.4.13" >
 6
 7    <uses-sdk
-7-->C:\Users\hp\Downloads\sherif branch\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
+7-->C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
 8        android:minSdkVersion="22"
-8-->C:\Users\hp\Downloads\sherif branch\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
+8-->C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:5-48
 9        android:targetSdkVersion="29" />
-9-->C:\Users\hp\Downloads\sherif branch\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:16-45
+9-->C:\Users\dell\Documents\GitHub\Autisma\openCVLibrary3413\src\main\AndroidManifest.xml:7:16-45
 10
 11</manifest>

@@ -1,8 +1,10 @@
 package com.example.autisma;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -30,5 +32,10 @@ public class Isolation extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        onBackPressed();
+        return true;
     }
 }
