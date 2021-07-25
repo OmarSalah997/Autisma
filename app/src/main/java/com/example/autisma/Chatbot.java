@@ -53,105 +53,97 @@ public class Chatbot extends AppCompatActivity {
                 String[] nutritionTags = {"الطعام", "طعام", "تاكل", "ياكل", "الاكل", "اكل", "تأكل", "يأكل", "الأكل", "أكل", "تتغذي", "يتغذي", "الغذاء", "غذاء", "التغذية", "تغذية"};
                 String[] adaptionTags = {"تتكيف", "يتكيف", "تكيف", "التكيف", "تحفظية", "تحفظي", "متحفظة", "متحفظ", "التحفظ", "تحفظ", "التغيير", "تغيير"};
                 boolean sucess = false;
-                if((str.contains("التوحد") == false)&&(str.contains("التوحد") == false))
-                {
-                    sucess = false;
+                for (String tag : echoTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Echolalia.class));
+                    }
                 }
-                else
-                {
-                    for (String tag : echoTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Echolalia.class));
-                        }
+                for (String tag : therapyTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Therapy.class));
                     }
-                    for (String tag : therapyTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Therapy.class));
-                        }
+                }
+                for (String tag : geneticTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Genetic.class));
                     }
-                    for (String tag : geneticTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Genetic.class));
-                        }
+                }
+                for (String tag : sexualDesireTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, SexualDesire.class));
                     }
-                    for (String tag : sexualDesireTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, SexualDesire.class));
-                        }
+                }
+                for (String tag : entertainmentTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Entertainment.class));
                     }
-                    for (String tag : entertainmentTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Entertainment.class));
-                        }
+                }
+                for (String tag : pronounsTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Pronouns.class));
                     }
-                    for (String tag : pronounsTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Pronouns.class));
-                        }
+                }
+                for (String tag : isolationTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Isolation.class));
                     }
-                    for (String tag : isolationTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Isolation.class));
-                        }
+                }
+                for (String tag : screamingTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Screaming.class));
                     }
-                    for (String tag : screamingTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Screaming.class));
-                        }
+                }
+                for (String tag : tantrumsTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Tantrums.class));
                     }
-                    for (String tag : tantrumsTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Tantrums.class));
-                        }
+                }
+                for (String tag : sabotageTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Sabotage.class));
                     }
-                    for (String tag : sabotageTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Sabotage.class));
-                        }
+                }
+                for (String tag : fearTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Fear.class));
                     }
-                    for (String tag : fearTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Fear.class));
-                        }
+                }
+                for (String tag : selfHarmTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, SelfHarm.class));
                     }
-                    for (String tag : selfHarmTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, SelfHarm.class));
-                        }
+                }
+                for (String tag : nutritionTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Nutrition.class));
                     }
-                    for (String tag : nutritionTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Nutrition.class));
-                        }
-                    }
-                    for (String tag : adaptionTags) {
-                        if (str.contains(tag)) {
-                            sucess = true;
-                            startActivity(new Intent(Chatbot.this, Adaptation.class));
-                        }
+                }
+                for (String tag : adaptionTags) {
+                    if (str.contains(tag)) {
+                        sucess = true;
+                        startActivity(new Intent(Chatbot.this, Adaptation.class));
                     }
                 }
                 if(sucess == false)
                 {
-                    Toast.makeText(Chatbot.this,"نتأسف لعدم وجود إجابة لسؤالك ... حاول كتابة السؤال بصيغة أخري",Toast.LENGTH_LONG).show();
+                    String tost = "نأسف لعدم وجود إجابة لسؤالكم ... حاول كتابة السؤال بصيغة أخري" + "\n" + "ونوعدكم بحل المشكلة قريباً";
+                    Toast.makeText(Chatbot.this,tost,Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
     @Override

@@ -3,7 +3,11 @@ package com.example.autisma;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -79,9 +83,9 @@ public class VideoToFrames {
                     Matrix matrix = new Matrix();
                     matrix.postRotate(270);
                     Bitmap b3 = Bitmap.createBitmap(bmp2, 0, 0, bmp2.getWidth(), bmp2.getHeight(), matrix, false);
-                    //Bitmap b4 = Bitmap.createScaledBitmap(b3, 720, 480,false);
                     Bitmap resized=Bitmap.createScaledBitmap(b3, 48, 48,true);
-                    frames.add(resized);
+                    Bitmap b4 = toGrayscale(resized);
+                    frames.add(b4);
 
                 }
             }
@@ -90,9 +94,6 @@ public class VideoToFrames {
             String fileName=getFileName(videopath,context);
             File video = new File(imagesFolder, fileName );
             video.delete();
-            // faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
-            // D.detect();
-            // while (!D.DetectionComplete);
             croppedframes=frames;
         }
         return true;
@@ -102,4 +103,20 @@ public class VideoToFrames {
             String[] splits = uri.getPath().split(File.separator);
             return splits[splits.length - 1]; }
         return null;
-}}
+}
+    public Bitmap toGrayscale(Bitmap bmpOriginal)
+    {
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
+    }}

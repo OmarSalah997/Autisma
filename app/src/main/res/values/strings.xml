@@ -254,7 +254,7 @@ In a social group ,He/She can easily keep track of several different peoples con
     <string name="Mq5">Is he/she always attached to one specific toy other than the others?</string>
     <string name="Mq6">Does the child get annoyed by loud noises exaggeratedly?</string>
     <string name="ProceedMCHAT">Proceed to MCHAT test</string>
-    <string name="ToddlerLow">This result indicates a low risk of autism, nothing to worry about, but you can check with a doctor if you are still concerned.</string>
+    <string name="ToddlerLow">This result indicates no risk of autism, nothing to worry about, but you can check with a doctor if you are still concerned.</string>
     <string name="ToddlerMedium">This result indicates a medium risk of autism, you need to re-run the test after 2 weeks, or check with a doctor if you are concerned.</string>
     <string name="ToddlerHigh">This result indicates a high risk of autism, we strongly encourage you to proceed to the next test.</string>
     <string name="PleaseWait">Please wait...</string>
