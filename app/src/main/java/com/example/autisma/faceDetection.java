@@ -93,13 +93,13 @@ public class faceDetection {
                                         Bitmap resized;
                                         if(cropped.getHeight()>0 & cropped.getWidth()>0)
                                         {
-                                            Bitmap grey=toGrayscale(cropped);
                                             resized=Bitmap.createScaledBitmap(cropped, 48, 48,true);
-                                            Croppedframes.add(resized);
+                                            Bitmap grey=toGrayscale(resized);
+                                            Croppedframes.add(grey);
                                         }
                                         }
                                     }
-                                    else {
+                                    else if(mode==1) {
                                         if(cropped!=null) {
                                             Croppedframes.add(cropped);
                                          List<FaceLandmark> landmarks=face.getAllLandmarks();
@@ -113,17 +113,22 @@ public class faceDetection {
 
                             }}}
                             if(finalI==frames.size()-1)
-                                DetectionComplete=true;
+                            DetectionComplete=true;
+
                         }
                     }).addOnCompleteListener(new OnCompleteListener<List<Face>>() {
                 @Override
                 public void onComplete(@NonNull Task<List<Face>> task) {
-                    { }
+                    {if(finalI==frames.size()-1)
+                    {DetectionComplete=true;
+                       } }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        int fail;
+                        if(finalI==frames.size()-1)
+                        {DetectionComplete=true;
+                         }
                     }
                 });
 

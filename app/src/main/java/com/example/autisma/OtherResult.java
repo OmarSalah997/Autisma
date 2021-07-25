@@ -47,7 +47,7 @@ int score;
         });
         if(score<=6)
         {
-            float f=((float) score/(float)30)*100;
+            float f=0;
             Scorebar.setDonut_progress(String.valueOf(Math.round(f)));
             Scorebar.setUnfinishedStrokeColor(Color.GRAY);
             Scorebar.setFinishedStrokeColor(Color.GREEN);

@@ -94,9 +94,6 @@ public class VideoToFrames {
             String fileName=getFileName(videopath,context);
             File video = new File(imagesFolder, fileName );
             video.delete();
-            // faceDetection D= new faceDetection(context,frames,mode); //mode =1 : eyegaze   mode = 2 : emotion
-            // D.detect();
-            // while (!D.DetectionComplete);
             croppedframes=frames;
         }
         return true;
