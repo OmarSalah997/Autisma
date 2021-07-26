@@ -4,9 +4,9 @@ import com.example.autisma.librosa.FFT;
 
 public class MFCC {
 
-        public int n_mfcc = 20;
+        public int n_mfcc = 40;
         public  double  fMin = 0.0;
-        public  int  n_fft = 2048;
+        public  int  n_fft = 4096;
         public  int  hop_length = 512;
         public  int	 n_mels  = 128;
         public double sampleRate   = 44100.0;
@@ -15,34 +15,24 @@ public class MFCC {
         FFT fft = new FFT();
 
 
-        public void setSampleRate(int sampleRateVal){
-            sampleRate = sampleRateVal;
+        public int[] process(double[] Buffer) {
+            final double[][] mfccResult = dct(Buffer);
+            return MFCC1D(mfccResult);
         }
 
-        public void setN_mfcc(int n_mfccVal) {
-            n_mfcc = n_mfccVal;
-        }
-
-        public float[] process(double[] doubleInputBuffer) {
-            final double[][] mfccResult = dctMfcc(doubleInputBuffer);
-            return finalshape(mfccResult);
-        }
-
-        //MFCC into 1d
-        public float[] finalshape(double[][] mfccSpecTro){
-            float[] finalMfcc = new float[mfccSpecTro[0].length * mfccSpecTro.length];
+        public int[] MFCC1D(double[][] mfccSpecTro){
+            int[] finalMfcc = new int[mfccSpecTro[0].length * mfccSpecTro.length];
             int k = 0;
             for (int i = 0; i < mfccSpecTro[0].length; i++){
                 for (int j = 0; j < mfccSpecTro.length; j++){
-                    finalMfcc[k] = (float) mfccSpecTro[j][i];
+                    finalMfcc[k] = (int) mfccSpecTro[j][i];
                     k = k+1;
                 }
             }
             return finalMfcc;
         }
 
-        //DCT to mfcc, librosa
-        public double[][] dctMfcc(double[] y){
+        public double[][] dct(double[] y){
             final double[][] specTroGram = powerToDb(melSpectrogram(y));
             final double[][] dctBasis = dctFilter(n_mfcc, n_mels);
             double[][] mfccSpecTro = new double[n_mfcc][specTroGram[0].length];
@@ -56,8 +46,6 @@ public class MFCC {
             return mfccSpecTro;
         }
 
-
-        //mel spectrogram, librosa
 
         public double[][] melSpectrogram(double[] y){
             double[][] melBasis = melFilter();
@@ -74,12 +62,11 @@ public class MFCC {
         }
 
 
-        //stft, librosa
+
         public double[][] stftMagSpec(double[] y){
             //Short-time Fourier transform (STFT)
             final double[] fftwin = getWindow();
-            //pad y with reflect mode so it's centered. This reflect padding implementation is
-            // not perfect but works for this demo.
+            //pad y
             double[] ypad = new double[n_fft+y.length];
             for (int i = 0; i < n_fft/2; i++){
                 ypad[(n_fft/2)-i-1] = y[i+1];
@@ -114,12 +101,7 @@ public class MFCC {
             return magSpec;
         }
 
-
-        //get hann window, librosa
         private double[] getWindow(){
-            //Return a Hann window for even n_fft.
-            //The Hann window is a taper formed by using a raised cosine or sine-squared
-            //with ends that touch zero.
             double[] win = new double[n_fft];
             for (int i = 0; i < n_fft; i++){
                 win[i] = 0.5 - 0.5 * Math.cos(2.0*Math.PI*i/n_fft);
@@ -127,7 +109,7 @@ public class MFCC {
             return win;
         }
 
-        //frame, librosa
+
         public double[][] yFrame(double[] ypad){
             final int n_frames = 1 + (ypad.length - n_fft) / hop_length;
             double[][] winFrames = new double[n_fft][n_frames];
@@ -141,11 +123,8 @@ public class MFCC {
 
 
 
-        //power to db, librosa
         public double[][] powerToDb(double[][] melS){
-            //Convert a power spectrogram (amplitude squared) to decibel (dB) units
-            //  This computes the scaling ``10 * log10(S / ref)`` in a numerically
-            //  stable way.
+
             double[][] log_spec = new double[melS.length][melS[0].length];
             double maxValue = -100;
             for (int i = 0; i < melS.length; i++){
@@ -162,7 +141,6 @@ public class MFCC {
                 }
             }
 
-            //set top_db to 80.0
             for (int i = 0; i < melS.length; i++){
                 for (int j = 0; j < melS[0].length; j++){
                     if (log_spec[i][j] < maxValue - 80.0){
@@ -170,13 +148,12 @@ public class MFCC {
                     }
                 }
             }
-            //ref is disabled, maybe later.
+
             return log_spec;
         }
 
-        //dct, librosa
+
         public double[][] dctFilter(int n_filters, int n_input){
-            //Discrete cosine transform (DCT type-III) basis.
             double[][] basis = new double[n_filters][n_input];
             double[] samples = new double[n_input];
             for (int i = 0; i < n_input; i++){
@@ -194,12 +171,10 @@ public class MFCC {
         }
 
 
-        //mel, librosa
+
         public double[][] melFilter(){
-            //Create a Filterbank matrix to combine FFT bins into Mel-frequency bins.
-            // Center freqs of each FFT bin
+
             final double[] fftFreqs = fftFreq();
-            //'Center freqs' of mel bands - uniformly spaced between limits
             final double[] melF = melFreq(n_mels+2);
 
             double[] fdiff = new double[melF.length-1];
@@ -240,12 +215,10 @@ public class MFCC {
             }
             return weights;
 
-            //need to check if there's an empty channel somewhere
+
         }
 
-        //fft frequencies, librosa
         public double[] fftFreq() {
-            //Alternative implementation of np.fft.fftfreqs
             double[] freqs = new double[1+n_fft/2];
             for (int i = 0; i < 1+n_fft/2; i++){
                 freqs[i] = 0 + (sampleRate/2)/(n_fft/2) * i;
@@ -253,9 +226,8 @@ public class MFCC {
             return freqs;
         }
 
-        //mel frequencies, librosa
+        //mel frequencies
         public double[] melFreq(int numMels) {
-            //'Center freqs' of mel bands - uniformly spaced between limits
             double[] LowFFreq = new double[1];
             double[] HighFFreq = new double[1];
             LowFFreq[0] = fMin;
@@ -270,7 +242,6 @@ public class MFCC {
         }
 
 
-        //mel to hz, htk, librosa
         public double[] melToFreqS(double[] mels) {
             double[] freqs = new double[mels.length];
             for (int i = 0; i < mels.length; i++) {
@@ -279,8 +250,6 @@ public class MFCC {
             return freqs;
         }
 
-
-        // hz to mel, htk, librosa
         public double[] freqToMelS(double[] freqs) {
             double[] mels = new double[freqs.length];
             for (int i = 0; i < freqs.length; i++){
@@ -289,7 +258,6 @@ public class MFCC {
             return mels;
         }
 
-        //mel to hz, Slaney, librosa
         public double[] melToFreq(double[] mels) {
             // Fill in the linear scale
             final double f_min = 0.0;
@@ -312,17 +280,14 @@ public class MFCC {
         }
 
 
-        // hz to mel, Slaney, librosa
         public double[] freqToMel(double[] freqs) {
             final double f_min = 0.0;
             final double f_sp = 200.0 / 3;
             double[] mels = new double[freqs.length];
 
-            // Fill in the log-scale part
-
-            final double min_log_hz = 1000.0;                         // beginning of log region (Hz)
-            final double min_log_mel = (min_log_hz - f_min) / f_sp ;  // # same (Mels)
-            final double logstep = Math.log(6.4) / 27.0;              // step size for log region
+            final double min_log_hz = 1000.0;
+            final double min_log_mel = (min_log_hz - f_min) / f_sp ;
+            final double logstep = Math.log(6.4) / 27.0;
 
             for (int i = 0; i < freqs.length; i++) {
                 if (freqs[i] < min_log_hz){
@@ -334,7 +299,6 @@ public class MFCC {
             return mels;
         }
 
-        // log10
         public double log10(double value) {
             return Math.log(value) / Math.log(10);
         }

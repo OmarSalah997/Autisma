@@ -62,7 +62,7 @@ public class SpeakingActivity extends AppCompatActivity {
     private boolean isRecording = false;
     public static int SAMPLE_RATE = 16000;
     private short[] mBuffer;
-    final static public int RECORDER_SAMPLERATE = 16000;
+    final static public int RECORDER_SAMPLERATE = 44100;
     final static public int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
     final static public int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
     final static public int BufferElements2Rec = 1024;
@@ -314,15 +314,7 @@ public class SpeakingActivity extends AppCompatActivity {
         try {
 
             int read = fs.read(bytes, 0, size);
-            /*
-            if (read < size) {
-                int remain = size - read;
-                while (remain > 0) {
-                    read = fs.read(tmpBuff, 0, remain);
-                    System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
-                    remain -= read;
-                }
-            }*/
+
         } catch (IOException e) {
             throw e;
         } finally {
@@ -358,7 +350,7 @@ public class SpeakingActivity extends AppCompatActivity {
         String[] files = null;
 try {
 
-    files = assetManager.list("files"); //ringtone is folder name
+    files = assetManager.list("files");
     filesNumber = files.length;
 
     for (int i = 0; i < (files.length); i += 1) {
@@ -380,49 +372,47 @@ try {
     }
     public int[] calculatesingleMFCC(File file) throws IOException, WavFileException {
 
-        int mNumFrames;
-        int mSampleRate;
-        int mChannels;
+        int numFrames;
+        int sampleRate;
+        int channels;
         int[] meanMFCCValues = null;
 
         try {
             WavFile wavFile;
             wavFile = WavFile.openWavFile(file);
-            mNumFrames = (int) wavFile.numFrames;
-            mSampleRate = (int) wavFile.sampleRate;
-            mChannels = wavFile.numChannels;
-            double[][] buffer = new double[mChannels][];
-            for (int l = 0; l < mChannels; l++) {
-                double[] var = new double[mNumFrames];
+            numFrames = (int) wavFile.numFrames;
+            sampleRate = (int) wavFile.sampleRate;
+            channels = wavFile.numChannels;
+            double[][] buffer = new double[channels][];
+            for (int l = 0; l < channels; l++) {
+                double[] var = new double[numFrames];
                 buffer[l] = var;
             }
 
             int frameOffset = 0;
+           /*
+            int counter = numFrames*channels / 4096 + 1;
+            for (int p = 0; p < counter; p++) {
+                frameOffset = wavFile.readFrames(buffer, numFrames, frameOffset);
+            }*/
+            wavFile.readFrames(buffer, numFrames, frameOffset);
 
-            int loopCounter = mNumFrames * mChannels / 4096 + 1;
-            for (int p = 0; p < loopCounter; p++) {
-                frameOffset = wavFile.readFrames(buffer, mNumFrames, frameOffset);
-            }
-
-            //trimming the magnitude values to 5 decimal digits
-            DecimalFormat df = new DecimalFormat("#.#####");
-            df.setRoundingMode(RoundingMode.CEILING);
-            double[] meanBuffer = new double[mNumFrames];
-            for (int q = 0; q < mNumFrames; q++) {
+            double[] meanBuffer = new double[numFrames];
+            for (int q = 0; q <numFrames; q++) {
                 double frameVal = 0.0;
-                for (int p = 0; p < mChannels; p++) {
+                for (int p = 0; p < channels; p++) {
                     frameVal = frameVal + buffer[p][q];
                 }
-                meanBuffer[q] = frameVal / mChannels;
+                meanBuffer[q] = frameVal / channels;
             }
 
 
             MFCC mfccConvert = new MFCC();
-            mfccConvert.setSampleRate(mSampleRate);
-            int nMFCC = 20;
-            mfccConvert.setN_mfcc(nMFCC);
-            float[] mfccInput = mfccConvert.process(meanBuffer);
-            int nFFT = mfccInput.length / nMFCC;
+            mfccConvert.sampleRate=sampleRate;
+            int nMFCC = 40;
+            mfccConvert.n_mfcc=nMFCC;
+            int[] mfccInput = mfccConvert.process(meanBuffer);
+     /*       int nFFT = mfccInput.length / nMFCC;
             double[][] mfccValues = new double[nMFCC][];
             for (int j = 0; j < nMFCC; j++) {
                 double[] var = new double[nFFT];
@@ -440,10 +430,6 @@ try {
             }
 
 
-            //code to take the mean of mfcc values across the rows such that
-            //[nMFCC x nFFT] matrix would be converted into
-            //[nMFCC x 1] dimension - which would act as an input
-
             meanMFCCValues = new int[nMFCC];
             for (int p = 0; p < nMFCC; p++) {
                 double fftValAcrossRow = 0.0;
@@ -452,9 +438,9 @@ try {
                 double fftMeanValAcrossRow = fftValAcrossRow / nFFT;
                 meanMFCCValues[p] = (int) fftMeanValAcrossRow;
 
-            }
+            }*/
             file.delete();
-            vec.add(meanMFCCValues);
+            vec.add(mfccInput);
          
 
         
@@ -507,7 +493,7 @@ try {
                 for (int i = 2; i < vec.size(); i += soundsclassifiers) {
                     for (int n = i; n < soundsclassifiers + i; n++) {
                         final DTW lDTW = new DTW();
-                        double dist = lDTW.compute(vec.get(n), vec.get(f)).getDistance();
+                     double dist=  lDTW.compute(vec.get(n), vec.get(f)).mDistance;
                         currentSpeakerDistances.add(dist);
                     }
 

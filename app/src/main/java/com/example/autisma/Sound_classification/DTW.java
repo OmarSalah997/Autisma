@@ -4,39 +4,37 @@ public final class DTW {
 
     public static class Result {
 
-        private final double  Distance;
+        public double  mDistance;
 
-        public Result( final double pDistance) {
+        public Result( double pDistance) {
 
-            this.Distance    = pDistance;
+            this.mDistance    = pDistance;
         }
-        public final double     getDistance() { return this.Distance;    }
     }
-
 
     public DTW() { }
 
-    public DTW.Result compute(final int[] s, final int[] t) {
+    public DTW.Result compute(int[] s,int[] t) {
 
-        final int lN = s.length;
-        final int lM = t.length;
+       int lN = s.length;
+      int lM = t.length;
 
         if(lN == 0 || lM == 0) {
-            return new DTW.Result(Double.NaN);
+            return new DTW.Result( Double.NaN);
         }
-        final double[][] lL            = new double[lN][lM];
-        final double[][] lG            = new double[lN][lM];
+
+    double[][] lL  = new double[lN][lM];
+       double[][] lG  = new double[lN][lM];
 
         int i, j;
 
         for(i = 0; i < lN; i++) {
-
-            final float ls= s[i];
+            float ss =s[i];
             for(j = 0; j < lM; j++) {
-
-                lL[i][j] = this.getDistanceBetween(ls, t[j]);
+                lL[i][j] = this.getDistanceBetween(ss, t[j]);
             }
         }
+
         lG[0][0] = lL[0][0];
 
         for(i = 1; i < lN; i++) {
@@ -49,31 +47,17 @@ public final class DTW {
 
         for (i = 1; i < lN; i++) {
             for (j = 1; j < lM; j++) {
-
                 lG[i][j] = (Math.min(Math.min(lG[i-1][j], lG[i-1][j-1]), lG[i][j-1])) + lL[i][j];
             }
         }
 
-        while ((i + j) != 0) {
-
-            if(i == 0) {
-                j -= 1;
-            }
-            else if(j == 0) {
-                i -= 1;
-
-            }
-
-        }
-
-        return new DTW.Result(((lG[lN - 1][lM - 1]) ));
+        return new DTW.Result(((lG[lN - 1][lM - 1])));
     }
 
 
     public double getDistanceBetween(double p1, double p2) {
         return (p1 - p2) * (p1 - p2);
     }
-
 
 
 }
